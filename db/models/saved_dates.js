@@ -5,7 +5,7 @@ const SavedDateSchema = new mongoose.Schema(
     userId: {
       type: String,
       required: [true, "A session tracking ID is required."],
-      trim: true,
+      trim: true, // trim any space the user mistyped
     },
     targetDate: {
       type: String,
@@ -28,7 +28,7 @@ const SavedDateSchema = new mongoose.Schema(
       default: "",
       trim: true,
     },
-    // OPTIONAL FIELD: Only saved when checking a dual-compatibility event (like a wedding or date)
+    // OPTIONAL FIELD: Only saved when checking a dual-compatibility event (wedding or dates)
     partnerSunSign: {
       type: String,
       lowercase: true,
@@ -42,7 +42,7 @@ const SavedDateSchema = new mongoose.Schema(
   }
 );
 
-// We explicitly map it to your lowercase "saved_dates" collection name as the third parameter
+// Explicitly mapping to your professional lowercase "saved_dates" collection
 const SavedDate =
   mongoose.models.SavedDate ||
   mongoose.model("SavedDate", SavedDateSchema, "saved_dates");
