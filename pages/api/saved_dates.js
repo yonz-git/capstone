@@ -1,5 +1,5 @@
-import dbConnect from "../../db/connect";
-import SavedDate from "../../db/models/saved_dates";
+import dbConnect from "@/db/connect";
+import SavedDate from "@/db/models/saved_dates";
 
 export default async function handler(request, response) {
   await dbConnect();
