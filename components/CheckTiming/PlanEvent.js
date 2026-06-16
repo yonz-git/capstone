@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { useRouter } from "next/router";
 
 const INITIAL_EVENTS = [
   { id: "date", name: "Date", emoji: "❤️" },
@@ -9,6 +10,7 @@ const INITIAL_EVENTS = [
 ];
 
 export default function PlanEvent({}) {
+  const router = useRouter();
   const [selectedEventId, setSelectedEventId] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
@@ -66,8 +68,9 @@ export default function PlanEvent({}) {
   }, [selectedCountry]);
 
   // data collection
-  const handleSubmitAllData = async (e) => {
-    e.preventDefault();
+
+  const handleSubmitAllData = async (event) => {
+    event.preventDefault();
 
     if (
       !selectedEventId ||
@@ -75,42 +78,41 @@ export default function PlanEvent({}) {
       !selectedCity ||
       !selectedDate
     ) {
-      alert(
-        "Please complete all sections, including selecting a calendar start date."
-      );
+      alert("Please complete all sections.");
       return;
     }
 
     setIsSubmitting(true);
-    try {
-      const response = await fetch("/api/saved-dates", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          eventType: selectedEventId,
-          eventCountry: selectedCountry,
-          eventCity: selectedCity,
-          startDate: selectedDate,
-          timeframe,
-          onlyWeekends,
-          partnerSunSign,
-        }),
-      });
 
-      if (response.ok) {
-        alert("🎉 Event setup successfully saved completely!");
-      } else {
-        alert("Failed to save your selections.");
+    try {
+      const eventCalculation = {
+        eventType: selectedEventId,
+        eventCountry: selectedCountry,
+        eventCity: selectedCity,
+        startDate: selectedDate,
+        timeframe,
+        onlyWeekends,
+        partnerSunSign,
+      };
+
+      localStorage.setItem(
+        "pending_event_calculation",
+        JSON.stringify(eventCalculation)
+      );
+
+      if (onCalculationComplete) {
+        onCalculationComplete();
       }
     } catch (error) {
-      console.error(error);
+      console.error("Error stringifying form inputs to local storage:", error);
+      alert("Something went wrong.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <Container>
+    <Container as="form" onSubmit={handleSubmitAllData}>
       <Header>
         <Title>Plan an Event ✨</Title>
         <Subtitle>
@@ -327,7 +329,7 @@ const Button = styled.button`
   padding: 16px;
   border-radius: 12px;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 400;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -337,10 +339,6 @@ const Button = styled.button`
   &:hover {
     background-color: #000000;
   }
-`;
-
-const ButtonIcon = styled.span`
-  font-size: 18px;
 `;
 
 const EventContainer = styled.div`
