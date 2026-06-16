@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
+import CosmicIcon from "../components/Icons/Icons";
 
 export default function OnboardingPage() {
   const router = useRouter();
@@ -65,7 +66,7 @@ export default function OnboardingPage() {
     // add up the datas
     const finalData = { ...profileData, ...step3Data };
 
-    // If the checkbox ticked, override whatever was in the time picker
+    // when the checkbox ticked, overrides the time picker
     if (unknownTime) {
       finalData.birthTime = "unknown";
     }
@@ -78,7 +79,7 @@ export default function OnboardingPage() {
     router.push("/dashboard");
   }
 
-  // Blocks continuing to the next step when not filled
+  // blocks continuing to the next step when not filled
   function handleNextStep(event) {
     const form = event.target.closest("form");
 
@@ -94,7 +95,7 @@ export default function OnboardingPage() {
     }
   }
 
-  // calculate the sun sign
+  // calculate the sun sign and saves in the local data
 
   function getSunSign(dateString) {
     if (!dateString) return "";
@@ -154,9 +155,10 @@ export default function OnboardingPage() {
           <StepSection>
             <IconBox>
               <span role="img" aria-label="calendar">
-                📅
+                <CosmicIcon name="birthday" />
               </span>
             </IconBox>
+
             <h2>What is your birth date?</h2>
 
             <InputGroup>
@@ -181,7 +183,7 @@ export default function OnboardingPage() {
           <StepSection>
             <IconBox>
               <span role="img" aria-label="clock">
-                🕒
+                <CosmicIcon name="clock" />
               </span>
             </IconBox>
             <h2>What time were you born?</h2>
@@ -221,8 +223,8 @@ export default function OnboardingPage() {
         {step === 3 && (
           <StepSection>
             <IconBox>
-              <span role="img" aria-label="map">
-                📍
+              <span role="img" aria-label="location">
+                <CosmicIcon name="earth" />
               </span>
             </IconBox>
             <h2>Where were you born?</h2>
@@ -315,7 +317,7 @@ const Header = styled.header`
 
   h1 {
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 400;
   }
 
   span {
@@ -332,17 +334,17 @@ const ProgressBar = styled.div`
 `;
 
 const Dot = styled.div`
-  width: 12px;
-  height: 12px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
-  background-color: ${(props) => (props.$active ? "#6236e8" : "#eee")};
-  border: 2px solid ${(props) => (props.$active ? "#3f3167" : "#ddd")};
+  background-color: ${(props) => (props.$active ? "#aa8dff" : "#3c3655")};
+  border: 2px solid ${(props) => (props.$active ? "#aa8dff" : "#aa8dff")};
 `;
 
 const Line = styled.div`
   width: 60px;
   height: 2px;
-  background-color: ${(props) => (props.$active ? "#333" : "#eee")};
+  background-color: ${(props) => (props.$active ? "#696186" : "#696186")};
 `;
 
 const FormContainer = styled.form`
@@ -358,6 +360,7 @@ const StepSection = styled.section`
   h2 {
     font-size: 22px;
     margin-bottom: 60px;
+    font-weight: 400;
   }
 
   p {
@@ -370,14 +373,14 @@ const StepSection = styled.section`
 const IconBox = styled.div`
   width: 80px;
   height: 80px;
-  background-color: #f5f5f5;
+
   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 40px;
-  margin-bottom: 24px;
-  border: 1px solid #eee;
+  margin-top: 3rem;
+  margin-bottom: 2rem;
 `;
 
 const InputGroup = styled.div`
@@ -387,9 +390,9 @@ const InputGroup = styled.div`
 
   label {
     display: block;
-    font-size: 12px;
-    font-weight: 600;
-    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 10px;
     color: #ffffff;
   }
 `;
