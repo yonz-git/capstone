@@ -75,7 +75,7 @@ export default function OnboardingPage() {
     finalData.sunSign = calculatedSunSign;
 
     // important to pass the final data
-    localStorage.setItem("user_profile", JSON.stringify(finalData));
+    localStorage.setItem("userProfile", JSON.stringify(finalData));
     router.push("/dashboard");
   }
 
@@ -261,15 +261,18 @@ export default function OnboardingPage() {
             <InputGroup>
               <label htmlFor="birthCity">Birth City</label>
               <StyledSelect
-  id="birthCity"
-  name="birthCity"
-  value={profileData.birthCity || ""}
-  onChange={(event) =>
-    setProfileData((prev) => ({ ...prev, birthCity: event.target.value }))
-  }
-  disabled={!selectedCountry || cities.length === 0}
-  required
->            
+                id="birthCity"
+                name="birthCity"
+                value={profileData.birthCity || ""}
+                onChange={(event) =>
+                  setProfileData((prev) => ({
+                    ...prev,
+                    birthCity: event.target.value,
+                  }))
+                }
+                disabled={!selectedCountry || cities.length === 0}
+                required
+              >
                 <option value="" disabled>
                   {!selectedCountry
                     ? "Choose a country first"
@@ -432,7 +435,7 @@ const CheckboxGroup = styled.div`
 
   label {
     font-size: 14px;
-    color: #555;
+    color: #ececec;
     cursor: pointer;
     user-select: none;
   }
