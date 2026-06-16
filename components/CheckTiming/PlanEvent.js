@@ -12,8 +12,10 @@ export default function PlanEvent({}) {
   const [selectedEventId, setSelectedEventId] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
-
-  const [formStep, setFormStep] = useState(1);
+  const [selectedDate, setSelectedDate] = useState("");
+  const [timeframe, setTimeframe] = useState("1 week");
+  const [onlyWeekends, setOnlyWeekends] = useState(false);
+  const [partnerSunSign, setPartnerSunSign] = useState("");
 
   // API loading states
   const [countries, setCountries] = useState([]);
@@ -63,45 +65,45 @@ export default function PlanEvent({}) {
     startFetching();
   }, [selectedCountry]);
 
-  // MongoDB Submission Handler
-  const handleNextStep = async (event) => {
-    event.preventDefault();
+  // data collection
+  const handleSubmitAllData = async (e) => {
+    e.preventDefault();
 
-    // mandatory
-    if (!selectedEventId || !selectedCountry || !selectedCity) {
+    if (
+      !selectedEventId ||
+      !selectedCountry ||
+      !selectedCity ||
+      !selectedDate
+    ) {
       alert(
-        "Please choose an event type, country, and city before proceeding."
+        "Please complete all sections, including selecting a calendar start date."
       );
       return;
     }
 
     setIsSubmitting(true);
-
     try {
       const response = await fetch("/api/saved-dates", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           eventType: selectedEventId,
           eventCountry: selectedCountry,
           eventCity: selectedCity,
-          // note: If your backend schema expects scores or dates later,
-          // you can add placeholder default values here or add date inputs next!
+          startDate: selectedDate,
+          timeframe,
+          onlyWeekends,
+          partnerSunSign,
         }),
       });
 
       if (response.ok) {
-        //to the next step on this same page
-        setFormStep(2);
+        alert("🎉 Event setup successfully saved completely!");
       } else {
-        const errorData = await response.json();
-        alert(`Failed to save event: ${errorData.message || "Unknown error"}`);
+        alert("Failed to save your selections.");
       }
     } catch (error) {
-      console.error("Network database saving error:", error);
-      alert("An unexpected error occurred.");
+      console.error(error);
     } finally {
       setIsSubmitting(false);
     }
@@ -116,10 +118,6 @@ export default function PlanEvent({}) {
           best days.
         </Subtitle>
       </Header>
-
-      <Main>
-        <Description></Description>
-      </Main>
 
       <EventContainer>
         <TitleBlock>
@@ -139,7 +137,9 @@ export default function PlanEvent({}) {
             </EventCard>
           ))}
         </GridContainer>
+      </EventContainer>
 
+      <EventContainer>
         <TitleBlock>
           <h2>2. Where is your event?</h2>
         </TitleBlock>
@@ -194,35 +194,85 @@ export default function PlanEvent({}) {
         </Location>
       </EventContainer>
 
+      <EventContainer>
+        <TitleBlock>
+          <h2>3. When do you want to time the event?</h2>
+        </TitleBlock>
+        <InputGroup>
+          <label htmlFor="startDate">Start Date</label>
+          <StyledInput
+            type="date"
+            id="startDate"
+            name="startDate"
+            value={selectedDate}
+            onChange={(event) => setSelectedDate(event.target.value)}
+          />
+        </InputGroup>
+
+        <InputGroup>
+          <label htmlFor="timeframe">Choose your Timeframe</label>
+          <StyledSelect
+            id="timeframe"
+            name="timeframe"
+            value={timeframe}
+            onChange={(event) => setTimeframe(event.target.value)}
+            required
+          >
+            <option value="1 week">1 Week</option>
+            <option value="2 weeks">2 Weeks</option>
+            <option value="3 weeks">3 Weeks</option>
+            <option value="1 month">1 Month</option>
+            <option value="3 months">3 Months</option>
+            <option value="6 months">6 Months</option>
+          </StyledSelect>
+        </InputGroup>
+
+        <CheckboxGroup>
+          <StyledCheckbox
+            type="checkbox"
+            id="onlyWeekends"
+            name="onlyWeekends"
+            checked={onlyWeekends}
+            onChange={(event) => setOnlyWeekends(event.target.checked)}
+          />
+          <CheckboxLabel htmlFor="onlyWeekends">Only weekends</CheckboxLabel>
+        </CheckboxGroup>
+      </EventContainer>
+
+      <EventContainer>
+        <TitleBlock>
+          <h2>4. Partner's Sun Sign (Optional)</h2>
+          <p>Add your partner's sun sign for deeper compatibility insights.</p>
+        </TitleBlock>
+
+        <IconInputWrapper>
+          <SelectIcon>☀️</SelectIcon>
+          <DropdownWithIcon
+            id="partnerSunSign"
+            name="partnerSunSign"
+            value={partnerSunSign}
+            onChange={(event) => setPartnerSunSign(event.target.value)}
+          >
+            <option value="">Select Sun Sign</option>
+            <option value="aries">Aries</option>
+            <option value="taurus">Taurus</option>
+            <option value="gemini">Gemini</option>
+            <option value="cancer">Cancer</option>
+            <option value="leo">Leo</option>
+            <option value="virgo">Virgo</option>
+            <option value="libra">Libra</option>
+            <option value="scorpio">Scorpio</option>
+            <option value="sagittarius">Sagittarius</option>
+            <option value="capricorn">Capricorn</option>
+            <option value="aquarius">Aquarius</option>
+            <option value="pisces">Pisces</option>
+          </DropdownWithIcon>
+        </IconInputWrapper>
+      </EventContainer>
+
       <Footer>
-        <Button onClick={handleNextStep} disabled={isSubmitting}>
-          <ButtonIcon>✦</ButtonIcon>
-          {isSubmitting ? "Saving Selections..." : "Continue to Next Step"}
-        </Button>
+        <Button>Find my aligned days 🌙</Button>
       </Footer>
-
-      {/*  STEP 2: Timeframe Selection / Date Calculation UI */}
-      {formStep === 2 && (
-        <>
-          <EventContainer>
-            <TitleBlock>
-              <h2>3. Choose your Timeframe</h2>
-              <p>
-                Your event details are locked in! Now select your target months.
-              </p>
-            </TitleBlock>
-
-            {/* 🛠️ Drop your timeframe calendar picker or input components right here! */}
-            <PlaceholderBox>Timeframe components go here...</PlaceholderBox>
-          </EventContainer>
-
-          <Footer>
-            <Button onClick={() => setFormStep(1)}>
-              ← Back to Event Details
-            </Button>
-          </Footer>
-        </>
-      )}
     </Container>
   );
 }
@@ -230,7 +280,7 @@ export default function PlanEvent({}) {
 const Container = styled.div`
   width: 100%;
   max-width: 400px;
-  height: 100vh;
+  height: auto;
 
   background-color: #141434;
   color: #ffffff;
@@ -264,18 +314,6 @@ const Subtitle = styled.p`
   line-height: 1.4;
 `;
 
-const Main = styled.main`
-  text-align: center;
-  padding: 0 12px;
-`;
-
-const Description = styled.p`
-  font-size: 16px;
-  line-height: 1.6;
-  color: #e2e2e2;
-  margin: 0;
-`;
-
 const Footer = styled.footer`
   width: 100%;
   margin-bottom: 20px;
@@ -306,16 +344,15 @@ const ButtonIcon = styled.span`
 `;
 
 const EventContainer = styled.div`
-  max-width: 450px;
-  margin: 0 auto;
-  padding: 20px;
+  max-width: 90vw;
+  margin-bottom: 3rem;
 `;
 
 const TitleBlock = styled.div`
   h2 {
     font-size: 16px;
     font-weight: 500;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
   }
   p {
     color: #ffffff;
@@ -326,8 +363,8 @@ const TitleBlock = styled.div`
 const GridContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-  margin-bottom: 3rem;
+  gap: 10px;
+
   }
 `;
 
@@ -381,7 +418,7 @@ const Location = styled.div`
 const StyledSelect = styled.select`
   width: 100%;
   padding: 12px;
-  background: #25234c;
+  background: #413e7a;
   border: 1px solid #3c3973;
   color: white;
   border-radius: 8px;
@@ -392,5 +429,76 @@ const StyledSelect = styled.select`
   &:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+  }
+`;
+
+const StyledInput = styled.input`
+  width: 100%;
+  padding: 14px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+  outline: none;
+  background-color: ${(props) => (props.disabled ? "#f9f9f9" : "#ffffff")};
+
+  &:focus {
+    border-color: ${(props) => (props.disabled ? "#ddd" : "#333")};
+  }
+`;
+
+const CheckboxGroup = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`;
+
+const StyledCheckbox = styled.input`
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: #aa99ff;
+`;
+
+const CheckboxLabel = styled.label`
+  font-size: 14px;
+  color: #ffffff;
+  cursor: pointer;
+  user-select: none;
+`;
+
+//partner sun sign
+
+const IconInputWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+`;
+
+const SelectIcon = styled.span`
+  position: absolute;
+  left: 14px;
+  font-size: 16px;
+  color: #b0afcf;
+  pointer-events: none; /* 🔑 Ensures clicking the icon still opens the dropdown menu underneath! */
+  display: flex;
+  align-items: center;
+`;
+
+const DropdownWithIcon = styled.select`
+  width: 100%;
+  padding: 14px 14px 14px 42px; /* 💡 Extra padding-left (42px) leaves perfect room for the sun icon! */
+  background-color: #25234c;
+  border: 1px solid #3c3973;
+  color: #ffffff;
+  border-radius: 12px;
+  font-size: 14px;
+  outline: none;
+  cursor: pointer;
+  appearance: none; /* Hides default native browser arrow styling if you want custom arrow control */
+
+  &:focus {
+    border-color: #aa99ff;
   }
 `;
