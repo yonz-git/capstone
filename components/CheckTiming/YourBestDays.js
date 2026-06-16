@@ -96,12 +96,12 @@ export default function YourBestDays({ onBackToForm }) {
                     <span>{day.score}</span>
                   </ScoreCircle>
                   {/* Smooth visual arrow showing expand status */}
-                  <DropdownArrow isExpanded={isExpanded}>▼</DropdownArrow>
+                  <DropdownArrow $isExpanded={isExpanded}>▼</DropdownArrow>
                 </RightActionBlock>
               </CardHeader>
 
               {/* Dynamic Expandable Reading Section */}
-              <ExpandableContent isExpanded={isExpanded}>
+              <ExpandableContent $isExpanded={isExpanded}>
                 <SummaryText>{day.summary}</SummaryText>
               </ExpandableContent>
             </ResultCard>
@@ -193,18 +193,18 @@ const DropdownArrow = styled.span`
   color: #aa99ff;
   transition: transform 0.2s ease-in-out;
   transform: ${(props) =>
-    props.isExpanded ? "rotate(180deg)" : "rotate(0deg)"};
+    props.$isExpanded ? "rotate(180deg)" : "rotate(0deg)"};
 `;
 
 const ExpandableContent = styled.div`
-  max-height: ${(props) => (props.isExpanded ? "150px" : "0px")};
+  max-height: ${(props) => (props.$isExpanded ? "150px" : "0px")};
   overflow: hidden;
   transition:
     max-height 0.25s ease-in-out,
     margin-top 0.2s ease;
-  margin-top: ${(props) => (props.isExpanded ? "14px" : "0px")};
-  border-top: ${(props) => (props.isExpanded ? "1px solid #3c3973" : "none")};
-  padding-top: ${(props) => (props.isExpanded ? "14px" : "0px")};
+  margin-top: ${(props) => (props.$isExpanded ? "14px" : "0px")};
+  border-top: ${(props) => (props.$isExpanded ? "1px solid #3c3973" : "none")};
+  padding-top: ${(props) => (props.$isExpanded ? "14px" : "0px")};
 `;
 
 const DateLabel = styled.h3`
