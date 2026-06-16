@@ -38,8 +38,8 @@ export default function DashboardView() {
           cosmic timing.
         </Description>
       </Header>
-      <ZodiacCard sunSign={sunSign} />
-      <Main></Main>
+      <ZodiacCard userProfile={userProfile} />
+      <Question>What are we timing today?</Question>
 
       <Footer></Footer>
     </Container>
@@ -81,17 +81,19 @@ const Title = styled.h1`
   line-height: 1.2;
 `;
 
-const Main = styled.main`
+const Question = styled.p`
   text-align: center;
   padding: 0 12px;
+  font-size: 18px;
 `;
 
 const Description = styled.p`
-  font-size: 16px;
+  font-size: 15px;
   line-height: 1.6;
-  color: #e2e2e2;
+  color: #ffffff;
   margin: 0;
   margin-top: 1.5rem;
+  font-weight: 300;
 `;
 
 const Footer = styled.footer`

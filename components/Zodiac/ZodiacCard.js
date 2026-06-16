@@ -34,6 +34,7 @@ const CardContainer = styled.div`
   background-color: #ffffff;
   max-width: 350px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+  color: #141434;
 `;
 
 const CardTitle = styled.span`
