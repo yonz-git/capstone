@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useRouter } from "next/router";
 import NoProfileHome from "../components/NoProfileHome/NoProfileHome";
 
