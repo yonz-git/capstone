@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useRouter } from "next/router";
 
 const INITIAL_EVENTS = [
   { id: "date", name: "Date", emoji: "❤️" },
@@ -9,14 +8,15 @@ const INITIAL_EVENTS = [
   { id: "professional", name: "Professional Meeting", emoji: "💼" },
 ];
 
-export default function PlanEvent({}) {
-  const router = useRouter();
+export default function PlanEvent({ onCalculationComplete }) {
   const [selectedEventId, setSelectedEventId] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
+  const todayString = new Date().toISOString().split("T")[0];
   const [timeframe, setTimeframe] = useState("1 week");
   const [onlyWeekends, setOnlyWeekends] = useState(false);
+
   const [partnerSunSign, setPartnerSunSign] = useState("");
 
   // API loading states
@@ -207,6 +207,7 @@ export default function PlanEvent({}) {
             id="startDate"
             name="startDate"
             value={selectedDate}
+            min={todayString} // only future dates
             onChange={(event) => setSelectedDate(event.target.value)}
           />
         </InputGroup>
@@ -314,11 +315,12 @@ const Subtitle = styled.p`
   color: #ffffff;
   font-weight: 300;
   line-height: 1.4;
+  padding-bottom: 30px;
 `;
 
 const Footer = styled.footer`
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 60px;
 `;
 
 const Button = styled.button`
