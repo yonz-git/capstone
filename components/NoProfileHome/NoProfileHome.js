@@ -18,7 +18,7 @@ export default function NoProfileHome({ onOnboarding }) {
       </Main>
 
       <Footer>
-        <Button onClick={Onboarding}>
+        <Button onClick={onOnboarding}>
           <ButtonIcon>✦</ButtonIcon> Create Cosmic Profile
         </Button>
       </Footer>
