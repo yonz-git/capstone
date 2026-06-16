@@ -1,14 +1,15 @@
-import ZodiacSign from "../components/Zodiac/ZodiacSign";
+import React, { useState } from "react";
+import { useRouter } from "next/router";
 
-export default function Dashboard({ userProfile }) {
-  // Assuming userProfile looks something like: { name: "Yeon Ji", sunSign: "Leo" }
+import DashboardView from "@/components/Dashboard/DashboardView";
 
-  return (
-    <main>
-      <h1>Welcome, Starseed!</h1>
+export default function Home() {
+  const router = useRouter();
+  const [userProfile, setUserProfile] = useState(null);
 
-      {/* Feed the layout state data straight down */}
-      <ZodiacSign sunSign={userProfile?.sunSign} />
-    </main>
-  );
+  function handleOnboarding() {
+    router.push("/onboarding");
+  }
+
+  return <DashboardView userProfile={userProfile} />;
 }

@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { zodiacConfig } from "./ZodiacData";
 
-export default function ZodiacSign({ userProfile }) {
+export default function ZodiacCard({ userProfile }) {
   const sunSign = userProfile?.sunSign;
 
   // CRASH PROTECTION GAURD

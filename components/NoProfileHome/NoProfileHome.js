@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-export default function NoProfileHome({ onStartOnboarding }) {
+export default function NoProfileHome({ onOnboarding }) {
   return (
     <Container>
       <Header>
@@ -17,16 +17,20 @@ export default function NoProfileHome({ onStartOnboarding }) {
         </Description>
       </Main>
 
-      <Footer></Footer>
+      <Footer>
+        <Button onClick={onOnboarding}>
+          <ButtonIcon>✦</ButtonIcon> Create Cosmic Profile
+        </Button>
+      </Footer>
     </Container>
   );
 }
 
 const Container = styled.div`
   width: 100%;
-  max-width: 375px;
+  max-width: 400px;
   height: 100vh;
-  max-height: 667px;
+
   background-color: #141434;
   color: #ffffff;
   display: flex;
@@ -78,4 +82,28 @@ const Description = styled.p`
 const Footer = styled.footer`
   width: 100%;
   margin-bottom: 20px;
+`;
+
+const Button = styled.button`
+  width: 100%;
+  background-color: #222222;
+  color: #ffffff;
+  border: none;
+  padding: 16px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  &:hover {
+    background-color: #000000;
+  }
+`;
+
+const ButtonIcon = styled.span`
+  font-size: 18px;
 `;

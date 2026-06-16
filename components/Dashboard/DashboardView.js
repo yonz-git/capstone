@@ -1,0 +1,100 @@
+import React, { useState, useEffect } from "react";
+import ZodiacCard from "../Zodiac/ZodiacCard";
+import styled from "styled-components";
+import { zodiacConfig } from "../Zodiac/ZodiacData";
+
+export default function DashboardView() {
+  const [userProfile, setUserProfile] = useState(null);
+  const [isMounted, setIsMounted] = useState(false);
+
+  // fetch profile from local storage when the page loads
+  useEffect(() => {
+    const savedData = localStorage.getItem("userProfile");
+    if (savedData) {
+      try {
+        setUserProfile(JSON.parse(savedData));
+      } catch (error) {
+        console.error("Error loading cosmic profile data:", error);
+      }
+    }
+    setIsMounted(true);
+  }, []);
+  //grab the sun sign
+  const sunSign = userProfile?.sunSign;
+  const signData = zodiacConfig[sunSign];
+
+  // prevents crashing
+  if (!isMounted || !sunSign || !signData) {
+    return <h3>Loading your cosmos...</h3>;
+  }
+
+  return (
+    <Container>
+      <Header>
+        <CosmicIcon>{signData.symbol + "\uFE0E"}</CosmicIcon>
+        <Title>Welcome, Starseed!</Title>
+        <Description>
+          Your cosmic profile is ready. We’ve mapped your natal positions and
+          cosmic timing.
+        </Description>
+      </Header>
+      <ZodiacCard sunSign={sunSign} />
+      <Main></Main>
+
+      <Footer></Footer>
+    </Container>
+  );
+}
+
+const Container = styled.div`
+  width: 100%;
+  max-width: 400px;
+  height: 100vh;
+
+  background-color: #141434;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 40px 24px;
+  box-sizing: border-box;
+  font-family: sans-serif;
+  margin: 0 auto;
+  position: relative;
+`;
+
+const Header = styled.header`
+  text-align: center;
+  margin-top: 40px;
+`;
+
+const CosmicIcon = styled.div`
+  margin-bottom: 16px;
+  font-size: 64px;
+`;
+
+const Title = styled.h1`
+  font-size: 28px;
+  font-weight: 400;
+  margin: 0 0 8px 0;
+
+  line-height: 1.2;
+`;
+
+const Main = styled.main`
+  text-align: center;
+  padding: 0 12px;
+`;
+
+const Description = styled.p`
+  font-size: 16px;
+  line-height: 1.6;
+  color: #e2e2e2;
+  margin: 0;
+  margin-top: 1.5rem;
+`;
+
+const Footer = styled.footer`
+  width: 100%;
+  margin-bottom: 20px;
+`;
