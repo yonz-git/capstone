@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 
@@ -6,6 +6,54 @@ export default function OnboardingPage() {
   const router = useRouter();
   const [step, setStep] = useState(1);
   const [unknownTime, setUnknownTime] = useState(false);
+
+  //birth place
+  const [countries, setCountries] = useState([]);
+  const [cities, setCities] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState("");
+
+  useEffect(() => {
+    async function startFetching() {
+      try {
+        const response = await fetch(
+          "https://countriesnow.space/api/v0.1/countries/iso"
+        );
+        const json = await response.json();
+
+        setCountries(json.data || []);
+      } catch (error) {
+        console.error("Error loading countries:", error);
+      }
+    }
+
+    startFetching();
+  }, []);
+
+  useEffect(() => {
+    if (!selectedCountry) {
+      setCities([]);
+      return;
+    }
+
+    async function startFetching() {
+      try {
+        const response = await fetch(
+          "https://countriesnow.space/api/v0.1/countries/cities",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ country: selectedCountry }),
+          }
+        );
+        const json = await response.json();
+        setCities(json.data || []);
+      } catch (error) {
+        console.error("Error loading cities:", error);
+      }
+    }
+
+    startFetching();
+  }, [selectedCountry]);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -64,7 +112,6 @@ export default function OnboardingPage() {
               </span>
             </IconBox>
             <h2>What is your birth date?</h2>
-            <p>Enter the date you were born.</p>
 
             <InputGroup>
               <label htmlFor="birthDate">Birth Date</label>
@@ -133,27 +180,48 @@ export default function OnboardingPage() {
             </IconBox>
             <h2>Where were you born?</h2>
 
-            {/* City Selection Input */}
-            {/* Country Selection Input */}
+            {/* Country Dropdown Input */}
             <InputGroup>
               <label htmlFor="birthCountry">Birth Country</label>
-              <StyledInput
-                type="text"
+              <StyledSelect
                 id="birthCountry"
                 name="birthCountry"
-                placeholder="e.g. Germany"
+                value={selectedCountry}
+                onChange={(e) => setSelectedCountry(e.target.value)}
                 required
-              />
+              >
+                <option value="">-- Select a Country --</option>
+                {countries.map((country) => (
+                  <option key={country.Iso2} value={country.name}>
+                    {country.name}
+                  </option>
+                ))}
+              </StyledSelect>
             </InputGroup>
+
+            {/* City Dropdown Input — Dependent on Country state! */}
             <InputGroup>
               <label htmlFor="birthCity">Birth City</label>
-              <StyledInput
-                type="text"
+              <StyledSelect
                 id="birthCity"
                 name="birthCity"
-                placeholder="e.g. Berlin"
+                defaultValue=""
+                disabled={!selectedCountry || cities.length === 0}
                 required
-              />
+              >
+                <option value="" disabled>
+                  {!selectedCountry
+                    ? "Choose a country first"
+                    : cities.length === 0
+                      ? "Loading local cities..."
+                      : "-- Select a City --"}
+                </option>
+                {cities.map((city) => (
+                  <option key={city} value={city}>
+                    {city}
+                  </option>
+                ))}
+              </StyledSelect>
             </InputGroup>
 
             <ContinueButton type="submit">Complete Profile</ContinueButton>
@@ -172,7 +240,7 @@ const PageContainer = styled.main`
   display: flex;
   flex-direction: column;
   background-color: #121348;
-  color: #333333;
+  color: #ffffff;
   font-family: sans-serif;
 `;
 
@@ -187,6 +255,7 @@ const Header = styled.header`
     border: none;
     font-size: 24px;
     cursor: pointer;
+    color: #ffffff;
   }
 
   h1 {
@@ -211,8 +280,8 @@ const Dot = styled.div`
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background-color: ${(props) => (props.$active ? "#333" : "#eee")};
-  border: 2px solid ${(props) => (props.$active ? "#333" : "#ddd")};
+  background-color: ${(props) => (props.$active ? "#6236e8" : "#eee")};
+  border: 2px solid ${(props) => (props.$active ? "#3f3167" : "#ddd")};
 `;
 
 const Line = styled.div`
@@ -222,7 +291,7 @@ const Line = styled.div`
 `;
 
 const FormContainer = styled.form`
-  flex-grow: 1;
+  flex-grow: 1;xs
 `;
 
 const StepSection = styled.section`
@@ -233,11 +302,11 @@ const StepSection = styled.section`
 
   h2 {
     font-size: 22px;
-    margin-bottom: 8px;
+    margin-bottom: 60px;
   }
 
   p {
-    color: #666;
+    color: #e2e2e2;
     margin-bottom: 30px;
     font-size: 14px;
   }
@@ -266,7 +335,7 @@ const InputGroup = styled.div`
     font-size: 12px;
     font-weight: 600;
     margin-bottom: 8px;
-    color: #888;
+    color: #ffffff;
   }
 `;
 
@@ -322,4 +391,15 @@ const ContinueButton = styled.button`
   &:hover {
     background-color: #000;
   }
+`;
+
+const StyledSelect = styled.select`
+  width: 100%;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #444;
+  font-size: 16px;
+  background-color: ${(props) => (props.disabled ? "#222" : "#fff")};
+  color: ${(props) => (props.disabled ? "#666" : "#000")};
+  outline: none;
 `;
