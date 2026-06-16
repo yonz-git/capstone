@@ -25,7 +25,7 @@ const SavedDateSchema = new mongoose.Schema(
     notes: {
       type: String,
       default: "",
-      trim: true,
+    
     },
     // OPTIONAL FIELD: Only saved when checking a dual-compatibility event (wedding or dates)
     partnerSunSign: {
