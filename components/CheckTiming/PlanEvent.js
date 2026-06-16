@@ -116,8 +116,8 @@ export default function PlanEvent({ onCalculationComplete }) {
       <Header>
         <Title>Plan an Event ✨</Title>
         <Subtitle>
-          Tell us what you{"'"}re planning and your timeframe. We'll find your 3
-          best days.
+          Tell us what you{"'"}re planning and your timeframe. We{"'"}ll find
+          your 3 best days.
         </Subtitle>
       </Header>
       <EventContainer>
