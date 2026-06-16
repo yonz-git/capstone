@@ -20,7 +20,7 @@ const SavedDateSchema = new mongoose.Schema(
     readingSummary: {
       type: String,
       required: [true, "The AI summary reading text is required."],
-      trim: true,
+      
     },
     notes: {
       type: String,
@@ -31,7 +31,7 @@ const SavedDateSchema = new mongoose.Schema(
     partnerSunSign: {
       type: String,
       lowercase: true,
-      trim: true,
+   
       default: null, // If they don't provide a partner, it sits cleanly as null
     },
   },
