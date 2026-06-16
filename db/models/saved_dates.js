@@ -7,11 +7,10 @@ const SavedDateSchema = new mongoose.Schema(
   ref: "UserProfile",
   required: [true, "A session tracking ID is required."],
 },
-    targetDate: {
-      type: String,
-      required: [true, "A calendar date string is required."],
-      trim: true,
-    },
+    gregorianDate: {
+  type: Date,
+  required: [true, "A calendar date string is required."],
+},
     cosmicScore: {
       type: Number,
       required: [true, "The cosmic score rating is required."],
