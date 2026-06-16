@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import CosmicIcon from "../components/Icons/Icons";
+import { Button } from "@/styles";
 
 export default function OnboardingPage() {
   const router = useRouter();
@@ -288,7 +289,7 @@ export default function OnboardingPage() {
               </StyledSelect>
             </InputGroup>
 
-            <ContinueButton type="submit">Save Profile</ContinueButton>
+            <Button type="submit">Save Profile</Button>
           </StepSection>
         )}
       </FormContainer>
@@ -312,7 +313,8 @@ const Header = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 30px;
+  margin-bottom: 1rem;
+  margin-top: 0.2em;
 
   button {
     background: none;
@@ -323,13 +325,13 @@ const Header = styled.header`
   }
 
   h1 {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 400;
   }
 
   span {
     font-size: 14px;
-    color: #888;
+    color: #e7e7e7;
   }
 `;
 
@@ -355,14 +357,20 @@ const Line = styled.div`
 `;
 
 const FormContainer = styled.form`
-  flex-grow: 1;
+  flex: 1; /* ✨ Tells the form to occupy all remaining vertical space */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* ✨ Centers the nested StepSection vertically */
+  align-items: center; /* ✨ Centers everything horizontally */
+  width: 100%;
 `;
 
 const StepSection = styled.section`
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
+  justify-content: center;
 
   h2 {
     font-size: 22px;

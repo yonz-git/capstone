@@ -41,11 +41,15 @@ const Container = styled.div`
   font-family: sans-serif;
   margin: 0 auto;
   position: relative;
+
+  display: flex;
+  justify-content: center;
 `;
 
 const Header = styled.header`
   text-align: center;
-  margin-top: 40px;
+
+  margin-bottom: 2rem;
 `;
 
 const CosmicIcon = styled.div`
@@ -77,11 +81,11 @@ const Description = styled.p`
   line-height: 1.6;
   color: #e2e2e2;
   margin: 0;
+  margin-bottom: 5rem;
 `;
 
 const Footer = styled.footer`
   width: 100%;
-  margin-bottom: 20px;
 `;
 
 const Button = styled.button`

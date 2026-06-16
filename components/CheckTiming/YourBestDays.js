@@ -124,6 +124,10 @@ const Container = styled.div`
   margin: 0 auto;
   font-family: sans-serif;
   box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
 
 const Header = styled.header`
@@ -133,7 +137,7 @@ const Header = styled.header`
 const Title = styled.h2`
   font-size: 24px;
   font-weight: 400;
-  margin: 0 0 8px 0;
+  margin: 40px 0 20px 0;
 `;
 const Subtitle = styled.p`
   font-size: 14px;

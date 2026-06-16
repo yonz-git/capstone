@@ -67,11 +67,15 @@ const Container = styled.div`
   font-family: sans-serif;
   margin: 0 auto;
   position: relative;
+
+  display: flex;
+  justify-content: center;
 `;
 
 const Header = styled.header`
   text-align: center;
   margin-top: 40px;
+  margin-bottom: 3.5rem;
 `;
 
 const CosmicIcon = styled.div`
@@ -89,8 +93,8 @@ const Title = styled.h1`
 
 const Question = styled.p`
   text-align: center;
-
-  font-size: 24px;
+  margin-top: 4rem;
+  font-size: 22px;
 `;
 
 const Description = styled.p`
@@ -121,6 +125,7 @@ const Button = styled.button`
   align-items: center;
   justify-content: center;
   gap: 8px;
+  transition: background-color 0.3s ease-in-out;
 
   &:hover {
     background-color: #000000;
