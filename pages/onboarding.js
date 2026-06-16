@@ -5,9 +5,10 @@ import styled from "styled-components";
 export default function OnboardingPage() {
   const router = useRouter();
   const [step, setStep] = useState(1);
+  const [profileData, setProfileData] = useState({});
   const [unknownTime, setUnknownTime] = useState(false);
 
-  //birth place
+  //birth place API fetching
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState("");
@@ -59,14 +60,21 @@ export default function OnboardingPage() {
     event.preventDefault();
 
     const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData);
+    const step3Data = Object.fromEntries(formData);
 
-    // If the checkbox was ticked, override whatever was in the time picker
+    // add up the datas
+    const finalData = { ...profileData, ...step3Data };
+
+    // If the checkbox ticked, override whatever was in the time picker
     if (unknownTime) {
-      data.birthTime = "unknown";
+      finalData.birthTime = "unknown";
     }
 
-    localStorage.setItem("cosmic_profile", JSON.stringify(data));
+    const calculatedSunSign = getSunSign(finalData.birthDate);
+    finalData.sunSign = calculatedSunSign;
+
+    // important to pass the final data
+    localStorage.setItem("user_profile", JSON.stringify(finalData));
     router.push("/dashboard");
   }
 
@@ -75,10 +83,48 @@ export default function OnboardingPage() {
     const form = event.target.closest("form");
 
     if (form.checkValidity()) {
+      //need to collect data before going to the next step
+      const formData = new FormData(form);
+      const partialData = Object.fromEntries(formData);
+      setProfileData((prev) => ({ ...prev, ...partialData }));
+
       setStep((prev) => prev + 1);
     } else {
       form.reportValidity();
     }
+  }
+
+  // calculate the sun sign
+
+  function getSunSign(dateString) {
+    if (!dateString) return "";
+
+    const date = new Date(dateString);
+    const month = date.getMonth() + 1; // JS months are 0-11, so +1 makes it 1-12
+    const day = date.getDate();
+
+    if ((month === 3 && day >= 21) || (month === 4 && day <= 19))
+      return "Aries";
+    if ((month === 4 && day >= 20) || (month === 5 && day <= 20))
+      return "Taurus";
+    if ((month === 5 && day >= 21) || (month === 6 && day <= 20))
+      return "Gemini";
+    if ((month === 6 && day >= 21) || (month === 7 && day <= 22))
+      return "Cancer";
+    if ((month === 7 && day >= 23) || (month === 8 && day <= 22)) return "Leo";
+    if ((month === 8 && day >= 23) || (month === 9 && day <= 22))
+      return "Virgo";
+    if ((month === 9 && day >= 23) || (month === 10 && day <= 22))
+      return "Libra";
+    if ((month === 10 && day >= 23) || (month === 11 && day <= 21))
+      return "Scorpio";
+    if ((month === 11 && day >= 22) || (month === 12 && day <= 21))
+      return "Sagittarius";
+    if ((month === 12 && day >= 22) || (month === 1 && day <= 19))
+      return "Capricorn";
+    if ((month === 1 && day >= 20) || (month === 2 && day <= 18))
+      return "Aquarius";
+    return "Pisces";
   }
 
   return (
@@ -103,7 +149,7 @@ export default function OnboardingPage() {
       </ProgressBar>
 
       <FormContainer onSubmit={handleSubmit}>
-        {/* STEP 1: Birth Date */}
+        {/* STEP 1: birth date */}
         {step === 1 && (
           <StepSection>
             <IconBox>
@@ -119,6 +165,7 @@ export default function OnboardingPage() {
                 type="date"
                 id="birthDate"
                 name="birthDate"
+                defaultValue={profileData.birthDate || ""} //data stays when going back
                 required
               />
             </InputGroup>
@@ -129,7 +176,7 @@ export default function OnboardingPage() {
           </StepSection>
         )}
 
-        {/* STEP 2: Birth Time (+ I Don't Know Checkbox) */}
+        {/* STEP 2: birth time */}
         {step === 2 && (
           <StepSection>
             <IconBox>
@@ -147,17 +194,17 @@ export default function OnboardingPage() {
                 id="birthTime"
                 name="birthTime"
                 disabled={unknownTime}
+                defaultValue={profileData.birthTime || ""}
                 required={!unknownTime}
               />
             </InputGroup>
 
-            {/* Checkbox implementation matching native HTML Form modules */}
             <CheckboxGroup>
               <input
                 type="checkbox"
                 id="unknownTime"
                 checked={unknownTime}
-                onChange={(e) => setUnknownTime(e.target.checked)}
+                onChange={(event) => setUnknownTime(event.target.checked)}
               />
               <label htmlFor="unknownTime">
                 I don't know my exact birth time
@@ -170,7 +217,7 @@ export default function OnboardingPage() {
           </StepSection>
         )}
 
-        {/* STEP 3: Split Location & Identity Selection */}
+        {/* STEP 3: birth place */}
         {step === 3 && (
           <StepSection>
             <IconBox>
@@ -180,14 +227,22 @@ export default function OnboardingPage() {
             </IconBox>
             <h2>Where were you born?</h2>
 
-            {/* Country Dropdown Input */}
+            {/* Country */}
             <InputGroup>
               <label htmlFor="birthCountry">Birth Country</label>
               <StyledSelect
                 id="birthCountry"
                 name="birthCountry"
                 value={selectedCountry}
-                onChange={(e) => setSelectedCountry(e.target.value)}
+                onChange={(event) => {
+                  setSelectedCountry(event.target.value);
+                  // Update profile data immediately on change
+                  setProfileData((prev) => ({
+                    ...prev,
+                    birthCountry: e.target.value,
+                    birthCity: "",
+                  }));
+                }}
                 required
               >
                 <option value="">-- Select a Country --</option>
@@ -199,13 +254,13 @@ export default function OnboardingPage() {
               </StyledSelect>
             </InputGroup>
 
-            {/* City Dropdown Input — Dependent on Country state! */}
+            {/* City */}
             <InputGroup>
               <label htmlFor="birthCity">Birth City</label>
               <StyledSelect
                 id="birthCity"
                 name="birthCity"
-                defaultValue=""
+                defaultValue={profileData.birthCity || ""}
                 disabled={!selectedCountry || cities.length === 0}
                 required
               >
@@ -224,7 +279,7 @@ export default function OnboardingPage() {
               </StyledSelect>
             </InputGroup>
 
-            <ContinueButton type="submit">Complete Profile</ContinueButton>
+            <ContinueButton type="submit">Save Profile</ContinueButton>
           </StepSection>
         )}
       </FormContainer>
@@ -291,7 +346,7 @@ const Line = styled.div`
 `;
 
 const FormContainer = styled.form`
-  flex-grow: 1;xs
+  flex-grow: 1;
 `;
 
 const StepSection = styled.section`
