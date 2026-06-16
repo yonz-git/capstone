@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import ZodiacCard from "../Zodiac/ZodiacCard";
 import styled from "styled-components";
 import { zodiacConfig } from "../Zodiac/ZodiacData";
+import { useRouter } from "next/router";
 
 export default function DashboardView() {
+  const router = useRouter();
   const [userProfile, setUserProfile] = useState(null);
   const [isMounted, setIsMounted] = useState(false);
 
@@ -42,7 +44,7 @@ export default function DashboardView() {
       <Question>What are we timing today?</Question>
 
       <Footer>
-        <Button>
+        <Button onClick={() => router.push("/checktiming")}>
           <ButtonIcon>✦</ButtonIcon> Check my Cosmic Timing
         </Button>
       </Footer>
@@ -87,8 +89,8 @@ const Title = styled.h1`
 
 const Question = styled.p`
   text-align: center;
-  padding: 0 12px;
-  font-size: 18px;
+
+  font-size: 24px;
 `;
 
 const Description = styled.p`

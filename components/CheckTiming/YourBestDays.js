@@ -6,6 +6,8 @@ export default function YourBestDays({ onBackToForm }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const [expandedIndex, setExpandedIndex] = useState(null);
+
   useEffect(() => {
     async function fetchCosmicDays() {
       try {
@@ -68,24 +70,43 @@ export default function YourBestDays({ onBackToForm }) {
       </Header>
 
       <CardsList>
-        {results.map((day, index) => (
-          <ResultCard key={index}>
-            <CardHeader>
-              <DateLabel>
-                {new Date(day.date).toLocaleDateString("en-US", {
-                  weekday: "long",
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
-              </DateLabel>
-              <ScoreCircle score={day.score}>
-                <span>{day.score}</span>
-              </ScoreCircle>
-            </CardHeader>
-            <SummaryText>{day.summary}</SummaryText>
-          </ResultCard>
-        ))}
+        {results.map((day, index) => {
+          const isExpanded = expandedIndex === index;
+
+          return (
+            <ResultCard key={index}>
+              {/* Clickable Header Area to handle the expansion toggle */}
+              <CardHeader
+                onClick={() => setExpandedIndex(isExpanded ? null : index)}
+              >
+                <DateWrapper>
+                  <PlanetIcon>🪐</PlanetIcon>
+                  <DateLabel>
+                    {new Date(day.date).toLocaleDateString("en-US", {
+                      weekday: "long",
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                  </DateLabel>
+                </DateWrapper>
+
+                <RightActionBlock>
+                  <ScoreCircle $score={day.score}>
+                    <span>{day.score}</span>
+                  </ScoreCircle>
+                  {/* Smooth visual arrow showing expand status */}
+                  <DropdownArrow isExpanded={isExpanded}>▼</DropdownArrow>
+                </RightActionBlock>
+              </CardHeader>
+
+              {/* Dynamic Expandable Reading Section */}
+              <ExpandableContent isExpanded={isExpanded}>
+                <SummaryText>{day.summary}</SummaryText>
+              </ExpandableContent>
+            </ResultCard>
+          );
+        })}
       </CardsList>
 
       <BackButton onClick={onBackToForm}>← Plan Another Event</BackButton>
@@ -96,6 +117,7 @@ export default function YourBestDays({ onBackToForm }) {
 const Container = styled.div`
   width: 100%;
   max-width: 400px;
+  height: 100vh;
   background-color: #141434;
   color: #ffffff;
   padding: 40px 24px;
@@ -115,7 +137,7 @@ const Title = styled.h2`
 `;
 const Subtitle = styled.p`
   font-size: 14px;
-  color: #b0afcf;
+  color: #d2d1f0;
   margin: 0;
   line-height: 1.4;
 `;
@@ -145,32 +167,70 @@ const CardHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 14px;
+  cursor: pointer;
+  user-select: none;
+`;
+
+const DateWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Spacing between planet icon and text label */
+`;
+
+const PlanetIcon = styled.span`
+  font-size: 18px;
+  line-height: 1;
+`;
+
+const RightActionBlock = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+`;
+
+const DropdownArrow = styled.span`
+  font-size: 11px;
+  color: #aa99ff;
+  transition: transform 0.2s ease-in-out;
+  transform: ${(props) =>
+    props.isExpanded ? "rotate(180deg)" : "rotate(0deg)"};
+`;
+
+const ExpandableContent = styled.div`
+  max-height: ${(props) => (props.isExpanded ? "150px" : "0px")};
+  overflow: hidden;
+  transition:
+    max-height 0.25s ease-in-out,
+    margin-top 0.2s ease;
+  margin-top: ${(props) => (props.isExpanded ? "14px" : "0px")};
+  border-top: ${(props) => (props.isExpanded ? "1px solid #3c3973" : "none")};
+  padding-top: ${(props) => (props.isExpanded ? "14px" : "0px")};
 `;
 
 const DateLabel = styled.h3`
-  font-size: 16px;
+  font-size: 15px;
   margin: 0;
   color: #ffffff;
   font-weight: 500;
+  white-space: nowrap; /* Prevents long dates from breaking into two messy lines */
 `;
 
 const ScoreCircle = styled.div`
-  width: 46px;
-  height: 46px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
-  background: ${(props) => (props.score > 85 ? "#4ade80" : "#aa99ff")};
+  background: ${(props) => (props.$score > 85 ? "#c17bff" : "#aa99ff")};
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 13px;
   color: #141434;
 `;
 
 const SummaryText = styled.p`
   font-size: 13px;
-  color: #d1d0e6;
+  color: #f1f0ff; /* Brightened slightly for readability on your new background */
   line-height: 1.5;
   margin: 0;
 `;
@@ -184,8 +244,11 @@ const BackButton = styled.button`
   border-radius: 12px;
   font-size: 14px;
   cursor: pointer;
-  transition: all 0.2s;
+  margin-top: 10px;
+  transition: all 0.2s ease-in-out;
+
   &:hover {
     background-color: #25234c;
+    color: #ffffff;
   }
 `;

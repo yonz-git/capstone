@@ -120,7 +120,6 @@ export default function PlanEvent({ onCalculationComplete }) {
           best days.
         </Subtitle>
       </Header>
-
       <EventContainer>
         <TitleBlock>
           <h2>1. What are you planning?</h2>
@@ -140,7 +139,6 @@ export default function PlanEvent({ onCalculationComplete }) {
           ))}
         </GridContainer>
       </EventContainer>
-
       <EventContainer>
         <TitleBlock>
           <h2>2. Where is your event?</h2>
@@ -195,7 +193,6 @@ export default function PlanEvent({ onCalculationComplete }) {
           </InputGroup>
         </Location>
       </EventContainer>
-
       <EventContainer>
         <TitleBlock>
           <h2>3. When do you want to time the event?</h2>
@@ -242,39 +239,43 @@ export default function PlanEvent({ onCalculationComplete }) {
         </CheckboxGroup>
       </EventContainer>
 
-      <EventContainer>
-        <TitleBlock>
-          <h2>4. Partner's Sun Sign (Optional)</h2>
-          <p>Add your partner's sun sign for deeper compatibility insights.</p>
-        </TitleBlock>
+      {/* only for date and wedding */}
+      {(selectedEventId === "date" || selectedEventId === "wedding") && (
+        <EventContainer>
+          <TitleBlock>
+            <h2>4. Partner's Sun Sign (Optional)</h2>
+            <p>
+              Add your partner's sun sign for deeper compatibility insights.
+            </p>
+          </TitleBlock>
 
-        <IconInputWrapper>
-          <SelectIcon>☀️</SelectIcon>
-          <DropdownWithIcon
-            id="partnerSunSign"
-            name="partnerSunSign"
-            value={partnerSunSign}
-            onChange={(event) => setPartnerSunSign(event.target.value)}
-          >
-            <option value="">Select Sun Sign</option>
-            <option value="aries">Aries</option>
-            <option value="taurus">Taurus</option>
-            <option value="gemini">Gemini</option>
-            <option value="cancer">Cancer</option>
-            <option value="leo">Leo</option>
-            <option value="virgo">Virgo</option>
-            <option value="libra">Libra</option>
-            <option value="scorpio">Scorpio</option>
-            <option value="sagittarius">Sagittarius</option>
-            <option value="capricorn">Capricorn</option>
-            <option value="aquarius">Aquarius</option>
-            <option value="pisces">Pisces</option>
-          </DropdownWithIcon>
-        </IconInputWrapper>
-      </EventContainer>
-
+          <IconInputWrapper>
+            <SelectIcon>☀️</SelectIcon>
+            <DropdownWithIcon
+              id="partnerSunSign"
+              name="partnerSunSign"
+              value={partnerSunSign}
+              onChange={(event) => setPartnerSunSign(event.target.value)}
+            >
+              <option value="">Select Sun Sign</option>
+              <option value="aries">Aries</option>
+              <option value="taurus">Taurus</option>
+              <option value="gemini">Gemini</option>
+              <option value="cancer">Cancer</option>
+              <option value="leo">Leo</option>
+              <option value="virgo">Virgo</option>
+              <option value="libra">Libra</option>
+              <option value="scorpio">Scorpio</option>
+              <option value="sagittarius">Sagittarius</option>
+              <option value="capricorn">Capricorn</option>
+              <option value="aquarius">Aquarius</option>
+              <option value="pisces">Pisces</option>
+            </DropdownWithIcon>
+          </IconInputWrapper>
+        </EventContainer>
+      )}
       <Footer>
-        <Button>Find my aligned days 🌙</Button>
+        <Button>Check my cosmic timing 🌙</Button>
       </Footer>
     </Container>
   );
