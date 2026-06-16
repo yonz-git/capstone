@@ -207,7 +207,7 @@ export default function OnboardingPage() {
                 onChange={(event) => setUnknownTime(event.target.checked)}
               />
               <label htmlFor="unknownTime">
-                I don't know my exact birth time
+                I don&apos;t know my exact birth time
               </label>
             </CheckboxGroup>
 
