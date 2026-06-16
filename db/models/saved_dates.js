@@ -3,10 +3,10 @@ import mongoose from "mongoose";
 const SavedDateSchema = new mongoose.Schema(
   {
     userId: {
-      type: String,
-      required: [true, "A session tracking ID is required."],
-      trim: true, // trim any space the user mistyped
-    },
+  type: mongoose.Schema.Types.ObjectId,
+  ref: "UserProfile",
+  required: [true, "A session tracking ID is required."],
+},
     targetDate: {
       type: String,
       required: [true, "A calendar date string is required."],
