@@ -10,5 +10,5 @@ export default function Home() {
   }
 
   // Default state when first landing when there is no profile
-  return <NoProfileHome Onboarding={handleOnboarding} />;
+  return <NoProfileHome onOnboarding={handleOnboarding} />;
 }
