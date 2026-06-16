@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-export default function NoProfileHome({ Onboarding }) {
+export default function NoProfileHome({ onOnboarding }) {
   return (
     <Container>
       <Header>
