@@ -261,12 +261,15 @@ export default function OnboardingPage() {
             <InputGroup>
               <label htmlFor="birthCity">Birth City</label>
               <StyledSelect
-                id="birthCity"
-                name="birthCity"
-                defaultValue={profileData.birthCity || ""}
-                disabled={!selectedCountry || cities.length === 0}
-                required
-              >
+  id="birthCity"
+  name="birthCity"
+  value={profileData.birthCity || ""}
+  onChange={(event) =>
+    setProfileData((prev) => ({ ...prev, birthCity: event.target.value }))
+  }
+  disabled={!selectedCountry || cities.length === 0}
+  required
+>            
                 <option value="" disabled>
                   {!selectedCountry
                     ? "Choose a country first"
