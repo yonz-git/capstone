@@ -329,7 +329,7 @@ const Button = styled.button`
   background-color: #222222;
   color: #ffffff;
   border: none;
-  padding: 16px;
+  padding: 12px 0 18px 0;
   border-radius: 12px;
   font-size: 16px;
   font-weight: 400;
@@ -372,7 +372,7 @@ const GridContainer = styled.div`
 const EventCard = styled.div`
   background: #625487;
   border-radius: 12px;
-  padding: 14px;
+  padding: 16px;
   text-align: center;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
@@ -389,6 +389,7 @@ const EventCard = styled.div`
     font-size: 14px;
     font-weight: 400;
     margin: 0;
+    margin-top: 10px;
   }
 `;
 
