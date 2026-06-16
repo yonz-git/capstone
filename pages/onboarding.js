@@ -128,7 +128,7 @@ export default function OnboardingPage() {
   }
 
   return (
-    <PageContainer>
+    <Container>
       <Header>
         <button
           type="button"
@@ -239,7 +239,7 @@ export default function OnboardingPage() {
                   // Update profile data immediately on change
                   setProfileData((prev) => ({
                     ...prev,
-                    birthCountry: e.target.value,
+                    birthCountry: event.target.value,
                     birthCity: "",
                   }));
                 }}
@@ -283,18 +283,18 @@ export default function OnboardingPage() {
           </StepSection>
         )}
       </FormContainer>
-    </PageContainer>
+    </Container>
   );
 }
 
-const PageContainer = styled.main`
+const Container = styled.main`
   max-width: 400px;
   margin: 0 auto;
   padding: 20px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: #121348;
+  background-color: #141434;
   color: #ffffff;
   font-family: sans-serif;
 `;

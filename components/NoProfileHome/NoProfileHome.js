@@ -28,9 +28,9 @@ export default function NoProfileHome({ Onboarding }) {
 
 const Container = styled.div`
   width: 100%;
-  max-width: 375px;
+
   height: 100vh;
-  max-height: 667px;
+
   background-color: #141434;
   color: #ffffff;
   display: flex;
