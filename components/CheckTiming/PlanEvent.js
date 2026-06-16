@@ -116,7 +116,7 @@ export default function PlanEvent({ onCalculationComplete }) {
       <Header>
         <Title>Plan an Event ✨</Title>
         <Subtitle>
-          Tell us what you're planning and your timeframe. We'll find your 3
+          Tell us what you{"'"}re planning and your timeframe. We'll find your 3
           best days.
         </Subtitle>
       </Header>
@@ -243,9 +243,9 @@ export default function PlanEvent({ onCalculationComplete }) {
       {(selectedEventId === "date" || selectedEventId === "wedding") && (
         <EventContainer>
           <TitleBlock>
-            <h2>4. Partner's Sun Sign (Optional)</h2>
+            <h2>4. Partner{"'"}s Sun Sign (Optional)</h2>
             <p>
-              Add your partner's sun sign for deeper compatibility insights.
+              Add your partner{"'"}s sun sign for deeper compatibility insights.
             </p>
           </TitleBlock>
 
