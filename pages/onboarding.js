@@ -133,6 +133,7 @@ export default function OnboardingPage() {
       <Header>
         <button
           type="button"
+          aria-label="Go back"
           onClick={() => (step > 1 ? setStep(step - 1) : router.push("/"))}
         >
           ←
