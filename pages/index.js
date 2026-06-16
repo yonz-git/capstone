@@ -1,18 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import NoProfileHome from "../components/NoProfileHome/NoProfileHome";
 import DashboardView from "@/components/Dashboard/DashboardView";
 
 export default function Home() {
   const router = useRouter();
-  const [userProfile, setUserProfile] = useState(null);
+
+  const [isChecking, setIsChecking] = useState(true);
+
+  useEffect(() => {
+    // check if the user already created a profile
+    const savedData = localStorage.getItem("userProfile");
+
+    if (savedData) {
+      // if yes go to dashboard
+      router.push("/dashboard");
+    } else {
+      setIsChecking(false);
+    }
+  }, [router]);
 
   function handleOnboarding() {
     router.push("/onboarding");
-  }
-
-  if (userProfile) {
-    return <DashboardView userProfile={userProfile} />;
   }
 
   // Default state when first landing when there is no profile

@@ -447,7 +447,7 @@ const ContinueButton = styled.button`
   background-color: #333333;
   color: white;
   border: none;
-  border-radius: 25px;
+  border-radius: 12px;
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
