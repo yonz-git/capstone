@@ -63,7 +63,7 @@ export default function YourBestDays({ onBackToForm }) {
   return (
     <Container>
       <Header>
-        <Title>Your Aligned Days 🪐</Title>
+        <Title>Your Cosmic Timing 🪐</Title>
         <Subtitle>
           The cosmos has spoken. <br></br>Here are your 3 strongest dates.
         </Subtitle>
@@ -80,7 +80,7 @@ export default function YourBestDays({ onBackToForm }) {
                 onClick={() => setExpandedIndex(isExpanded ? null : index)}
               >
                 <DateWrapper>
-                  <PlanetIcon>🪐</PlanetIcon>
+                  <PlanetIcon>✨</PlanetIcon>
                   <DateLabel>
                     {new Date(day.date).toLocaleDateString("en-US", {
                       weekday: "long",
@@ -91,16 +91,16 @@ export default function YourBestDays({ onBackToForm }) {
                   </DateLabel>
                 </DateWrapper>
 
-                <RightActionBlock>
+                <RightAction>
                   <ScoreCircle $score={day.score}>
                     <span>{day.score}</span>
                   </ScoreCircle>
-                  {/* Smooth visual arrow showing expand status */}
+
                   <DropdownArrow $isExpanded={isExpanded}>▼</DropdownArrow>
-                </RightActionBlock>
+                </RightAction>
               </CardHeader>
 
-              {/* Dynamic Expandable Reading Section */}
+              {/* expandable reading section */}
               <ExpandableContent $isExpanded={isExpanded}>
                 <SummaryText>{day.summary}</SummaryText>
               </ExpandableContent>
@@ -138,7 +138,7 @@ const Title = styled.h2`
 const Subtitle = styled.p`
   font-size: 14px;
   color: #d2d1f0;
-  margin: 0;
+  margin: 1rem;
   line-height: 1.4;
 `;
 const LoadingText = styled.h3`
@@ -182,7 +182,7 @@ const PlanetIcon = styled.span`
   line-height: 1;
 `;
 
-const RightActionBlock = styled.div`
+const RightAction = styled.div`
   display: flex;
   align-items: center;
   gap: 12px;
@@ -229,7 +229,7 @@ const ScoreCircle = styled.div`
 `;
 
 const SummaryText = styled.p`
-  font-size: 13px;
+  font-size: 14px;
   color: #f1f0ff; /* Brightened slightly for readability on your new background */
   line-height: 1.5;
   margin: 0;
