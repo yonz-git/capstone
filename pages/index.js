@@ -5,10 +5,10 @@ import NoProfileHome from "../components/NoProfileHome/NoProfileHome";
 export default function Home() {
   const router = useRouter();
 
-  function handleStartOnboarding() {
+  function handleOnboarding() {
     router.push("/onboarding");
   }
 
   // Default state when first landing when there is no profile
-  return <NoProfileHome onStartOnboarding={handleStartOnboarding} />;
+  return <NoProfileHome Onboarding={handleOnboarding} />;
 }

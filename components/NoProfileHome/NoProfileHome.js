@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-export default function NoProfileHome({ onStartOnboarding }) {
+export default function NoProfileHome({ Onboarding }) {
   return (
     <Container>
       <Header>
@@ -18,7 +18,7 @@ export default function NoProfileHome({ onStartOnboarding }) {
       </Main>
 
       <Footer>
-        <Button>
+        <Button onClick={Onboarding}>
           <ButtonIcon>✦</ButtonIcon> Create Cosmic Profile
         </Button>
       </Footer>
