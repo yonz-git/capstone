@@ -54,7 +54,7 @@ const SignHeader = styled.div`
 
 const SignName = styled.h3`
   font-size: 1.8rem;
-  font-family: serif; /* Matches your layout style */
+
   margin: 0;
 `;
 

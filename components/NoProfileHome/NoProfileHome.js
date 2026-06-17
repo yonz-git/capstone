@@ -38,14 +38,18 @@ const Container = styled.div`
   justify-content: space-between;
   padding: 40px 24px;
   box-sizing: border-box;
-  font-family: sans-serif;
+
   margin: 0 auto;
   position: relative;
+
+  display: flex;
+  justify-content: center;
 `;
 
 const Header = styled.header`
   text-align: center;
-  margin-top: 40px;
+
+  margin-bottom: 2rem;
 `;
 
 const CosmicIcon = styled.div`
@@ -55,7 +59,7 @@ const CosmicIcon = styled.div`
 
 const Title = styled.h1`
   font-size: 36px;
-  font-weight: bold;
+  font-weight: 500;
   margin: 0 0 8px 0;
 
   line-height: 1.2;
@@ -77,11 +81,11 @@ const Description = styled.p`
   line-height: 1.6;
   color: #e2e2e2;
   margin: 0;
+  margin-bottom: 5rem;
 `;
 
 const Footer = styled.footer`
   width: 100%;
-  margin-bottom: 20px;
 `;
 
 const Button = styled.button`
@@ -92,7 +96,7 @@ const Button = styled.button`
   padding: 16px;
   border-radius: 12px;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
   display: flex;
   align-items: center;

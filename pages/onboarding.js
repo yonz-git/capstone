@@ -305,14 +305,14 @@ const Container = styled.main`
   flex-direction: column;
   background-color: #141434;
   color: #ffffff;
-  font-family: sans-serif;
 `;
 
 const Header = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 30px;
+  margin-bottom: 1rem;
+  margin-top: 0.2em;
 
   button {
     background: none;
@@ -323,13 +323,13 @@ const Header = styled.header`
   }
 
   h1 {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 400;
   }
 
   span {
     font-size: 14px;
-    color: #888;
+    color: #e7e7e7;
   }
 `;
 
@@ -355,25 +355,31 @@ const Line = styled.div`
 `;
 
 const FormContainer = styled.form`
-  flex-grow: 1;
+  flex: 1; /* ✨ Tells the form to occupy all remaining vertical space */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* ✨ Centers the nested StepSection vertically */
+  align-items: center; /* ✨ Centers everything horizontally */
+  width: 100%;
 `;
 
 const StepSection = styled.section`
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
+  justify-content: center;
 
   h2 {
     font-size: 22px;
-    margin-bottom: 60px;
+
     font-weight: 400;
   }
 
   p {
     color: #e2e2e2;
-    margin-bottom: 30px;
-    font-size: 14px;
+    margin-bottom: 3rem;
+    font-size: 16px;
   }
 `;
 

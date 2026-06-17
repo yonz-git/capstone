@@ -293,7 +293,7 @@ const Container = styled.div`
   justify-content: space-between;
   padding: 40px 24px;
   box-sizing: border-box;
-  font-family: sans-serif;
+
   margin: 0 auto;
   position: relative;
 `;
@@ -306,7 +306,7 @@ const Header = styled.header`
 const Title = styled.h2`
   font-size: 26px;
   font-weight: 300;
-  margin: 0 0 8px 0;
+  margin: 0 0 30px 0;
 
   line-height: 1.2;
 `;
@@ -338,6 +338,7 @@ const Button = styled.button`
   align-items: center;
   justify-content: center;
   gap: 8px;
+  transition: background-color 0.3s ease-in-out;
 
   &:hover {
     background-color: #000000;

@@ -32,9 +32,9 @@ export default function YourBestDays({ onBackToForm }) {
 
         const data = await response.json();
         setResults(data.bestDays || []);
-      } catch (err) {
-        console.error(err);
-        setError(err.message);
+      } catch (error) {
+        console.error(error);
+        setError(error.message);
       } finally {
         setLoading(false);
       }
@@ -122,8 +122,12 @@ const Container = styled.div`
   color: #ffffff;
   padding: 40px 24px;
   margin: 0 auto;
-  font-family: sans-serif;
+
   box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
 
 const Header = styled.header`
@@ -133,11 +137,11 @@ const Header = styled.header`
 const Title = styled.h2`
   font-size: 24px;
   font-weight: 400;
-  margin: 0 0 8px 0;
+  margin: 40px 0 20px 0;
 `;
 const Subtitle = styled.p`
-  font-size: 14px;
-  color: #d2d1f0;
+  font-size: 15px;
+  color: #f0f0fc;
   margin: 1rem;
   line-height: 1.4;
 `;
@@ -208,10 +212,10 @@ const ExpandableContent = styled.div`
 `;
 
 const DateLabel = styled.h3`
-  font-size: 15px;
+  font-size: 17px;
   margin: 0;
   color: #ffffff;
-  font-weight: 500;
+  font-weight: 400;
   white-space: nowrap; /* Prevents long dates from breaking into two messy lines */
 `;
 
@@ -239,16 +243,16 @@ const BackButton = styled.button`
   width: 100%;
   background-color: transparent;
   border: 1px solid #3c3973;
-  color: #aa99ff;
+  color: #cbc1ff;
   padding: 14px;
   border-radius: 12px;
-  font-size: 14px;
+  font-size: 16px;
   cursor: pointer;
   margin-top: 10px;
   transition: all 0.2s ease-in-out;
 
   &:hover {
-    background-color: #25234c;
+    background-color: #5337af;
     color: #ffffff;
   }
 `;
