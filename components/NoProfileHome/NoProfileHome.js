@@ -38,7 +38,7 @@ const Container = styled.div`
   justify-content: space-between;
   padding: 40px 24px;
   box-sizing: border-box;
-  font-family: sans-serif;
+
   margin: 0 auto;
   position: relative;
 
@@ -59,7 +59,7 @@ const CosmicIcon = styled.div`
 
 const Title = styled.h1`
   font-size: 36px;
-  font-weight: bold;
+  font-weight: 500;
   margin: 0 0 8px 0;
 
   line-height: 1.2;
@@ -96,7 +96,7 @@ const Button = styled.button`
   padding: 16px;
   border-radius: 12px;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
   display: flex;
   align-items: center;

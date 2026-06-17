@@ -64,7 +64,7 @@ const Container = styled.div`
   justify-content: space-between;
   padding: 40px 24px;
   box-sizing: border-box;
-  font-family: sans-serif;
+
   margin: 0 auto;
   position: relative;
 

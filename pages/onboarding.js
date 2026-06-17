@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import CosmicIcon from "../components/Icons/Icons";
-import { Button } from "@/styles";
 
 export default function OnboardingPage() {
   const router = useRouter();
@@ -289,7 +288,7 @@ export default function OnboardingPage() {
               </StyledSelect>
             </InputGroup>
 
-            <Button type="submit">Save Profile</Button>
+            <ContinueButton type="submit">Save Profile</ContinueButton>
           </StepSection>
         )}
       </FormContainer>
@@ -306,7 +305,6 @@ const Container = styled.main`
   flex-direction: column;
   background-color: #141434;
   color: #ffffff;
-  font-family: sans-serif;
 `;
 
 const Header = styled.header`
@@ -374,14 +372,14 @@ const StepSection = styled.section`
 
   h2 {
     font-size: 22px;
-    margin-bottom: 60px;
+
     font-weight: 400;
   }
 
   p {
     color: #e2e2e2;
-    margin-bottom: 30px;
-    font-size: 14px;
+    margin-bottom: 3rem;
+    font-size: 16px;
   }
 `;
 
