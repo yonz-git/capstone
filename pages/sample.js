@@ -141,7 +141,7 @@ export default function YourBestDays({ onBackToForm }) {
         })}
       </CardsList>
 
-      <BackButton onClick={onBackToForm}>← Plan Another Event</BackButton>
+      <BackButton onClick={onBackToForm}>✦ Plan Another Event</BackButton>
     </Container>
   );
 }
@@ -270,6 +270,7 @@ const DropdownArrow = styled.span`
   color: #aa99ff;
   line-height: 1;
   transition: transform 0.25s ease-in-out;
+  opacity: ${(props) => (props.$isExpanded ? 0 : 1)};
 `;
 
 const ExpandableContent = styled.div`
