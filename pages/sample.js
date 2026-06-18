@@ -6,15 +6,6 @@ export default function YourBestDays({ onBackToForm }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [savedDates, setSavedDates] = useState([]);
-
-  const toggleSaveDate = (dateString) => {
-    setSavedDates((prev) =>
-      prev.includes(dateString)
-        ? prev.filter((d) => d !== dateString)
-        : [...prev, dateString]
-    );
-  };
-
   const [expandedIndex, setExpandedIndex] = useState(null);
 
   useEffect(() => {
@@ -28,6 +19,7 @@ export default function YourBestDays({ onBackToForm }) {
           throw new Error("Missing required computation profile variables.");
         }
 
+        // fetch the calculation
         const response = await fetch("/api/calculate-days", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -41,6 +33,13 @@ export default function YourBestDays({ onBackToForm }) {
 
         const data = await response.json();
         setResults(data.bestDays || []);
+
+        // fetch already saved response (active hearts)
+        const savedResponse = await fetch("/api/saved_dates");
+        if (savedResponse.ok) {
+          const savedData = await savedResponse.json();
+          setSavedDates(savedData.map((item) => item.date));
+        }
       } catch (error) {
         console.error(error);
         setError(error.message);
@@ -51,6 +50,60 @@ export default function YourBestDays({ onBackToForm }) {
 
     fetchCosmicDays();
   }, []);
+
+  const toggleSaveDate = async (day) => {
+    const isSaved = savedDates.includes(day.date);
+
+    const localEvent = JSON.parse(
+      localStorage.getItem("pending_event_calculation") || "{}"
+    );
+    const localProfile = JSON.parse(
+      localStorage.getItem("userProfile") || "{}"
+    );
+
+    setSavedDates((prev) =>
+      isSaved ? prev.filter((date) => date !== day.date) : [...prev, day.date]
+    );
+
+    try {
+      if (isSaved) {
+        // unsave deletes the date
+        const response = await fetch("/api/saved_dates", {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ date: day.date }),
+        });
+
+        if (!response.ok)
+          throw new Error("Could not remove date from database.");
+      } else {
+        // save date
+        const payload = {
+          date: day.date,
+          score: day.score,
+          summary: day.summary,
+          eventType: localEvent.eventType || "General",
+          partnerSunsign:
+            localEvent.partnerSunsign || localProfile.partnerSunsign || null,
+          savedAt: new Date().toISOString(), // Tracking parameter for chronological indexing
+        };
+
+        const response = await fetch("/api/saved_dates", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        if (!response.ok) throw new Error("Could not save date to database.");
+      }
+    } catch (error) {
+      console.error("Database sync issue:", error);
+
+      setSavedDates((prev) =>
+        isSaved ? [...prev, day.date] : prev.filter((date) => date !== day.date)
+      );
+    }
+  };
 
   if (loading) {
     return (
@@ -141,7 +194,7 @@ export default function YourBestDays({ onBackToForm }) {
         })}
       </CardsList>
 
-      <BackButton onClick={onBackToForm}>✦ Plan Another Event</BackButton>
+      <BackButton onClick={onBackToForm}> Plan Another Event</BackButton>
     </Container>
   );
 }
@@ -270,7 +323,6 @@ const DropdownArrow = styled.span`
   color: #aa99ff;
   line-height: 1;
   transition: transform 0.25s ease-in-out;
-  opacity: ${(props) => (props.$isExpanded ? 0 : 1)};
 `;
 
 const ExpandableContent = styled.div`
