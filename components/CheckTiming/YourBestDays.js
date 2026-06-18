@@ -319,9 +319,6 @@ const DropdownArrow = styled.span`
   position: absolute;
   bottom: -16px;
   left: 50%;
-  transform: translateX(-50%)
-    ${(props) => (props.$isExpanded ? "rotate(-90deg)" : "rotate(90deg)")};
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -329,6 +326,11 @@ const DropdownArrow = styled.span`
   color: #aa99ff;
   line-height: 1;
   transition: transform 0.25s ease-in-out;
+  opacity: ${(props) => (props.$isExpanded ? 0 : 1)};
+  visibility: ${(props) => (props.$isExpanded ? "hidden" : "visible")};
+  pointer-events: ${(props) => (props.$isExpanded ? "none" : "auto")};
+  transform: translateX(-50%)
+    ${(props) => (props.$isExpanded ? "rotate(-90deg)" : "rotate(90deg)")};
 `;
 
 const ExpandableContent = styled.div`
