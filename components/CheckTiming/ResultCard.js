@@ -38,6 +38,7 @@ export default function ResultCard({
           <LeftGroup>
             <PlanetIcon />
             <DateLabel>
+              ✨
               {new Date(data.date).toLocaleDateString("en-US", {
                 weekday: "long",
                 month: "long",
@@ -86,7 +87,7 @@ const HeartFilledIcon = styled.svg`
   width: 20px;
   height: 20px;
   fill: #c0e666; /* Clean cosmic pink/crimson variant */
-  filter: drop-shadow(0 0 6px rgba(255, 75, 114, 0.45));
+  filter: drop-shadow(0 0 6px rgba(255, 53, 201, 0.45));
 `;
 
 const CardContainer = styled.div`
