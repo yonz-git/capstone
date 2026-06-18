@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import useSWR from "swr";
+
+// explicit fetcher to ensure SWR handles the JSON response correctly
+const fetcher = (url) => fetch(url).then((response) => response.json());
 
 export default function YourBestDays({ onBackToForm }) {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [savedDates, setSavedDates] = useState([]);
   const [expandedIndex, setExpandedIndex] = useState(null);
+
+  const { data: savedDatesData, mutate } = useSWR("/api/saved_dates", fetcher);
 
   useEffect(() => {
     async function fetchCosmicDays() {
@@ -16,7 +21,9 @@ export default function YourBestDays({ onBackToForm }) {
         const localProfile = localStorage.getItem("userProfile");
 
         if (!localEvent || !localProfile) {
-          throw new Error("Missing required computation profile variables.");
+          setError("Please go back and fill out the form details first.");
+          setLoading(false);
+          return; // stop running the function without crashing the page
         }
 
         // fetch the calculation
@@ -33,13 +40,6 @@ export default function YourBestDays({ onBackToForm }) {
 
         const data = await response.json();
         setResults(data.bestDays || []);
-
-        // fetch already saved response (active hearts)
-        const savedResponse = await fetch("/api/saved_dates");
-        if (savedResponse.ok) {
-          const savedData = await savedResponse.json();
-          setSavedDates(savedData.map((item) => item.date));
-        }
       } catch (error) {
         console.error(error);
         setError(error.message);
@@ -52,7 +52,12 @@ export default function YourBestDays({ onBackToForm }) {
   }, []);
 
   const toggleSaveDate = async (day) => {
-    const isSaved = savedDates.includes(day.date);
+    // Defensive check: Only run .find() if data is a valid array
+    const savedDatesArray = Array.isArray(savedDatesData) ? savedDatesData : [];
+    const existingSavedDate = savedDatesArray.find(
+      (date) => date.gregorianDate?.split("T")[0] === day.date
+    );
+    const isSaved = !!existingSavedDate;
 
     const localEvent = JSON.parse(
       localStorage.getItem("pending_event_calculation") || "{}"
@@ -61,31 +66,26 @@ export default function YourBestDays({ onBackToForm }) {
       localStorage.getItem("userProfile") || "{}"
     );
 
-    setSavedDates((prev) =>
-      isSaved ? prev.filter((date) => date !== day.date) : [...prev, day.date]
-    );
-
     try {
       if (isSaved) {
-        // unsave deletes the date
         const response = await fetch("/api/saved_dates", {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ date: day.date }),
+          body: JSON.stringify({ id: existingSavedDate._id }),
         });
 
-        if (!response.ok)
-          throw new Error("Could not remove date from database.");
+        if (response.ok) {
+          mutate(); // Revalidate SWR data cache
+        }
       } else {
-        // save date
         const payload = {
-          date: day.date,
-          score: day.score,
-          summary: day.summary,
+          gregorianDate: day.date,
           eventType: localEvent.eventType || "General",
-          partnerSunsign:
+          cosmicScore: Number(day.score),
+          readingSummary: day.summary,
+          partnerSunSign:
             localEvent.partnerSunsign || localProfile.partnerSunsign || null,
-          savedAt: new Date().toISOString(), // Tracking parameter for chronological indexing
+          userId: "6671827464ef241bb4df199c",
         };
 
         const response = await fetch("/api/saved_dates", {
@@ -94,14 +94,12 @@ export default function YourBestDays({ onBackToForm }) {
           body: JSON.stringify(payload),
         });
 
-        if (!response.ok) throw new Error("Could not save date to database.");
+        if (response.ok) {
+          mutate(); // Revalidate SWR data cache
+        }
       }
     } catch (error) {
       console.error("Database sync issue:", error);
-
-      setSavedDates((prev) =>
-        isSaved ? [...prev, day.date] : prev.filter((date) => date !== day.date)
-      );
     }
   };
 
@@ -135,20 +133,28 @@ export default function YourBestDays({ onBackToForm }) {
         {results.map((day, index) => {
           const isExpanded = expandedIndex === index;
 
+          // Determine active status condition matching active data
+          const savedDatesArray = Array.isArray(savedDatesData)
+            ? savedDatesData
+            : [];
+          const isHeartActive = savedDatesArray.some(
+            (date) => date.gregorianDate?.split("T")[0] === day.date
+          );
+
           return (
             <ResultCard key={index}>
-              {/* Clickable Header Area to handle the expansion toggle */}
+              {/* clickable Header Area to handle the expansion toggle */}
               <CardHeader
                 onClick={() => setExpandedIndex(isExpanded ? null : index)}
               >
                 <HeartButton
                   onClick={(event) => {
-                    event.stopPropagation(); // Prevents card from opening/closing when saving
-                    toggleSaveDate(day.date);
+                    event.stopPropagation(); // stops the dropdown from opening when clicking the heart
+                    toggleSaveDate(day);
                   }}
-                  aria-label="Save profile date"
+                  aria-label="Save date"
                 >
-                  {savedDates.includes(day.date) ? (
+                  {isHeartActive ? (
                     <HeartFilledIcon viewBox="0 0 24 24">
                       <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
                     </HeartFilledIcon>
@@ -306,7 +312,7 @@ const HeartButton = styled.button`
 
 const PlanetIcon = styled.span`
   font-size: 18px;
-  line-height: ;1
+  line-height: 1;
 `;
 
 const DropdownArrow = styled.span`

@@ -484,7 +484,7 @@ const SelectIcon = styled.span`
   left: 14px;
   font-size: 16px;
   color: #b0afcf;
-  pointer-events: none; /* 🔑 Ensures clicking the icon still opens the dropdown menu underneath! */
+  pointer-events: none; /* Ensures clicking the icon still opens the dropdown menu underneath! */
   display: flex;
   align-items: center;
 `;

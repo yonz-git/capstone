@@ -1,5 +1,6 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import OpenAI from "openai";
+import SavedDate from "@/db/models/saved_dates";
 
 const ai = process.env.GEMINI_API_KEY
   ? new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY })
