@@ -1,6 +1,6 @@
 import { useState } from "react";
 import PlanEvent from "../components/CheckTiming/PlanEvent";
-import YourBestDays from "../components/CheckTiming/YourBestDays";
+import ResultsList from "../components/CheckTiming/ResultsList";
 
 export default function CheckTimingPage() {
   const [showResults, setShowResults] = useState(false);
@@ -10,7 +10,7 @@ export default function CheckTimingPage() {
       {!showResults ? (
         <PlanEvent onCalculationComplete={() => setShowResults(true)} />
       ) : (
-        <YourBestDays onBackToForm={() => setShowResults(false)} />
+        <ResultsList onBackToForm={() => setShowResults(false)} />
       )}
     </>
   );
