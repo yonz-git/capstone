@@ -1,5 +1,6 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import OpenAI from "openai";
+import SavedDate from "@/db/models/saved_dates";
 
 const ai = process.env.GEMINI_API_KEY
   ? new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY })
@@ -13,6 +14,7 @@ const groq = process.env.GROQ_API_KEY
     })
   : null;
 
+//mock data
 export default async function handler(request, response) {
   if (request.method !== "POST") {
     return response.status(405).json({ message: "Method not allowed" });
@@ -82,7 +84,7 @@ export default async function handler(request, response) {
       console.error("External Astrology API fallback activated:", apiError);
     }
 
-    // ✨ Force strict schema descriptions directly in the text prompt string for Groq's fallback path
+    // Force strict schema descriptions directly in the text prompt string for Groq's fallback path
     const prompt = `
       You are an expert electional astrologer and data analyst.
       Calculate the 3 absolute best days for this event based on the following authenticated data.
@@ -182,7 +184,7 @@ export default async function handler(request, response) {
 
       console.log("Computing via Groq Fallback (llama-3.3-70b-versatile)...");
       const groqResponse = await groq.chat.completions.create({
-        model: "llama-3.3-70b-versatile",
+        model: "llama-3.1-8b-instant",
         messages: [{ role: "user", content: prompt }],
         response_format: { type: "json_object" },
       });
