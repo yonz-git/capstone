@@ -1,61 +1,38 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import CosmicIcon from "../components/Icons/Icons";
+import useSWR from "swr";
 
 export default function OnboardingPage() {
   const router = useRouter();
   const [step, setStep] = useState(1);
   const [profileData, setProfileData] = useState({});
   const [unknownTime, setUnknownTime] = useState(false);
-
-  //birth place API fetching
-  const [countries, setCountries] = useState([]);
-  const [cities, setCities] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState("");
 
-  useEffect(() => {
-    async function startFetching() {
-      try {
-        const response = await fetch(
-          "https://countriesnow.space/api/v0.1/countries/iso"
-        );
-        const json = await response.json();
+  //birth place API fetching
 
-        setCountries(json.data || []);
-      } catch (error) {
-        console.error("Error loading countries:", error);
-      }
-    }
+  const { data: countriesData } = useSWR(
+    "https://countriesnow.space/api/v0.1/countries/iso"
+  );
+  const countries = countriesData?.data || [];
 
-    startFetching();
-  }, []);
-
-  useEffect(() => {
-    if (!selectedCountry) {
-      setCities([]);
-      return;
-    }
-
-    async function startFetching() {
-      try {
-        const response = await fetch(
+  const { data: citiesData } = useSWR(
+    selectedCountry
+      ? [
           "https://countriesnow.space/api/v0.1/countries/cities",
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ country: selectedCountry }),
-          }
-        );
-        const json = await response.json();
-        setCities(json.data || []);
-      } catch (error) {
-        console.error("Error loading cities:", error);
-      }
-    }
-
-    startFetching();
-  }, [selectedCountry]);
+          selectedCountry,
+        ]
+      : null,
+    ([url, country]) =>
+      fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ country }),
+      }).then((response) => response.json())
+  );
+  const cities = citiesData?.data || [];
 
   function handleSubmit(event) {
     event.preventDefault();
