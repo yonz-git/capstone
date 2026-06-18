@@ -11,8 +11,6 @@ export default function YourBestDays({ onBackToForm }) {
   const [error, setError] = useState(null);
   const [expandedIndex, setExpandedIndex] = useState(null);
 
-  const { data: savedDatesData, mutate } = useSWR("/api/saved_dates", fetcher);
-
   useEffect(() => {
     async function fetchCosmicDays() {
       try {
@@ -51,57 +49,47 @@ export default function YourBestDays({ onBackToForm }) {
     fetchCosmicDays();
   }, []);
 
-  const toggleSaveDate = async (day) => {
-    // Defensive check: Only run .find() if data is a valid array
-    const savedDatesArray = Array.isArray(savedDatesData) ? savedDatesData : [];
-    const existingSavedDate = savedDatesArray.find(
-      (date) => date.gregorianDate?.split("T")[0] === day.date
-    );
-    const isSaved = !!existingSavedDate;
+  // saving date create and delete
 
-    const localEvent = JSON.parse(
-      localStorage.getItem("pending_event_calculation") || "{}"
-    );
-    const localProfile = JSON.parse(
-      localStorage.getItem("userProfile") || "{}"
-    );
+  const { data: savedDatesData, mutate } = useSWR("/api/saved_dates", fetcher);
+  // data and fetcher added to make it read and write version
 
-    try {
-      if (isSaved) {
-        const response = await fetch("/api/saved_dates", {
-          method: "DELETE",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ id: existingSavedDate._id }),
-        });
+  async function toggleSaveDate(data, isSaved) {
+    if (isSaved) {
+      const response = await fetch(`/api/saved_dates/${isSaved._id}`, {
+        method: "DELETE",
+      });
 
-        if (response.ok) {
-          mutate(); // Revalidate SWR data cache
-        }
-      } else {
-        const payload = {
-          gregorianDate: day.date,
-          eventType: localEvent.eventType || "General",
-          cosmicScore: Number(day.score),
-          readingSummary: day.summary,
-          partnerSunSign:
-            localEvent.partnerSunSign || localProfile.partnerSunSign || null,
-          userId: "6671827464ef241bb4df199c",
-        };
-
-        const response = await fetch("/api/saved_dates", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-
-        if (response.ok) {
-          mutate(); // Revalidate SWR data cache
-        }
+      if (!response.ok) {
+        console.error(response.status);
+        return;
       }
-    } catch (error) {
-      console.error("Database sync issue:", error);
+    } else {
+      const localEvent = JSON.parse(
+        localStorage.getItem("pending_event_calculation") || "{}"
+      );
+      const response = await fetch("/api/saved_dates", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          gregorianDate: data.date,
+          cosmicScore: Number(data.score),
+          readingSummary: data.summary,
+          userId: "6671827464ef241bb4df199c",
+          eventType: localEvent.eventType || "General",
+        }),
+      });
+
+      if (!response.ok) {
+        console.error(response.status);
+        return;
+      }
     }
-  };
+
+    mutate();
+  }
 
   if (loading) {
     return (
@@ -130,16 +118,20 @@ export default function YourBestDays({ onBackToForm }) {
       </Header>
 
       <CardsList>
-        {results.map((day, index) => {
+        {results.map((data, index) => {
           const isExpanded = expandedIndex === index;
 
           // Determine active status condition matching active data
           const savedDatesArray = Array.isArray(savedDatesData)
             ? savedDatesData
             : [];
-          const isHeartActive = savedDatesArray.some(
-            (date) => date.gregorianDate?.split("T")[0] === day.date
-          );
+
+          const isSaved = savedDatesArray.find((date) => {
+            if (!date.gregorianDate || !data.date) return false;
+            // Convert to string safely before splitting
+            const savedDateString = String(date.gregorianDate).split("T")[0];
+            return savedDateString === data.date;
+          });
 
           return (
             <ResultCard key={index}>
@@ -150,11 +142,11 @@ export default function YourBestDays({ onBackToForm }) {
                 <HeartButton
                   onClick={(event) => {
                     event.stopPropagation(); // stops the dropdown from opening when clicking the heart
-                    toggleSaveDate(day);
+                    toggleSaveDate(data, isSaved);
                   }}
                   aria-label="Save date"
                 >
-                  {isHeartActive ? (
+                  {isSaved ? (
                     <HeartFilledIcon viewBox="0 0 24 24">
                       <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
                     </HeartFilledIcon>
@@ -174,7 +166,7 @@ export default function YourBestDays({ onBackToForm }) {
                   <LeftGroup>
                     <PlanetIcon>✨</PlanetIcon>
                     <DateLabel>
-                      {new Date(day.date).toLocaleDateString("en-US", {
+                      {new Date(data.date).toLocaleDateString("en-US", {
                         weekday: "long",
                         month: "long",
                         day: "numeric",
@@ -183,8 +175,8 @@ export default function YourBestDays({ onBackToForm }) {
                   </LeftGroup>
 
                   <RightGroup>
-                    <ScoreCircle $score={day.score}>
-                      <span>{day.score}</span>
+                    <ScoreCircle $score={data.score}>
+                      <span>{data.score}</span>
                     </ScoreCircle>
                   </RightGroup>
                 </HeaderMainRow>
@@ -193,7 +185,7 @@ export default function YourBestDays({ onBackToForm }) {
 
               {/* expandable reading section */}
               <ExpandableContent $isExpanded={isExpanded}>
-                <SummaryText>{day.summary}</SummaryText>
+                <SummaryText>{data.summary}</SummaryText>
               </ExpandableContent>
             </ResultCard>
           );
