@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import useSWR from "swr";
 
 const INITIAL_EVENTS = [
   { id: "date", name: "Date", emoji: "❤️" },
@@ -18,54 +19,29 @@ export default function PlanEvent({ onCalculationComplete }) {
   const [onlyWeekends, setOnlyWeekends] = useState(false);
 
   const [partnerSunSign, setPartnerSunSign] = useState("");
-
-  // API loading states
-  const [countries, setCountries] = useState([]);
-  const [cities, setCities] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  useEffect(() => {
-    async function startFetching() {
-      try {
-        const response = await fetch(
-          "https://countriesnow.space/api/v0.1/countries/iso"
-        );
-        const json = await response.json();
+  // API loading states
+  const { data: countriesData } = useSWR(
+    "https://countriesnow.space/api/v0.1/countries/iso"
+  );
+  const countries = countriesData?.data || [];
 
-        setCountries(json.data || []);
-      } catch (error) {
-        console.error("Error loading countries:", error);
-      }
-    }
-
-    startFetching();
-  }, []);
-
-  useEffect(() => {
-    if (!selectedCountry) {
-      setCities([]);
-      return;
-    }
-
-    async function startFetching() {
-      try {
-        const response = await fetch(
+  const { data: citiesData } = useSWR(
+    selectedCountry
+      ? [
           "https://countriesnow.space/api/v0.1/countries/cities",
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ country: selectedCountry }),
-          }
-        );
-        const json = await response.json();
-        setCities(json.data || []);
-      } catch (error) {
-        console.error("Error loading cities:", error);
-      }
-    }
-
-    startFetching();
-  }, [selectedCountry]);
+          selectedCountry,
+        ]
+      : null,
+    ([url, country]) =>
+      fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ country }),
+      }).then((response) => response.json())
+  );
+  const cities = citiesData?.data || [];
 
   // data collection
 
@@ -114,10 +90,10 @@ export default function PlanEvent({ onCalculationComplete }) {
   return (
     <Container as="form" onSubmit={handleSubmitAllData}>
       <Header>
-        <Title>Plan an Event ✨</Title>
+        <Title>✨ Plan an Event </Title>
         <Subtitle>
-          Tell us what you{"'"}re planning and your timeframe. We{"'"}ll find
-          your 3 best days.
+          Tell us what you{"'"}re planning and your timeframe. <br></br>We{"'"}
+          ll find your 3 best days.
         </Subtitle>
       </Header>
       <EventContainer>
@@ -275,7 +251,9 @@ export default function PlanEvent({ onCalculationComplete }) {
         </EventContainer>
       )}
       <Footer>
-        <Button>Check my cosmic timing 🌙</Button>
+        <Button disabled={isSubmitting}>
+          {isSubmitting ? "Calculating..." : "🌙 Check my cosmic timing "}
+        </Button>
       </Footer>
     </Container>
   );

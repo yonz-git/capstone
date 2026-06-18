@@ -3,9 +3,6 @@ import styled from "styled-components";
 import useSWR from "swr";
 import ResultCard from "./ResultCard";
 
-// explicit fetcher to ensure SWR handles the JSON response correctly
-const fetcher = (url) => fetch(url).then((response) => response.json());
-
 export default function YourBestDays({ onBackToForm }) {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -52,8 +49,7 @@ export default function YourBestDays({ onBackToForm }) {
 
   // saving date create and delete
 
-  const { data: savedDatesData, mutate } = useSWR("/api/saved_dates", fetcher);
-  // data and fetcher added to make it read and write version
+  const { data: savedDatesData, mutate } = useSWR("/api/saved_dates");
 
   async function toggleSaveDate(data, isSaved) {
     if (isSaved) {
