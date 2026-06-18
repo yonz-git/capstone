@@ -84,7 +84,7 @@ export default function YourBestDays({ onBackToForm }) {
           cosmicScore: Number(day.score),
           readingSummary: day.summary,
           partnerSunSign:
-            localEvent.partnerSunsign || localProfile.partnerSunsign || null,
+            localEvent.partnerSunSign || localProfile.partnerSunSign || null,
           userId: "6671827464ef241bb4df199c",
         };
 
