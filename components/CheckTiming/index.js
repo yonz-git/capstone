@@ -281,9 +281,7 @@ export default function CheckTiming({ onCalculationComplete }) {
         </EventContainer>
       )}
       <Footer>
-        <Button disabled={isSubmitting} type="submit">
-          {isSubmitting ? "Calculating..." : "🌙 Check my cosmic timing "}
-        </Button>
+        <Button type="submit">🌙 Check my cosmic timing</Button>
       </Footer>
     </Container>
   );
