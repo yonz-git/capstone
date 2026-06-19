@@ -1,6 +1,5 @@
-import React from "react";
-import DashboardView from "@/components/Dashboard/DashboardView";
+import Dashboard from "@/components/Dashboard/";
 
 export default function DashboardPage() {
-  return <DashboardView />;
+  return <Dashboard />;
 }

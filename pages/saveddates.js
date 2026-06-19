@@ -1,12 +1,5 @@
-import { useRouter } from "next/router";
-import SavedList from "@/components/SavedList/SavedList";
+import SavedList from "@/components/SavedList";
 
 export default function SavedDatesPage() {
-  const router = useRouter();
-
-  return (
-    <>
-      <SavedList onBackToForm={() => router.push("/checktiming")} />
-    </>
-  );
+  return <SavedList />;
 }

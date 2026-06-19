@@ -1,4 +1,8 @@
-import React from "react";
+export default function CosmicIcon({ name }) {
+  const selectedIcon = icons[name];
+
+  return <span role="img">{selectedIcon}</span>;
+}
 
 // icons for the form
 
@@ -124,9 +128,3 @@ const icons = {
     </svg>
   ),
 };
-
-export default function CosmicIcon({ name }) {
-  const selectedIcon = icons[name];
-
-  return <span role="img">{selectedIcon}</span>;
-}
