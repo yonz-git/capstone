@@ -13,6 +13,22 @@ export default function SavedList({ onBackToForm }) {
     mutate,
   } = useSWR("/api/saved_dates");
 
+  async function handleUpdateNote(id, updatedNotes) {
+    try {
+      const response = await fetch(`/api/saved_dates/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ notes: updatedNotes }),
+      });
+
+      if (!response.ok) throw new Error("Failed to update note");
+
+      mutate();
+    } catch (error) {
+      console.error("Error saving note:", error);
+    }
+  }
+
   async function handleDeleteSavedDate(id) {
     try {
       const response = await fetch(`/api/saved_dates/${id}`, {
@@ -23,7 +39,6 @@ export default function SavedList({ onBackToForm }) {
         throw new Error(`Failed to delete document: ${response.status}`);
       }
 
-      // Refresh the local SWR cache immediately so the card drops off the list instantly
       mutate();
     } catch (error) {
       console.error("Error deleting saved date:", error);
@@ -73,11 +88,13 @@ export default function SavedList({ onBackToForm }) {
                 eventType: data.eventType,
                 eventCity: data.eventCity,
                 eventCountry: data.eventCountry,
+                notes: data.notes || "",
               }}
               isSaved={true}
               onToggleSave={() => handleDeleteSavedDate(data._id)}
               isExpanded={isExpanded}
               onToggleExpand={() => setExpandedIndex(isExpanded ? null : index)}
+              onSaveNote={handleUpdateNote}
             />
           );
         })}
@@ -139,7 +156,7 @@ const BackButton = styled.button`
   border: 1px solid #3c3973;
   color: #cbc1ff;
   padding: 14px;
-  border-radius: 12px;
+  border-radius: 0.8rem;
   font-size: 16px;
   cursor: pointer;
   margin-top: 10px;

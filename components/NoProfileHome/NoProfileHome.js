@@ -94,7 +94,7 @@ const Button = styled.button`
   color: #ffffff;
   border: none;
   padding: 16px;
-  border-radius: 12px;
+  border-radius: 0.8rem;
   font-size: 16px;
   font-weight: 500;
   cursor: pointer;
