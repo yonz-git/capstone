@@ -52,20 +52,15 @@ export default function DashboardView() {
   );
 }
 
-const Container = styled.div`
-  width: 100%;
-  max-width: 400px;
-  height: 100vh;
-
+const Container = styled.main`
   background-color: #141434;
   color: #ffffff;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  max-height: 100vh;
   padding: 40px 24px;
   box-sizing: border-box;
 
-  margin: 0 auto;
   position: relative;
 
   display: flex;

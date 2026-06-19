@@ -3,7 +3,7 @@ import styled from "styled-components";
 import useSWR from "swr";
 import ResultCard from "./ResultCard";
 
-export default function YourBestDays({ onBackToForm }) {
+export default function ResultsList({ onBackToForm }) {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -76,6 +76,8 @@ export default function YourBestDays({ onBackToForm }) {
           readingSummary: data.summary,
           userId: "6671827464ef241bb4df199c",
           eventType: localEvent.eventType || "General",
+          eventCountry: localEvent.eventCountry,
+          eventCity: localEvent.eventCity,
         }),
       });
 
@@ -150,8 +152,8 @@ export default function YourBestDays({ onBackToForm }) {
 
 const Container = styled.div`
   width: 100%;
-  max-width: 400px;
-  height: 100vh;
+  max-width: 375px;
+  height: 667px;
   background-color: #141434;
   color: #ffffff;
   padding: 40px 24px;

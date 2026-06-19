@@ -260,10 +260,6 @@ export default function PlanEvent({ onCalculationComplete }) {
 }
 
 const Container = styled.div`
-  width: 100%;
-  max-width: 400px;
-  height: auto;
-
   background-color: #141434;
   color: #ffffff;
   display: flex;

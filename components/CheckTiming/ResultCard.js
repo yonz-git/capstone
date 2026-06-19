@@ -58,7 +58,9 @@ export default function ResultCard({
       </CardHeader>
 
       <ExpandableContent $isExpanded={isExpanded}>
-        <SummaryText>{data.summary}</SummaryText>
+        <AnimationContentWrapper $isExpanded={isExpanded}>
+          <SummaryText>{data.summary}</SummaryText>
+        </AnimationContentWrapper>
       </ExpandableContent>
     </CardContainer>
   );
@@ -174,14 +176,24 @@ const DropdownArrow = styled.span`
 `;
 
 const ExpandableContent = styled.div`
-  max-height: ${(props) => (props.$isExpanded ? "150px" : "0px")};
+  max-height: ${(props) => (props.$isExpanded ? "70vh" : "0px")};
   overflow: hidden;
+  display: grid;
+  transition: grid-template-rows 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+`;
+
+const AnimationContentWrapper = styled.div`
+  min-height: 0; /* Prevents grid layout calculation blowouts */
+
+  opacity: ${(props) => (props.$isExpanded ? 1 : 0)};
+  transform: translateY(${(props) => (props.$isExpanded ? "0px" : "-8px")});
+
   transition:
-    max-height 0.25s ease-in-out,
-    margin-top 0.2s ease;
-  margin-top: ${(props) => (props.$isExpanded ? "14px" : "0px")};
+    opacity ${(props) => (props.$isExpanded ? "0.6s ease-out" : "0.4s ease-in")},
+    transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 
   padding-top: ${(props) => (props.$isExpanded ? "14px" : "0px")};
+  margin-top: ${(props) => (props.$isExpanded ? "14px" : "0px")};
 `;
 
 const DateLabel = styled.h3`
@@ -189,12 +201,12 @@ const DateLabel = styled.h3`
   margin: 0;
   color: #ffffff;
   font-weight: 400;
-  white-space: nowrap; /* Prevents long dates from breaking into two messy lines */
 `;
 
 const SummaryText = styled.p`
   font-size: 14px;
-  color: #f1f0ff; /* Brightened slightly for readability on your new background */
+  color: #f1f0ff;
   line-height: 1.5;
   margin: 0;
+  padding-bottom: 1em;
 `;

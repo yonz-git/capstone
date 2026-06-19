@@ -7,12 +7,17 @@ export default createGlobalStyle`
     box-sizing: border-box;
   }
 
-  /* 1. Target 'main' directly because that's where your font variable lives! */
+
   main {
     font-family: var(--font-jost), system-ui, sans-serif;
+    width: 100%;
+  max-width: 428px;
+  min-height: 100vh;
+  margin: 0 auto;   
+  position: relative;
   }
 
-  /* 2. Force buttons and form inputs to inherit the font directly from main */
+
   button, input, textarea, select {
     font-family: inherit;
   }

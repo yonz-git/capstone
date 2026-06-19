@@ -137,7 +137,7 @@ export default function OnboardingPage() {
               </span>
             </IconBox>
 
-            <h2>What is your birth date?</h2>
+            <h2>When is your birth date?</h2>
 
             <InputGroup>
               <label htmlFor="birthDate">Birth Date</label>
@@ -165,7 +165,6 @@ export default function OnboardingPage() {
               </span>
             </IconBox>
             <h2>What time were you born?</h2>
-            <p>Exact time helps calculate your rising sign accurately.</p>
 
             <InputGroup>
               <label htmlFor="birthTime">Birth Time</label>
@@ -274,10 +273,8 @@ export default function OnboardingPage() {
 }
 
 const Container = styled.main`
-  max-width: 400px;
-  margin: 0 auto;
   padding: 20px;
-  min-height: 100vh;
+
   display: flex;
   flex-direction: column;
   background-color: #141434;
@@ -430,7 +427,7 @@ const ContinueButton = styled.button`
   background-color: #333333;
   color: white;
   border: none;
-  border-radius: 12px;
+  border-radius: 0.8rem;
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
