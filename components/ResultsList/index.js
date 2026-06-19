@@ -1,9 +1,18 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
+import { useState, useEffect } from "react";
 import useSWR from "swr";
-import ResultCard from "./ResultCard";
+import ResultCard from "../ResultCard";
+import Link from "next/link";
+import {
+  Container,
+  Header,
+  Title,
+  Subtitle,
+  LoadingText,
+  CardsList,
+  BackButton,
+} from "./ResultsList.styled.js";
 
-export default function ResultsList({ onBackToForm }) {
+export default function ResultsList({ onBack }) {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -102,7 +111,9 @@ export default function ResultsList({ onBackToForm }) {
     return (
       <Container>
         <p>Error: {error}</p>
-        <BackButton onClick={onBackToForm}>Go Back & Try Again</BackButton>
+        <Link href="/checktiming">
+          <BackButton>Go Back & Try Again</BackButton>
+        </Link>
       </Container>
     );
   }
@@ -120,14 +131,14 @@ export default function ResultsList({ onBackToForm }) {
         {results.map((data, index) => {
           const isExpanded = expandedIndex === index;
 
-          // Determine active status condition matching active data
+          // determine active status condition matching active data
           const savedDatesArray = Array.isArray(savedDatesData)
             ? savedDatesData
             : [];
 
           const isSaved = savedDatesArray.find((date) => {
             if (!date.gregorianDate || !data.date) return false;
-            // Convert to string safely before splitting
+            // convert to string safely before splitting
             const savedDateString = String(date.gregorianDate).split("T")[0];
             return savedDateString === data.date;
           });
@@ -145,70 +156,7 @@ export default function ResultsList({ onBackToForm }) {
         })}
       </CardsList>
 
-      <BackButton onClick={onBackToForm}> Plan Another Event</BackButton>
+      <BackButton onClick={onBack}> Plan Another Event</BackButton>
     </Container>
   );
 }
-
-const Container = styled.div`
-  width: 100%;
-  max-width: 375px;
-  height: 667px;
-  background-color: #141434;
-  color: #ffffff;
-  padding: 40px 24px;
-  margin: 0 auto;
-
-  box-sizing: border-box;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-`;
-
-const Header = styled.header`
-  text-align: center;
-  margin-bottom: 30px;
-`;
-const Title = styled.h2`
-  font-size: 24px;
-  font-weight: 400;
-  margin: 40px 0 20px 0;
-`;
-const Subtitle = styled.p`
-  font-size: 15px;
-  color: #f0f0fc;
-  margin: 1rem;
-  line-height: 1.4;
-`;
-const LoadingText = styled.h3`
-  text-align: center;
-  font-weight: 300;
-  margin-top: 50px;
-  color: #aa99ff;
-`;
-
-const CardsList = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-bottom: 30px;
-`;
-
-const BackButton = styled.button`
-  width: 100%;
-  background-color: transparent;
-  border: 1px solid #3c3973;
-  color: #cbc1ff;
-  padding: 14px;
-  border-radius: 12px;
-  font-size: 16px;
-  cursor: pointer;
-  margin-top: 10px;
-  transition: all 0.2s ease-in-out;
-
-  &:hover {
-    background-color: #5337af;
-    color: #ffffff;
-  }
-`;

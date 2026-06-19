@@ -1,72 +1,6 @@
-import React from "react";
 import styled from "styled-components";
 
-export default function ResultCard({
-  data,
-  isExpanded,
-  isSaved,
-  onToggleExpand,
-  onToggleSave,
-}) {
-  return (
-    <CardContainer>
-      <CardHeader onClick={onToggleExpand}>
-        <HeartButton
-          onClick={(event) => {
-            event.stopPropagation();
-            onToggleSave();
-          }}
-          aria-label="Save date"
-        >
-          {isSaved ? (
-            <HeartFilledIcon viewBox="0 0 24 24">
-              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.5 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-            </HeartFilledIcon>
-          ) : (
-            <HeartOutlineIcon
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.5 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-            </HeartOutlineIcon>
-          )}
-        </HeartButton>
-
-        <HeaderMainRow>
-          <LeftGroup>
-            <PlanetIcon />
-            <DateLabel>
-              ✨
-              {new Date(data.date).toLocaleDateString("en-US", {
-                weekday: "long",
-                month: "long",
-                day: "numeric",
-              })}
-            </DateLabel>
-          </LeftGroup>
-
-          <RightGroup>
-            <ScoreCircle $score={data.score}>
-              <span>{data.score}</span>
-            </ScoreCircle>
-          </RightGroup>
-        </HeaderMainRow>
-
-        <DropdownArrow $isExpanded={isExpanded}>》</DropdownArrow>
-      </CardHeader>
-
-      <ExpandableContent $isExpanded={isExpanded}>
-        <AnimationContentWrapper $isExpanded={isExpanded}>
-          <SummaryText>{data.summary}</SummaryText>
-        </AnimationContentWrapper>
-      </ExpandableContent>
-    </CardContainer>
-  );
-}
-
-const ScoreCircle = styled.div`
+export const ScoreCircle = styled.div`
   width: 42px;
   height: 42px;
   border-radius: 50%;
@@ -79,20 +13,20 @@ const ScoreCircle = styled.div`
   color: #141434;
 `;
 
-const HeartOutlineIcon = styled.svg`
+export const HeartOutlineIcon = styled.svg`
   width: 20px;
   height: 20px;
   color: #aa99ff; /* Matches your theme's purple accents */
 `;
 
-const HeartFilledIcon = styled.svg`
+export const HeartFilledIcon = styled.svg`
   width: 20px;
   height: 20px;
   fill: #c0e666; /* Clean cosmic pink/crimson variant */
   filter: drop-shadow(0 0 6px rgba(255, 53, 201, 0.45));
 `;
 
-const CardContainer = styled.div`
+export const CardContainer = styled.div`
   background: #494682;
   border: 1px solid #3c3973;
   border-radius: 16px;
@@ -100,7 +34,7 @@ const CardContainer = styled.div`
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 `;
 
-const CardHeader = styled.div`
+export const CardHeader = styled.div`
   position: relative; /* Required anchor for absolute positioned elements */
   display: flex;
   flex-direction: column;
@@ -110,7 +44,7 @@ const CardHeader = styled.div`
   padding-top: 20px;
 `;
 
-const HeaderMainRow = styled.div`
+export const HeaderMainRow = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -118,18 +52,18 @@ const HeaderMainRow = styled.div`
   padding-right: 24px; /* Prevents the score circle from bumping into the Heart icon on small viewports */
 `;
 
-const LeftGroup = styled.div`
+export const LeftGroup = styled.div`
   display: flex;
   align-items: center; /* Vertically centers star and date label */
   gap: 10px;
 `;
 
-const RightGroup = styled.div`
+export const RightGroup = styled.div`
   display: flex;
   align-items: center; /* Vertically centers the score circle */
 `;
 
-const HeartButton = styled.button`
+export const HeartButton = styled.button`
   position: absolute;
   top: -1.5rem;
   right: -1.5rem;
@@ -152,12 +86,12 @@ const HeartButton = styled.button`
   }
 `;
 
-const PlanetIcon = styled.span`
+export const PlanetIcon = styled.span`
   font-size: 18px;
   line-height: 1;
 `;
 
-const DropdownArrow = styled.span`
+export const DropdownArrow = styled.span`
   position: absolute;
   bottom: -16px;
   left: 50%;
@@ -175,14 +109,14 @@ const DropdownArrow = styled.span`
     ${(props) => (props.$isExpanded ? "rotate(-90deg)" : "rotate(90deg)")};
 `;
 
-const ExpandableContent = styled.div`
+export const ExpandableContent = styled.div`
   max-height: ${(props) => (props.$isExpanded ? "70vh" : "0px")};
   overflow: hidden;
   display: grid;
   transition: grid-template-rows 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 `;
 
-const AnimationContentWrapper = styled.div`
+export const AnimationContentWrapper = styled.div`
   min-height: 0; /* Prevents grid layout calculation blowouts */
 
   opacity: ${(props) => (props.$isExpanded ? 1 : 0)};
@@ -196,14 +130,14 @@ const AnimationContentWrapper = styled.div`
   margin-top: ${(props) => (props.$isExpanded ? "14px" : "0px")};
 `;
 
-const DateLabel = styled.h3`
+export const DateLabel = styled.h3`
   font-size: 17px;
   margin: 0;
   color: #ffffff;
   font-weight: 400;
 `;
 
-const SummaryText = styled.p`
+export const SummaryText = styled.p`
   font-size: 14px;
   color: #f1f0ff;
   line-height: 1.5;

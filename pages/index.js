@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import NoProfileHome from "../components/NoProfileHome/NoProfileHome";
+import NewUser from "@/components/NewUser";
 
-export default function Home() {
+export default function HomePage() {
   const router = useRouter();
 
   const [isChecking, setIsChecking] = useState(true);
@@ -19,10 +19,7 @@ export default function Home() {
     }
   }, [router]);
 
-  function handleOnboarding() {
-    router.push("/onboarding");
-  }
+  if (isChecking) return null;
 
-  // Default state when first landing when there is no profile
-  return <NoProfileHome onOnboarding={handleOnboarding} />;
+  return <NewUser />;
 }

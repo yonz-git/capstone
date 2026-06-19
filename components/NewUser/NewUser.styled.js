@@ -1,30 +1,6 @@
-import React from "react";
 import styled from "styled-components";
 
-export default function NoProfileHome({ onOnboarding }) {
-  return (
-    <Container>
-      <Header>
-        <CosmicIcon>🌙✨</CosmicIcon>
-        <Title>It&apos;s Not Your Day.</Title>
-        <Subtitle>Your cosmic timing.</Subtitle>
-      </Header>
-
-      <Description>
-        Create your cosmic profile to unlock personalized insights, transits,
-        and your daily planner.
-      </Description>
-
-      <Footer>
-        <Button onClick={onOnboarding}>
-          <ButtonIcon>✦</ButtonIcon> Create Cosmic Profile
-        </Button>
-      </Footer>
-    </Container>
-  );
-}
-
-const Container = styled.main`
+export const Container = styled.main`
   background-color: #141434;
   color: #ffffff;
   display: flex;
@@ -34,18 +10,18 @@ const Container = styled.main`
   box-sizing: border-box;
 `;
 
-const Header = styled.header`
+export const Header = styled.header`
   text-align: center;
 
   margin-bottom: 6rem;
 `;
 
-const CosmicIcon = styled.div`
+export const CosmicIcon = styled.div`
   font-size: 32px;
   margin-bottom: 16px;
 `;
 
-const Title = styled.h1`
+export const Title = styled.h1`
   font-size: 36px;
   font-weight: 500;
   margin: 0 0 8px 0;
@@ -53,13 +29,13 @@ const Title = styled.h1`
   line-height: 1.2;
 `;
 
-const Subtitle = styled.p`
+export const Subtitle = styled.p`
   font-size: 22px;
   color: #e2e2e2;
   margin: 0;
 `;
 
-const Description = styled.p`
+export const Description = styled.p`
   font-size: 16px;
   line-height: 1.6;
   color: #e2e2e2;
@@ -67,11 +43,11 @@ const Description = styled.p`
   margin-bottom: 5rem;
 `;
 
-const Footer = styled.footer`
+export const Footer = styled.footer`
   width: 100%;
 `;
 
-const Button = styled.button`
+export const Button = styled.button`
   width: 100%;
   background-color: #222222;
   color: #ffffff;
@@ -91,6 +67,26 @@ const Button = styled.button`
   }
 `;
 
-const ButtonIcon = styled.span`
+export const Link = styled.button`
+  width: 100%;
+  background-color: #222222;
+  color: #ffffff;
+  border: none;
+  padding: 16px;
+  border-radius: 0.8rem;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  &:hover {
+    background-color: #000000;
+  }
+`;
+
+export const ButtonIcon = styled.span`
   font-size: 18px;
 `;
