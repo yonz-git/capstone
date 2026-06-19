@@ -32,7 +32,7 @@ export default function SavedCard({
   };
   return (
     <CardContainer>
-      <CardHeader onClick={onToggleExpand}>
+      <CardHeader>
         <NoteButton
           onClick={handleNoteButtonClick}
           aria-label="Add or edit notes"
@@ -50,13 +50,7 @@ export default function SavedCard({
             />
           </svg>
         </NoteButton>
-        <HeartButton
-          onClick={(event) => {
-            event.stopPropagation();
-            onToggleSave();
-          }}
-          aria-label="Save date"
-        >
+        <HeartButton onClick={onToggleSave} aria-label="Save date">
           {isSaved ? (
             <HeartFilledIcon viewBox="0 0 24 24">
               <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.5 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
@@ -72,37 +66,40 @@ export default function SavedCard({
             </HeartOutlineIcon>
           )}
         </HeartButton>
+        <HeaderClickableZone onClick={onToggleExpand}>
+          <HeaderMainRow>
+            <LeftGroup>
+              <EventLabel>
+                ༄{" "}
+                {data?.eventType
+                  ? data.eventType.charAt(0).toUpperCase() +
+                    data.eventType.slice(1)
+                  : "Event"}
+              </EventLabel>
 
-        <HeaderMainRow>
-          <LeftGroup>
-            <EventLabel>
-              ༄{" "}
-              {data?.eventType
-                ? data.eventType.charAt(0).toUpperCase() +
-                  data.eventType.slice(1)
-                : "Event"}
-            </EventLabel>
+              <DateLabel>
+                {new Date(data.date).toLocaleDateString("en-US", {
+                  weekday: "long",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </DateLabel>
+              <EventLocation>
+                ⟟ {data.eventCity}, {data.eventCountry}
+              </EventLocation>
+            </LeftGroup>
 
-            <DateLabel>
-              {new Date(data.date).toLocaleDateString("en-US", {
-                weekday: "long",
-                month: "long",
-                day: "numeric",
-              })}
-            </DateLabel>
-            <EventLocation>
-              ⟟ {data.eventCity}, {data.eventCountry}
-            </EventLocation>
-          </LeftGroup>
+            <RightGroup>
+              <ScoreCircle $score={data.score}>
+                <span>{data.score}</span>
+              </ScoreCircle>
+            </RightGroup>
+          </HeaderMainRow>
+        </HeaderClickableZone>
 
-          <RightGroup>
-            <ScoreCircle $score={data.score}>
-              <span>{data.score}</span>
-            </ScoreCircle>
-          </RightGroup>
-        </HeaderMainRow>
-
-        <DropdownArrow $isExpanded={isExpanded}>》</DropdownArrow>
+        <DropdownArrow onClick={onToggleExpand} $isExpanded={isExpanded}>
+          》
+        </DropdownArrow>
       </CardHeader>
 
       <ExpandableContent $isExpanded={isExpanded}>
@@ -338,7 +335,7 @@ const NoteText = styled.p`
 `;
 
 const AnimationContentWrapper = styled.div`
-  min-height: 0; /* Prevents grid layout calculation blowouts */
+  min-height: 0;
 
   opacity: ${(props) => (props.$isExpanded ? 1 : 0)};
   transform: translateY(${(props) => (props.$isExpanded ? "0px" : "-8px")});
@@ -431,4 +428,9 @@ const SaveButton = styled.button`
   &:not(:disabled):hover {
     background: #c6baff;
   }
+`;
+
+const HeaderClickableZone = styled.div`
+  width: 100%;
+  cursor: pointer;
 `;
