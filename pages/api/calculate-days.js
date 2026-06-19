@@ -16,6 +16,40 @@ const groq = process.env.GROQ_API_KEY
 
 //mock data
 export default async function handler(request, response) {
+  if (process.env.NODE_ENV === "development") {
+    return response.status(200).json({
+      bestDays: [
+        {
+          eventType: "Date",
+          eventCity: "Jeonju",
+          eventCountry: "Korea",
+          date: "2026-07-12",
+          score: 92,
+          summary:
+            "Celestial alignments favor high creative output and seamless social connections today. Celestial alignments favor high creative output and seamless social connections today. A strong lunar trine provides excellent anchoring for long-term project planning.A strong lunar trine provides excellent anchoring for long-term project planning.",
+        },
+        {
+          eventType: "Date",
+          eventCity: "Jeonju",
+          eventCountry: "Korea",
+          date: "2026-07-15",
+          score: 88,
+          summary:
+            "A strong lunar trine provides excellent anchoring for long-term project planning. Celestial alignments favor high creative output and seamless social connections today. A strong lunar trine provides excellent anchoring for long-term project planning. A strong lunar trine provides excellent anchoring for long-term project planning.",
+        },
+        {
+          eventType: "Date",
+          eventCity: "Jeonju",
+          eventCountry: "Korea",
+          date: "2026-07-22",
+          score: 79,
+          summary:
+            "Mercury stabilizes your communication sector, making this an ideal window for presentations. Celestial alignments favor high creative output and seamless social connections today.A strong lunar trine provides excellent anchoring for long-term project planning. A strong lunar trine provides excellent anchoring for long-term project planning.",
+        },
+      ],
+    });
+  }
+
   if (request.method !== "POST") {
     return response.status(405).json({ message: "Method not allowed" });
   }

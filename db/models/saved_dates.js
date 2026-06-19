@@ -15,6 +15,14 @@ const SavedDateSchema = new mongoose.Schema(
       type: String,
       required: [true, "The event type selection is required."],
     },
+    eventCountry: {
+      type: String,
+      required: [true, "The country location is required."],
+    },
+    eventCity: {
+      type: String,
+      required: [true, "The city location is required."],
+    },
     cosmicScore: {
       type: Number,
       required: [true, "The cosmic score rating is required."],

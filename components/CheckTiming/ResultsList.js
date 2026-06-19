@@ -3,7 +3,7 @@ import styled from "styled-components";
 import useSWR from "swr";
 import ResultCard from "./ResultCard";
 
-export default function YourBestDays({ onBackToForm }) {
+export default function ResultsList({ onBackToForm }) {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -76,6 +76,8 @@ export default function YourBestDays({ onBackToForm }) {
           readingSummary: data.summary,
           userId: "6671827464ef241bb4df199c",
           eventType: localEvent.eventType || "General",
+          eventCountry: localEvent.eventCountry,
+          eventCity: localEvent.eventCity,
         }),
       });
 
