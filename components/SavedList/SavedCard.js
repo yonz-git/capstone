@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 export default function SavedCard({
@@ -11,6 +11,13 @@ export default function SavedCard({
 }) {
   const [isEditingNote, setIsEditingNote] = useState(false);
   const [noteValue, setNoteValue] = useState(data.notes || "");
+
+  useEffect(() => {
+    if (!isExpanded) {
+      setIsEditingNote(false);
+      setNoteValue(data.notes || ""); // reset the editing state
+    }
+  }, [isExpanded, data.notes]);
 
   // Helper function to count words safely
   const getWordCount = (text) => {
@@ -66,6 +73,7 @@ export default function SavedCard({
             </HeartOutlineIcon>
           )}
         </HeartButton>
+
         <HeaderClickableZone onClick={onToggleExpand}>
           <HeaderMainRow>
             <LeftGroup>
@@ -105,8 +113,8 @@ export default function SavedCard({
       <ExpandableContent $isExpanded={isExpanded}>
         <AnimationContentWrapper $isExpanded={isExpanded}>
           <SummaryText>{data.summary}</SummaryText>
-
-          {data.notes && !isEditingNote && (
+          {/* trim needed not to leave the note container saved empty */}
+          {data.notes && data.notes.trim() !== "" && !isEditingNote && (
             <NoteContainer onClick={handleNoteButtonClick}>
               <NoteText>{data.notes}</NoteText>
             </NoteContainer>
