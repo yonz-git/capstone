@@ -105,15 +105,11 @@ export default function SavedList({ onBackToForm }) {
   );
 }
 
-const Container = styled.div`
-  width: 100%;
-  max-width: 400px;
-  height: 100vh;
+const Container = styled.main`
   background-color: #141434;
   color: #ffffff;
   padding: 40px 24px;
-  margin: 0 auto;
-
+  overflow: hidden;
   box-sizing: border-box;
 
   display: flex;

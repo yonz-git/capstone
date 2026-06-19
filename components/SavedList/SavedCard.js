@@ -126,11 +126,11 @@ export default function SavedCard({
                 id="note"
                 value={noteValue}
                 aria-label="Input for Note"
-                type="text"
                 name="note"
                 onChange={(event) => setNoteValue(event.target.value)}
                 placeholder="Write down your insights..."
                 rows={2}
+                autoComplete="off"
               />
               <NoteActionsBar>
                 <WordCounter $isOverLimit={getWordCount(noteValue) > 50}>

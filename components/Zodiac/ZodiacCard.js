@@ -31,7 +31,7 @@ const CardContainer = styled.div`
   border: 1px solid #eaeaea;
   border-radius: 12px;
   padding: 20px;
-  background-color: #ffffff;
+  background-color: #e5d7f8;
   max-width: 350px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
   color: #141434;

@@ -10,12 +10,10 @@ export default function NoProfileHome({ onOnboarding }) {
         <Subtitle>Your cosmic timing.</Subtitle>
       </Header>
 
-      <Main>
-        <Description>
-          Create your cosmic profile to unlock personalized insights, transits,
-          and your daily planner.
-        </Description>
-      </Main>
+      <Description>
+        Create your cosmic profile to unlock personalized insights, transits,
+        and your daily planner.
+      </Description>
 
       <Footer>
         <Button onClick={onOnboarding}>
@@ -26,30 +24,20 @@ export default function NoProfileHome({ onOnboarding }) {
   );
 }
 
-const Container = styled.div`
-  width: 100%;
-  max-width: 400px;
-  height: 100vh;
-
+const Container = styled.main`
   background-color: #141434;
   color: #ffffff;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   padding: 40px 24px;
   box-sizing: border-box;
-
-  margin: 0 auto;
-  position: relative;
-
-  display: flex;
-  justify-content: center;
 `;
 
 const Header = styled.header`
   text-align: center;
 
-  margin-bottom: 2rem;
+  margin-bottom: 6rem;
 `;
 
 const CosmicIcon = styled.div`
@@ -69,11 +57,6 @@ const Subtitle = styled.p`
   font-size: 22px;
   color: #e2e2e2;
   margin: 0;
-`;
-
-const Main = styled.main`
-  text-align: center;
-  padding: 0 12px;
 `;
 
 const Description = styled.p`

@@ -152,8 +152,8 @@ export default function ResultsList({ onBackToForm }) {
 
 const Container = styled.div`
   width: 100%;
-  max-width: 400px;
-  height: 100vh;
+  max-width: 375px;
+  height: 667px;
   background-color: #141434;
   color: #ffffff;
   padding: 40px 24px;
