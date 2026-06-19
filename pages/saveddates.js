@@ -1,12 +1,12 @@
-import { useState } from "react";
+import { useRouter } from "next/router";
 import SavedList from "@/components/SavedList/SavedList";
 
-export default function CheckTimingPage() {
-  const [showResults, setShowResults] = useState(false);
+export default function savedDatesPage() {
+  const router = useRouter();
 
   return (
     <>
-      <SavedList onBackToForm={() => setShowResults(false)} />
+      <SavedList onBackToForm={() => router.push("/checktiming")} />
     </>
   );
 }

@@ -45,8 +45,8 @@ export default function SavedList({ onBackToForm }) {
         {" "}
         <StatusMessage>
           No saved days yet. ✨ <br />
-          <BackButton onClick={onBackToForm}>Find Aligned Days</BackButton>
         </StatusMessage>
+        <BackButton onClick={onBackToForm}>Find Aligned Days</BackButton>
       </Container>
     );
   }
