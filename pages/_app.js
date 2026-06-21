@@ -1,6 +1,9 @@
+import useSWR, { SWRConfig } from "swr";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import NavBar from "@/components/NavBar";
 import GlobalStyle from "../styles";
 import { Jost } from "next/font/google";
-import { SWRConfig } from "swr";
 
 const jost = Jost({
   subsets: ["latin"],
@@ -8,17 +11,33 @@ const jost = Jost({
 });
 
 export default function App({ Component, pageProps }) {
-  return (
-    <main className={jost.variable}>
-      <GlobalStyle />
+  const router = useRouter();
 
-      <SWRConfig
-        value={{
-          fetcher: (url) => fetch(url).then((response) => response.json()),
-        }}
-      >
-        <Component {...pageProps} />
-      </SWRConfig>
-    </main>
+  const { data: userProfile, mutate } = useSWR("userProfile", () => {
+    if (typeof window !== "undefined") {
+      return JSON.parse(localStorage.getItem("userProfile"));
+    }
+    return null;
+  });
+
+  useEffect(() => {
+    mutate();
+  }, [router.pathname, mutate]);
+
+  return (
+    <div className={jost.variable}>
+      <main>
+        <GlobalStyle />
+        <SWRConfig
+          value={{
+            fetcher: (url) => fetch(url).then((response) => response.json()),
+          }}
+        >
+          <Component {...pageProps} />
+        </SWRConfig>
+      </main>
+
+      {userProfile && <NavBar />}
+    </div>
   );
 }

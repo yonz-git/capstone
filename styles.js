@@ -24,6 +24,10 @@ export default createGlobalStyle`
 
   body {
     margin: 0;
+    margin-bottom:40px;
+    body, input, select, textarea, button, a {
+    font-family: var(--font-jost), sans-serif;
+  }
 
   }
 
