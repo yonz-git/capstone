@@ -28,12 +28,11 @@ export const NavItem = styled.li`
   pointer: cursor;
   font-weight: 300;
   &.active {
-    background-color: #1f2023;
-    font-weight: bold;
+    font-weight: 400;
   }
 
   &:hover {
-    background-color: #1f2023;
+    background-color: #a981a521;
   }
 
   a {
@@ -44,6 +43,6 @@ export const NavItem = styled.li`
     height: 100%;
     text-decoration: none;
     color: white;
-    font-weight: 400;
+    font-weight: 300;
   }
 `;
