@@ -27,7 +27,7 @@ export const NavItem = styled.li`
   border-right: 1px solid #0a0a0b;
   pointer: cursor;
   font-weight: 300;
-  &.active {
+  &.active {code 
     font-weight: 400;
   }
 
