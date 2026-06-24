@@ -56,9 +56,7 @@ export default function Dashboard() {
 
       <Footer>
         <Link href="/checktiming">
-          <Button>
-            <ButtonIcon>✦</ButtonIcon> Check my Cosmic Timing
-          </Button>
+          <Button>✦ Check my Cosmic Timing</Button>
         </Link>
       </Footer>
     </Container>

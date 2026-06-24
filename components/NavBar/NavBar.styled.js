@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const StyledNav = styled.nav`
   position: fixed;
-  bottom: 0;
+  bottom: 5px;
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
