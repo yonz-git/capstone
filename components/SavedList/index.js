@@ -57,8 +57,8 @@ export default function SavedList() {
   if (isLoading)
     return (
       <Container>
-        {" "}
         <StatusMessage>Loading your aligned days...</StatusMessage>
+
         <StatusMessage>Error loading saved dates.</StatusMessage>
       </Container>
     );

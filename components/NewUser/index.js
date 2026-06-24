@@ -17,13 +17,12 @@ export default function NewUser({ onOnboarding }) {
     <Container>
       <Header>
         <CosmicIcon>🌙✨</CosmicIcon>
-        <Title>It&apos;s Not Your Day.</Title>
-        <Subtitle>Your cosmic timing.</Subtitle>
+        <Title>It&apos;s Not Your Day</Title>
+        <Subtitle>Your cosmic timing</Subtitle>
       </Header>
 
       <Description>
-        Create your cosmic profile to unlock personalized insights, transits,
-        and your daily planner.
+        Create your cosmic profile to unlock personalized insights and transits.
       </Description>
 
       <Footer>

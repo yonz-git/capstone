@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import useSWR from "swr";
 import ResultCard from "../ResultCard";
 import Link from "next/link";
+import { Atom } from "react-loading-indicators";
 import {
   Container,
   Header,
@@ -102,7 +103,15 @@ export default function ResultsList({ onBack }) {
   if (loading) {
     return (
       <Container>
-        <LoadingText>Calculating celestial alignments... </LoadingText>
+        <LoadingText>
+          {" "}
+          <Atom
+            color="#8f86b0"
+            size="small"
+            text="Calculating your aligned days..."
+            textColor="#ece4fd"
+          />
+        </LoadingText>
       </Container>
     );
   }
