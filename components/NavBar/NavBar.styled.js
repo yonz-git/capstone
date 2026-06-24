@@ -12,6 +12,7 @@ export const StyledNav = styled.nav`
   border-top: 1px solid #0a0a0b;
   z-index: 100;
   border-radius: 50px;
+  backdrop-filter: blur(15px);
 `;
 
 export const NavList = styled.ul`
@@ -25,16 +26,15 @@ export const NavList = styled.ul`
 export const NavItem = styled.li`
   flex: 1;
   display: flex;
-  border-right: 1px solid #0a0a0b;
+
   pointer: cursor;
-  font-weight: 300;
+  font-weight: 200;
   &.active {
     font-weight: 400;
   }
 
   &:hover {
-    background-color: #a981a521;
-    border-radius: 50px;
+    font-weight: 400;
   }
 
   a {

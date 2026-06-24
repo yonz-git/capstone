@@ -42,7 +42,7 @@ export const CardsList = styled.div`
 
 export const BackButton = styled.button`
   width: 100%;
-  background-color: transparent;
+
   border: 1px solid #3c3973;
   color: #fbfaff;
   padding: 14px;
