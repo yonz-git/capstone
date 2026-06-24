@@ -27,7 +27,7 @@ export default function ZodiacCard({ userProfile }) {
       <CardTitle>Your Sun Sign</CardTitle>
       <SignHeader>
         <SignName>{sunSign}</SignName>
-        <SignSymbol>{signData.symbol}</SignSymbol>
+        <SignSymbol>{signData.symbol + "\uFE0E"}</SignSymbol>
       </SignHeader>
       <SignTraits>{signData.traits}</SignTraits>
     </CardContainer>

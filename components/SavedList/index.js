@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import useSWR from "swr";
 import SavedCard from "../SavedCard";
 import Link from "next/link";
+import { Atom } from "react-loading-indicators";
 import {
   Container,
   Header,
@@ -57,9 +58,14 @@ export default function SavedList() {
   if (isLoading)
     return (
       <Container>
-        <StatusMessage>Loading your aligned days...</StatusMessage>
-
-        <StatusMessage>Error loading saved dates.</StatusMessage>
+        <StatusMessage>
+          <Atom
+            color="#8f86b0"
+            size="small"
+            text="Loading your aligned days..."
+            textColor="#ece4fd"
+          />
+        </StatusMessage>
       </Container>
     );
 

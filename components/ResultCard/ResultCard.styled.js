@@ -16,13 +16,13 @@ export const ScoreCircle = styled.div`
 export const HeartOutlineIcon = styled.svg`
   width: 20px;
   height: 20px;
-  color: #aa99ff; /* Matches your theme's purple accents */
+  color: #aa99ff;
 `;
 
 export const HeartFilledIcon = styled.svg`
   width: 20px;
   height: 20px;
-  fill: #c0e666; /* Clean cosmic pink/crimson variant */
+  fill: #c0e666;
   filter: drop-shadow(0 0 6px rgba(255, 53, 201, 0.45));
 `;
 
@@ -66,7 +66,7 @@ export const RightGroup = styled.div`
   align-items: center;
 `;
 
-export const HeartButton = styled.button`
+export const HeartButton = styled.div`
   position: absolute;
   top: -1.5rem;
   right: -1.5rem;
