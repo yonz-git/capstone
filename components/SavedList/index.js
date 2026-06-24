@@ -11,10 +11,16 @@ import {
   CardsList,
   BackButton,
   StatusMessage,
+  ModalOverlay,
+  ModalBox,
+  ButtonGroup,
+  CancelButton,
+  ConfirmButton,
 } from "./SavedList.styed";
 
 export default function SavedList() {
   const [expandedIndex, setExpandedIndex] = useState(null);
+  const [dateToDelete, setDateToDelete] = useState(null);
 
   const {
     data: savedDates,
@@ -39,9 +45,10 @@ export default function SavedList() {
     }
   }
 
-  async function handleDeleteSavedDate(id) {
+  async function handleConfirmDelete() {
+    if (!dateToDelete) return;
     try {
-      const response = await fetch(`/api/saved_dates/${id}`, {
+      const response = await fetch(`/api/saved_dates/${dateToDelete._id}`, {
         method: "DELETE",
       });
 
@@ -49,6 +56,7 @@ export default function SavedList() {
         throw new Error(`Failed to delete document: ${response.status}`);
       }
 
+      setDateToDelete(null);
       mutate();
     } catch (error) {
       console.error("Error deleting saved date:", error);
@@ -108,7 +116,7 @@ export default function SavedList() {
                 notes: data.notes || "",
               }}
               isSaved={true}
-              onToggleSave={() => handleDeleteSavedDate(data._id)}
+              onToggleSave={() => setDateToDelete(data)}
               isExpanded={isExpanded}
               onToggleExpand={() => setExpandedIndex(isExpanded ? null : index)}
               onSaveNote={handleUpdateNote}
@@ -118,8 +126,33 @@ export default function SavedList() {
       </CardsList>
 
       <Link href="/checktiming">
-        <BackButton> Plan Another Event</BackButton>
+        <BackButton>✦ Plan Another Event</BackButton>
       </Link>
+
+      {dateToDelete && (
+        <ModalOverlay
+          id="modal-backdrop"
+          onClick={(event) => {
+            // 2. 🚀 ONLY close if the user clicked the backdrop itself, NOT the content box inside
+            if (event.target.id === "modal-backdrop") {
+              setDateToDelete(null);
+            }
+          }}
+        >
+          <ModalBox>
+            <h3>Unsave Date?</h3>
+            <p>Are you sure you want to remove this alignment?</p>
+            <ButtonGroup>
+              <CancelButton onClick={() => setDateToDelete(null)}>
+                Cancel
+              </CancelButton>
+              <ConfirmButton onClick={handleConfirmDelete}>
+                Yes, Unsave
+              </ConfirmButton>
+            </ButtonGroup>
+          </ModalBox>
+        </ModalOverlay>
+      )}
     </Container>
   );
 }
