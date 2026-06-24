@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const Container = styled.main`
-  background-color: #141434;
   color: #ffffff;
   display: flex;
   flex-direction: column;
@@ -41,6 +40,10 @@ export const Description = styled.p`
   color: #e2e2e2;
   margin: 0;
   margin-bottom: 5rem;
+  text-align: center;
+  font-weight: 200;
+  width: 70%;
+  margin: 0 auto;
 `;
 
 export const Footer = styled.footer`
@@ -55,36 +58,13 @@ export const Button = styled.button`
   padding: 16px;
   border-radius: 0.8rem;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 400;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-
-  &:hover {
-    background-color: #000000;
-  }
-`;
-
-export const Link = styled.button`
-  width: 100%;
-  background-color: #222222;
-  color: #ffffff;
-  border: none;
-  padding: 16px;
-  border-radius: 0.8rem;
-  font-size: 16px;
-  font-weight: 500;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-
-  &:hover {
-    background-color: #000000;
-  }
+  margin-top: 3rem;
 `;
 
 export const ButtonIcon = styled.span`

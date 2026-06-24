@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const Container = styled.main`
-  background-color: #141434;
   color: #ffffff;
   padding: 40px 24px;
   overflow: hidden;
@@ -43,20 +42,15 @@ export const CardsList = styled.div`
 
 export const BackButton = styled.button`
   width: 100%;
-  background-color: transparent;
+
   border: 1px solid #3c3973;
-  color: #cbc1ff;
+  color: #fbfaff;
   padding: 14px;
   border-radius: 0.8rem;
   font-size: 16px;
   cursor: pointer;
   margin-top: 10px;
   transition: all 0.2s ease-in-out;
-
-  &:hover {
-    background-color: #5337af;
-    color: #ffffff;
-  }
 `;
 
 export const StatusMessage = styled.div`

@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  background-color: #141434;
   color: #ffffff;
   display: flex;
   flex-direction: column;
@@ -38,9 +37,9 @@ export const Footer = styled.footer`
 
 export const Button = styled.button`
   width: 100%;
-  background-color: #222222;
+
   color: #ffffff;
-  border: none;
+
   padding: 12px 0 18px 0;
   border-radius: 12px;
   font-size: 16px;
@@ -51,10 +50,6 @@ export const Button = styled.button`
   justify-content: center;
   gap: 8px;
   transition: background-color 0.3s ease-in-out;
-
-  &:hover {
-    background-color: #000000;
-  }
 `;
 
 export const EventContainer = styled.div`
@@ -81,7 +76,9 @@ export const GridContainer = styled.div`
 `;
 
 export const EventCard = styled.div`
-  background: #625487;
+  background: #49468250;
+  backdrop-filter: blur(5px);
+  border: 1px solid #3c3973;
   border-radius: 12px;
   padding: 16px;
   text-align: center;

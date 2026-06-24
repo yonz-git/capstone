@@ -5,7 +5,7 @@ export const Container = styled.main`
 
   display: flex;
   flex-direction: column;
-  background-color: #141434;
+
   color: #ffffff;
 `;
 
@@ -152,18 +152,14 @@ export const CheckboxGroup = styled.div`
 export const ContinueButton = styled.button`
   width: 100%;
   padding: 16px;
-  background-color: #333333;
+
   color: white;
   border: none;
   border-radius: 0.8rem;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 400;
   cursor: pointer;
   margin-top: 20px;
-
-  &:hover {
-    background-color: #000;
-  }
 `;
 
 export const StyledSelect = styled.select`

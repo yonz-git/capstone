@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const Container = styled.main`
-  background-color: #141434;
   color: #ffffff;
   display: flex;
   flex-direction: column;
@@ -15,7 +14,7 @@ export const Container = styled.main`
 export const Header = styled.header`
   text-align: center;
   margin-top: 40px;
-  margin-bottom: 3.5rem;
+  margin-bottom: 2rem;
 `;
 
 export const CosmicIcon = styled.div`
@@ -32,7 +31,7 @@ export const Title = styled.h1`
 
 export const Question = styled.p`
   text-align: center;
-  margin-top: 4rem;
+  margin-top: 2rem;
   font-size: 22px;
 `;
 
@@ -40,9 +39,10 @@ export const Description = styled.p`
   font-size: 15px;
   line-height: 1.6;
   color: #ffffff;
-  margin: 0;
+  margin: 0 auto;
   margin-top: 1.5rem;
   font-weight: 300;
+  width: 14rem;
 `;
 
 export const Footer = styled.footer`
@@ -52,23 +52,17 @@ export const Footer = styled.footer`
 
 export const Button = styled.button`
   width: 100%;
-  background-color: #222222;
+  transition: background-color 0.3s ease-in-out;
   color: #ffffff;
-  border: none;
   padding: 16px;
   border-radius: 12px;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 400;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  transition: background-color 0.3s ease-in-out;
-
-  &:hover {
-    background-color: #000000;
-  }
 `;
 
 export const ButtonIcon = styled.span`

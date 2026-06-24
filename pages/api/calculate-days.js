@@ -82,7 +82,9 @@ export default async function handler(request, response) {
     } catch (apiError) {
       console.error("External Astrology API fallback activated:", apiError);
     }
-
+    const isProfessional = eventDetails.eventType
+      ?.toLowerCase()
+      .includes("professional");
     // Force strict schema descriptions directly in the text prompt string for Groq's fallback path
     const prompt = `
       You are an expert electional astrologer and data analyst.
@@ -100,6 +102,22 @@ export default async function handler(request, response) {
       - Look ahead timeframe: ${eventDetails.timeframe}
       - Weekend preference: ${eventDetails.onlyWeekends ? "ONLY weekends allowed" : "Any day of the week"}
       - Partner Sun Sign: ${eventDetails.partnerSunSign || "None provided"}
+      
+      CRITICAL DATE SELECTION RULE:
+${
+  eventDetails.eventType?.toLowerCase().includes("professional")
+    ? "-> CRITICAL REQUIREMENT: Because this is a Professional Meeting, you MUST NOT under any circumstance select a Saturday or a Sunday. All 3 chosen bestDays MUST fall strictly on weekdays (Monday through Friday)."
+    : ""
+}
+
+${
+  isProfessional
+    ? `HARSH CONSTRAINT - EVENT IS PROFESSIONAL: 
+The user is booking a "${eventDetails.eventType}". 
+You ARE STRICTLY FORBIDDEN from choosing a Saturday or Sunday for any of the 3 dates. 
+Double-check your calendar math: All 3 "date" properties in the JSON MUST fall exclusively on Monday, Tuesday, Wednesday, Thursday, or Friday.`
+    : ""
+}
 
       REAL-TIME PLANETARY TRANSIT POSITIONS (Ground Truth):
       The current baseline planet coordinates for the start of this window are:

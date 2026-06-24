@@ -27,7 +27,10 @@ export const HeartFilledIcon = styled.svg`
 `;
 
 export const CardContainer = styled.div`
-  background: #494682;
+  background: #49468250;
+  backdrop-filter: blur(5px);
+  border: 1px solid #3c3973;
+  backdrop-filter: blur(5px);
   border: 1px solid #3c3973;
   border-radius: 16px;
   padding: 1.5rem;
@@ -49,18 +52,18 @@ export const HeaderMainRow = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding-right: 24px; /* Prevents the score circle from bumping into the Heart icon on small viewports */
+  padding-right: 24px;
 `;
 
 export const LeftGroup = styled.div`
   display: flex;
-  align-items: center; /* Vertically centers star and date label */
+  align-items: center;
   gap: 10px;
 `;
 
 export const RightGroup = styled.div`
   display: flex;
-  align-items: center; /* Vertically centers the score circle */
+  align-items: center;
 `;
 
 export const HeartButton = styled.button`

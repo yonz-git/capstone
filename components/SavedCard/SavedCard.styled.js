@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
 export const CardContainer = styled.div`
-  background: #494682;
+  background: #49468250;
+  backdrop-filter: blur(5px);
   border: 1px solid #3c3973;
   border-radius: 16px;
   padding: 1rem;
@@ -9,12 +10,12 @@ export const CardContainer = styled.div`
 `;
 
 export const CardHeader = styled.div`
-  position: relative; /* Required anchor for absolute positioned elements */
+  position: relative;
   display: flex;
   flex-direction: column;
   cursor: pointer;
   user-select: none;
-  padding-bottom: 20px; /* Creates explicit layout room for the absolute arrow */
+  padding-bottom: 20px;
   padding-top: 20px;
 `;
 
@@ -23,7 +24,7 @@ export const HeaderMainRow = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding-right: 24px; /* Prevents the score circle from bumping into the Heart icon on small viewports */
+  padding-right: 24px;
 `;
 
 export const LeftGroup = styled.div`
@@ -34,10 +35,10 @@ export const LeftGroup = styled.div`
 
 export const RightGroup = styled.div`
   display: flex;
-  align-items: center; /* Vertically centers the score circle */
+  align-items: center;
 `;
 
-export const HeartButton = styled.button`
+export const HeartButton = styled.div`
   position: absolute;
   top: -1em;
   right: -1rem;
@@ -52,8 +53,13 @@ export const HeartButton = styled.button`
   transition: transform 0.2s ease;
 
   &:hover {
-    background: none;
+    border: none;
     transform: scale(1.15);
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    outline: none;
+    box-shadow: none !important;
   }
   &:active {
     transform: scale(0.95);
@@ -76,13 +82,13 @@ export const ScoreCircle = styled.div`
 export const HeartOutlineIcon = styled.svg`
   width: 20px;
   height: 20px;
-  color: #aa99ff; /* Matches your theme's purple accents */
+  color: #aa99ff;
 `;
 
 export const HeartFilledIcon = styled.svg`
   width: 20px;
   height: 20px;
-  fill: #c0e666; /* Clean cosmic pink/crimson variant */
+  fill: #c0e666;
   filter: drop-shadow(0 0 6px rgba(255, 53, 201, 0.45));
 `;
 
@@ -139,8 +145,9 @@ export const DropdownArrow = styled.span`
 
 // note feature
 
-export const NoteButton = styled.button`
+export const NoteButton = styled.div`
   font-size: 13px;
+  color: #edbfff;
   position: absolute;
   top: -1em;
   right: 0.9em;
