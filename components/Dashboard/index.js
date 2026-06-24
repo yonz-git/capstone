@@ -12,7 +12,6 @@ import {
   Description,
   Footer,
   Button,
-  ButtonIcon,
 } from "./Dashboard.styled.js";
 
 export default function Dashboard() {
