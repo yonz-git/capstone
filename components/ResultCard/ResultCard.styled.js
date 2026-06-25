@@ -158,9 +158,9 @@ export const WeatherContainer = styled.div`
 `;
 
 export const Weather = styled.div`
-  background-color: #2d3142;
-  color: #e2e8f0;
-  padding: 6px 16px;
+  background-color: #584f85;
+  color: #ffffff;
+  padding: 7px 16px;
   border-radius: 9999px;
   font-size: 0.85rem;
   font-weight: 500;

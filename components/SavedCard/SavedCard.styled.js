@@ -15,7 +15,7 @@ export const CardHeader = styled.div`
   flex-direction: column;
   cursor: pointer;
   user-select: none;
-
+  padding-bottom: 20px;
   padding-top: 20px;
 `;
 
@@ -97,6 +97,7 @@ export const ExpandableContent = styled.div`
   max-height: ${(props) => (props.$isExpanded ? "70vh" : "0px")};
   overflow: hidden;
   transition: grid-template-rows 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  margin-top: -25px;
 `;
 
 export const DateLabel = styled.h3`
