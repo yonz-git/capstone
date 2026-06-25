@@ -14,6 +14,8 @@ import {
   AnimationContentWrapper,
   DateLabel,
   SummaryText,
+  Weather,
+  WeatherContainer,
 } from "./ResultCard.styled";
 
 export default function ResultCard({
@@ -29,7 +31,7 @@ export default function ResultCard({
         <HeartButton
           onClick={(event) => {
             event.stopPropagation();
-            onToggleSave();
+            onToggleSave(data);
           }}
           aria-label="Save date"
         >
@@ -53,7 +55,7 @@ export default function ResultCard({
           <LeftGroup>
             <PlanetIcon />
             <DateLabel>
-              ✨
+              ✨{" "}
               {new Date(data.date).toLocaleDateString("en-US", {
                 weekday: "long",
                 month: "long",
@@ -68,6 +70,15 @@ export default function ResultCard({
             </ScoreCircle>
           </RightGroup>
         </HeaderMainRow>
+
+        {(data.temperature || data.weatherCondition) && (
+          <WeatherContainer>
+            {data.temperature && <Weather> {data.temperature}</Weather>}
+            {data.weatherCondition && (
+              <Weather>{data.weatherCondition}</Weather>
+            )}
+          </WeatherContainer>
+        )}
 
         <DropdownArrow $isExpanded={isExpanded}>》</DropdownArrow>
       </CardHeader>

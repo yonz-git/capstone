@@ -92,6 +92,8 @@ export default function ResultsList({ onBack }) {
           eventType: localEvent.eventType || "General",
           eventCountry: localEvent.eventCountry,
           eventCity: localEvent.eventCity,
+          temperature: data.temperature,
+          weatherCondition: data.weatherCondition,
         }),
       });
 

@@ -44,6 +44,9 @@ const SavedDateSchema = new mongoose.Schema(
 
       default: null, // If they don't provide a partner, it sits cleanly as null
     },
+
+    temperature: { type: String },
+    weatherCondition: { type: String },
   },
   {
     // Automatically injects and handles 'createdAt' and 'updatedAt' fields

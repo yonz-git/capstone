@@ -131,6 +131,8 @@ export default function SavedList() {
                 eventCity: data.eventCity,
                 eventCountry: data.eventCountry,
                 notes: data.notes || "",
+                temperature: data.temperature,
+                weatherCondition: data.weatherCondition,
               }}
               isSaved={true}
               onToggleSave={() => setDateToDelete(data)}

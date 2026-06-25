@@ -146,4 +146,29 @@ export const SummaryText = styled.p`
   line-height: 1.5;
   margin: 0;
   padding-bottom: 1em;
+  font-weight: 300;
+`;
+
+export const WeatherContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+  margin-bottom: 4px;
+`;
+
+export const Weather = styled.div`
+  background-color: #2d3142;
+  color: #e2e8f0;
+  padding: 6px 16px;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  font-weight: 200;
+  font-size: 12px;
 `;

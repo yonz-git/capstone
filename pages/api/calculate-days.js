@@ -18,7 +18,7 @@ export default async function handler(request, response) {
     return response.status(405).json({ message: "Method not allowed" });
   }
 
-  // Defensive Gate: Check if environment variables are missing
+  // Defensive Gate: Check if Gemini initialization failed
   if (!ai) {
     console.error(
       "CRITICAL ERROR: GEMINI_API_KEY environment variable is not defined in .env.local"
@@ -79,13 +79,24 @@ export default async function handler(request, response) {
     let weatherDataText =
       "No weather data available for this date range or preference.";
 
+    const todayMidnight = new Date();
+    todayMidnight.setHours(0, 0, 0, 0);
+
+    const targetMidnight = new Date(parsedDate);
+    if (isNaN(targetMidnight)) {
+      targetMidnight.setTime(todayMidnight.getTime()); // fallback safety
+    } else {
+      targetMidnight.setHours(0, 0, 0, 0);
+    }
+
     const daysDifference =
-      (new Date(parsedDate) - new Date()) / (1000 * 60 * 60 * 24);
+      (targetMidnight - todayMidnight) / (1000 * 60 * 60 * 24);
+
+    // Check if weather is needed and the START date is within reasonable range
+    const includeWeatherInResult = weatherMatters && daysDifference <= 14;
 
     // 2. STEP 2: Fetch Open-Meteo Weather Forecast using the geocoded coordinates
-
-    // ONLY fetch weather if the date is within 14 days AND the checkbox is ticked
-    if (weatherMatters && daysDifference >= 0 && daysDifference <= 14) {
+    if (includeWeatherInResult) {
       try {
         const weatherResponse = await fetch(
           `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,precipitation_probability_max,weather_code,wind_speed_10m_max&forecast_days=14&timezone=auto`
@@ -141,7 +152,29 @@ export default async function handler(request, response) {
       console.error("External Astrology API fallback activated:", apiError);
     }
 
-    // 4. STEP 4: Construct AI Prompt
+    // 4. STEP 4: Build your DYNAMIC validation configurations
+    const bestDayItemProperties = {
+      date: { type: Type.STRING, description: "YYYY-MM-DD format" },
+      score: { type: Type.INTEGER, description: "Cosmic match score 0-100" },
+      summary: {
+        type: Type.STRING,
+        description: "Astrological reading summary",
+      },
+    };
+    const bestDayItemRequired = ["date", "score", "summary"];
+
+    if (includeWeatherInResult) {
+      bestDayItemProperties.temperature = {
+        type: Type.STRING,
+      };
+      bestDayItemProperties.weatherCondition = {
+        type: Type.STRING,
+        description:
+          "Short custom summary of the clear sky, rain percentages, or wind conditions matching this exact date from the forecast data arrays.",
+      };
+    }
+
+    // 5. STEP 5: Construct AI Prompt
     const prompt = `
       You are an expert electional astrologer and data analyst.
       Calculate the 3 absolute best days for this event based on the following authenticated data.
@@ -156,9 +189,10 @@ export default async function handler(request, response) {
       If the user indicates weather matters to them, evaluate the forecast data strictly against these "Ideal Weather" rules:
       - SUNNY & CLEAR: Prioritize days where the 'weather_code' indicates clear or mainly clear skies (codes 0, 1, 2). 
       - NO RAIN: Heavily penalize any date where 'precipitation_probability_max' climbs above 20%, or if codes indicate rain/drizzle.
-      - CALM & NOT WINDY: Evaluate 'wind_speed_10m_max'. If wind speeds exceed 20 km/h (approx 12 mph), penalize the cosmic score, as high winds ruin outdoor vibes.
+      - CALM & NOT WINDY: Evaluate 'wind_speed_10m_max'. If wind speeds exceed 20 km/h, penalize the cosmic score, as high winds ruin outdoor vibes.
       
       Combine planetary alignment friction with these crisp weather realities to determine if it really "Is or Is Not their day". Drop the final score significantly if a day has great stars but bad, windy, or rainy weather.
+
       EVENT REQUIREMENTS:
       - Planning a: ${eventDetails.eventType}
       - Location: ${eventDetails.eventCity}, ${eventDetails.eventCountry}
@@ -204,7 +238,11 @@ export default async function handler(request, response) {
           {
             "date": "YYYY-MM-DD",
             "score": 85,
-            "summary": "A brief 50-word astrological explanation goes here."
+            "summary": "A brief 50-word astrological explanation goes here."${
+              includeWeatherInResult
+                ? ',\n            "temperature": "Dynamic string based strictly on forecast data arrays (e.g., 18°C or 31°C)",\n            "weatherCondition": "Dynamic wind/rain/sunny summary matching the forecast arrays"'
+                : ""
+            }
           }
         ]
       }
@@ -212,7 +250,7 @@ export default async function handler(request, response) {
 
     let finalJsonResult = null;
 
-    // 5. STEP 5: Fire primary Gemini pipeline
+    // 6. STEP 6: Fire primary Gemini pipeline
     try {
       console.log("Attempting cosmic calculation via Gemini...");
       const aiResponse = await ai.models.generateContent({
@@ -227,21 +265,8 @@ export default async function handler(request, response) {
                 type: Type.ARRAY,
                 items: {
                   type: Type.OBJECT,
-                  properties: {
-                    date: {
-                      type: Type.STRING,
-                      description: "YYYY-MM-DD format",
-                    },
-                    score: {
-                      type: Type.INTEGER,
-                      description: "Cosmic match score 0-100",
-                    },
-                    summary: {
-                      type: Type.STRING,
-                      description: "Astrological reading summary",
-                    },
-                  },
-                  required: ["date", "score", "summary"],
+                  properties: bestDayItemProperties,
+                  required: bestDayItemRequired,
                 },
               },
             },
@@ -282,10 +307,7 @@ export default async function handler(request, response) {
     }
 
     if (finalJsonResult && finalJsonResult.bestDays) {
-      return response.status(200).json({
-        ...finalJsonResult,
-        DEBUG_WEATHER_DATA: weatherDataText, // 👈 This will pass the raw weather string right into your browser's Network -> Response tab!
-      });
+      return response.status(200).json(finalJsonResult);
     } else {
       throw new Error(
         "The returned calculation data payload was malformed or empty."

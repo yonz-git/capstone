@@ -27,7 +27,10 @@ import {
   CancelButton,
   SaveButton,
   HeaderClickableZone,
+  Weather,
+  WeatherContainer,
 } from "./SavedCard.styled";
+// import { Weather, WeatherContainer } from "../ResultCard/ResultCard.styled";
 
 export default function SavedCard({
   data,
@@ -37,6 +40,7 @@ export default function SavedCard({
   onToggleSave,
   onSaveNote,
 }) {
+  console.log(" Current Saved Card Data Object:", data);
   const [isEditingNote, setIsEditingNote] = useState(false);
   const [noteValue, setNoteValue] = useState(data.notes || "");
 
@@ -131,6 +135,15 @@ export default function SavedCard({
               </ScoreCircle>
             </RightGroup>
           </HeaderMainRow>
+
+          {(data.temperature || data.weatherCondition) && (
+            <WeatherContainer>
+              {data.temperature && <Weather> {data.temperature}</Weather>}
+              {data.weatherCondition && (
+                <Weather>{data.weatherCondition}</Weather>
+              )}
+            </WeatherContainer>
+          )}
         </HeaderClickableZone>
 
         <DropdownArrow onClick={onToggleExpand} $isExpanded={isExpanded}>
