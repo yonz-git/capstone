@@ -63,20 +63,18 @@ export default function SavedList() {
     }
   }
 
+  // escape function added this way because using dialog required to use useRef
   useEffect(() => {
-    // 1. Function that checks if the pressed key is "Escape"
     const handleKeyDown = (event) => {
       if (event.key === "Escape") {
         setDateToDelete(null); // Closes the modal
       }
     };
 
-    // 2. Only listen to the keyboard if the modal is actually open
     if (dateToDelete) {
       window.addEventListener("keydown", handleKeyDown);
     }
 
-    // 3. Clean up the event listener when the modal closes or component unmounts
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
