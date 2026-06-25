@@ -7,6 +7,23 @@ export default createGlobalStyle`
     box-sizing: border-box;
   }
 
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100vh;
+    
+
+    overflow-y: auto; 
+
+
+    &::-webkit-scrollbar {
+      display: none; 
+    }
+    scrollbar-width: none;
+    -ms-overflow-style: none; 
+  }
+
 
   main {
     font-family: var(--font-jost), system-ui, sans-serif;

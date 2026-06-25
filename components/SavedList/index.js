@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import useSWR from "swr";
 import SavedCard from "../SavedCard";
 import Link from "next/link";
@@ -11,10 +11,16 @@ import {
   CardsList,
   BackButton,
   StatusMessage,
-} from "./SavedList.styed";
+  ModalOverlay,
+  ModalBox,
+  ButtonGroup,
+  CancelButton,
+  ConfirmButton,
+} from "./SavedList.styled";
 
 export default function SavedList() {
   const [expandedIndex, setExpandedIndex] = useState(null);
+  const [dateToDelete, setDateToDelete] = useState(null);
 
   const {
     data: savedDates,
@@ -39,9 +45,10 @@ export default function SavedList() {
     }
   }
 
-  async function handleDeleteSavedDate(id) {
+  async function handleConfirmDelete() {
+    if (!dateToDelete) return;
     try {
-      const response = await fetch(`/api/saved_dates/${id}`, {
+      const response = await fetch(`/api/saved_dates/${dateToDelete._id}`, {
         method: "DELETE",
       });
 
@@ -49,11 +56,31 @@ export default function SavedList() {
         throw new Error(`Failed to delete document: ${response.status}`);
       }
 
+      setDateToDelete(null);
       mutate();
     } catch (error) {
       console.error("Error deleting saved date:", error);
     }
   }
+
+  useEffect(() => {
+    // 1. Function that checks if the pressed key is "Escape"
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setDateToDelete(null); // Closes the modal
+      }
+    };
+
+    // 2. Only listen to the keyboard if the modal is actually open
+    if (dateToDelete) {
+      window.addEventListener("keydown", handleKeyDown);
+    }
+
+    // 3. Clean up the event listener when the modal closes or component unmounts
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [dateToDelete]);
 
   if (isLoading)
     return (
@@ -108,7 +135,7 @@ export default function SavedList() {
                 notes: data.notes || "",
               }}
               isSaved={true}
-              onToggleSave={() => handleDeleteSavedDate(data._id)}
+              onToggleSave={() => setDateToDelete(data)}
               isExpanded={isExpanded}
               onToggleExpand={() => setExpandedIndex(isExpanded ? null : index)}
               onSaveNote={handleUpdateNote}
@@ -118,8 +145,34 @@ export default function SavedList() {
       </CardsList>
 
       <Link href="/checktiming">
-        <BackButton> Plan Another Event</BackButton>
+        <BackButton>✦ Plan Another Event</BackButton>
       </Link>
+
+      {dateToDelete && (
+        <ModalOverlay
+          role="dialog"
+          aria-modal="true"
+          id="modal-backdrop"
+          onClick={(event) => {
+            if (event.target === event.currentTarget) {
+              setDateToDelete(null);
+            }
+          }}
+        >
+          <ModalBox>
+            <h3>Unsave Date?</h3>
+            <p>Are you sure you want to remove this alignment?</p>
+            <ButtonGroup>
+              <CancelButton onClick={() => setDateToDelete(null)}>
+                Cancel
+              </CancelButton>
+              <ConfirmButton onClick={handleConfirmDelete}>
+                Yes, Unsave
+              </ConfirmButton>
+            </ButtonGroup>
+          </ModalBox>
+        </ModalOverlay>
+      )}
     </Container>
   );
 }
