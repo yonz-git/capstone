@@ -13,10 +13,19 @@ const groq = process.env.GROQ_API_KEY
     })
   : null;
 
-//mock data
 export default async function handler(request, response) {
   if (request.method !== "POST") {
     return response.status(405).json({ message: "Method not allowed" });
+  }
+
+  // Defensive Gate: Check if environment variables are missing
+  if (!ai) {
+    console.error(
+      "CRITICAL ERROR: GEMINI_API_KEY environment variable is not defined in .env.local"
+    );
+    return response.status(500).json({
+      error: "Server configuration missing: GEMINI_API_KEY is not configured.",
+    });
   }
 
   try {
@@ -30,49 +39,64 @@ export default async function handler(request, response) {
       });
     }
 
-    // Defensive Gate 2: Check if environment variables are missing
-    if (!ai) {
-      console.error(
-        "CRITICAL ERROR: GEMINI_API_KEY environment variable is not defined in .env.local"
-      );
-      return response.status(500).json({
-        error:
-          "Server configuration missing: GEMINI_API_KEY is not configured.",
-      });
-    }
-
     // Robust JavaScript Date object processing
     const parsedDate = new Date(eventDetails.startDate);
     const targetYear = !isNaN(parsedDate) ? parsedDate.getFullYear() : 2026;
     const targetMonth = !isNaN(parsedDate) ? parsedDate.getMonth() + 1 : 6;
     const targetDay = !isNaN(parsedDate) ? parsedDate.getDate() : 16;
 
-    const lat = eventDetails.latitude || eventDetails.lat || 52.52;
-    const lon = eventDetails.longitude || eventDetails.lon || 13.405;
+    // Default Fallback Coordinates (Berlin) if Geocoding is skipped or fails
+    let lat = eventDetails.latitude || eventDetails.lat || 52.52;
+    let lon = eventDetails.longitude || eventDetails.lon || 13.405;
+    const city = eventDetails.eventCity;
     const weatherMatters = eventDetails.weatherMatters;
 
+    // 1. STEP 1: Dynamically convert City Name string to Latitude/Longitude Coordinates
+    if (city) {
+      try {
+        const geocodeUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&language=en&format=json`;
+        const geocodeResponse = await fetch(geocodeUrl);
+
+        if (geocodeResponse.ok) {
+          const geocodeData = await geocodeResponse.json();
+          if (geocodeData.results && geocodeData.results.length > 0) {
+            lat = geocodeData.results[0].latitude;
+            lon = geocodeData.results[0].longitude;
+            console.log(
+              `🗺️ Open-Meteo Geocoded ${city}: Lat ${lat}, Lon ${lon}`
+            );
+          }
+        }
+      } catch (geoError) {
+        console.error(
+          "Geocoding lookup failed, proceeding with fallback coordinates:",
+          geoError
+        );
+      }
+    }
+
     let realTransitData = "Could not fetch live ephemeris data.";
-    let weatherDataText = "No weather data available for this date range.";
+    let weatherDataText =
+      "No weather data available for this date range or preference.";
 
     const daysDifference =
       (new Date(parsedDate) - new Date()) / (1000 * 60 * 60 * 24);
 
+    // 2. STEP 2: Fetch Open-Meteo Weather Forecast using the geocoded coordinates
+
     // ONLY fetch weather if the date is within 14 days AND the checkbox is ticked
     if (weatherMatters && daysDifference >= 0 && daysDifference <= 14) {
-      if (!lat || !lon) {
-        return response.status(400).json({
-          error:
-            "Bad Request: Coordinates are required when weather preferences are enabled.",
-        });
-      }
-
       try {
         const weatherResponse = await fetch(
-          `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,precipitation_probability_max,weather_code&forecast_days=14`
+          `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,precipitation_probability_max,weather_code,wind_speed_10m_max&forecast_days=14&timezone=auto`
         );
         if (weatherResponse.ok) {
           const weatherJson = await weatherResponse.json();
           weatherDataText = JSON.stringify(weatherJson.daily);
+          console.log(
+            "🌤️ OPEN-METEO WEATHER FETCH SUCCESS:",
+            weatherJson.daily
+          );
         }
       } catch (error) {
         console.error("Weather fetch failed, proceeding without it.");
@@ -81,6 +105,7 @@ export default async function handler(request, response) {
       }
     }
 
+    // 3. STEP 3: Fetch Astrology Data using the same coordinates
     try {
       if (process.env.ASTROLOGY_API_KEY) {
         const astroResponse = await fetch(
@@ -97,8 +122,8 @@ export default async function handler(request, response) {
               day: targetDay,
               hours: 12,
               min: 0,
-              lat: lat || 52.52,
-              lon: lon || 13.405,
+              lat: lat,
+              lon: lon,
               tzone: 1.0,
             }),
           }
@@ -108,16 +133,15 @@ export default async function handler(request, response) {
           const astroJson = await astroResponse.json();
           if (astroJson && astroJson.output) {
             realTransitData = JSON.stringify(astroJson.output);
+            console.log("🪐 ASTROLOGY EPHEMERIS FETCH SUCCESS");
           }
         }
       }
     } catch (apiError) {
       console.error("External Astrology API fallback activated:", apiError);
     }
-    const isProfessional = eventDetails.eventType
-      ?.toLowerCase()
-      .includes("professional");
-    // Force strict schema descriptions directly in the text prompt string for Groq's fallback path
+
+    // 4. STEP 4: Construct AI Prompt
     const prompt = `
       You are an expert electional astrologer and data analyst.
       Calculate the 3 absolute best days for this event based on the following authenticated data.
@@ -129,8 +153,12 @@ export default async function handler(request, response) {
       - Forecasted Weather Data: ${weatherDataText}
 
       CRITERIA:
-  If the user indicates weather matters to them, adjust your total cosmic score downward if severe storms, heavy rain, or freezing temp conflicts with their event type (e.g., an outdoor date or wedding). Combine planetary alignment friction with weather realities to determine if it really "Is or Is Not their day".
-
+      If the user indicates weather matters to them, evaluate the forecast data strictly against these "Ideal Weather" rules:
+      - SUNNY & CLEAR: Prioritize days where the 'weather_code' indicates clear or mainly clear skies (codes 0, 1, 2). 
+      - NO RAIN: Heavily penalize any date where 'precipitation_probability_max' climbs above 20%, or if codes indicate rain/drizzle.
+      - CALM & NOT WINDY: Evaluate 'wind_speed_10m_max'. If wind speeds exceed 20 km/h (approx 12 mph), penalize the cosmic score, as high winds ruin outdoor vibes.
+      
+      Combine planetary alignment friction with these crisp weather realities to determine if it really "Is or Is Not their day". Drop the final score significantly if a day has great stars but bad, windy, or rainy weather.
       EVENT REQUIREMENTS:
       - Planning a: ${eventDetails.eventType}
       - Location: ${eventDetails.eventCity}, ${eventDetails.eventCountry}
@@ -140,24 +168,23 @@ export default async function handler(request, response) {
       - Partner Sun Sign: ${eventDetails.partnerSunSign || "None provided"}
       
       CRITICAL DATE SELECTION RULE:
-${
-  eventDetails.onlyWeekends
-    ? "-> CRITICAL FORCED CONSTRAINT: The user checked ONLY weekends. You ARE STRICTLY FORBIDDEN from choosing any day that is not a Saturday or a Sunday. Every single 'date' property in your JSON output MUST be a Saturday or a Sunday."
-    : ""
-}
+      ${
+        eventDetails.onlyWeekends
+          ? "-> CRITICAL FORCED CONSTRAINT: The user checked ONLY weekends. You ARE STRICTLY FORBIDDEN from choosing any day that is not a Saturday or a Sunday. Every single 'date' property in your JSON output MUST be a Saturday or a Sunday."
+          : ""
+      }
       
-${
-  eventDetails.eventType === "professional" && !eventDetails.onlyWeekends
-    ? `-> CRITICAL REQUIREMENT: Because this is a Professional Meeting, you MUST NOT under any circumstance select a Saturday or a Sunday. All 3 chosen bestDays MUST fall strictly on weekdays (Monday through Friday).
-    
--> HARSH CONSTRAINT - EVENT IS PROFESSIONAL: 
-The user is checking a "${eventDetails.eventType}". 
-You ARE STRICTLY FORBIDDEN from choosing a Saturday or Sunday for any of the 3 dates. 
-Double-check your calendar math: All 3 "date" properties in the JSON MUST fall exclusively on Monday, Tuesday, Wednesday, Thursday, or Friday.`
-    : ""
-}
-
-
+      ${
+        eventDetails.eventType?.toLowerCase().includes("professional") &&
+        !eventDetails.onlyWeekends
+          ? `-> CRITICAL REQUIREMENT: Because this is a Professional Meeting, you MUST NOT under any circumstance select a Saturday or a Sunday. All 3 chosen bestDays MUST fall strictly on weekdays (Monday through Friday).
+          
+          -> HARSH CONSTRAINT - EVENT IS PROFESSIONAL: 
+          The user is checking a "${eventDetails.eventType}". 
+          You ARE STRICTLY FORBIDDEN from choosing a Saturday or Sunday for any of the 3 dates. 
+          Double-check your calendar math: All 3 "date" properties in the JSON MUST fall exclusively on Monday, Tuesday, Wednesday, Thursday, or Friday.`
+          : ""
+      }
 
       REAL-TIME PLANETARY TRANSIT POSITIONS (Ground Truth):
       The current baseline planet coordinates for the start of this window are:
@@ -185,6 +212,7 @@ Double-check your calendar math: All 3 "date" properties in the JSON MUST fall e
 
     let finalJsonResult = null;
 
+    // 5. STEP 5: Fire primary Gemini pipeline
     try {
       console.log("Attempting cosmic calculation via Gemini...");
       const aiResponse = await ai.models.generateContent({
@@ -239,7 +267,7 @@ Double-check your calendar math: All 3 "date" properties in the JSON MUST fall e
         );
       }
 
-      console.log("Computing via Groq Fallback (llama-3.3-70b-versatile)...");
+      console.log("Computing via Groq Fallback (llama-3.1-8b-instant)...");
       const groqResponse = await groq.chat.completions.create({
         model: "llama-3.1-8b-instant",
         messages: [{ role: "user", content: prompt }],
@@ -254,7 +282,10 @@ Double-check your calendar math: All 3 "date" properties in the JSON MUST fall e
     }
 
     if (finalJsonResult && finalJsonResult.bestDays) {
-      return response.status(200).json(finalJsonResult);
+      return response.status(200).json({
+        ...finalJsonResult,
+        DEBUG_WEATHER_DATA: weatherDataText, // 👈 This will pass the raw weather string right into your browser's Network -> Response tab!
+      });
     } else {
       throw new Error(
         "The returned calculation data payload was malformed or empty."
