@@ -44,6 +44,7 @@ export default function CheckTiming({ onCalculationComplete }) {
   const [partnerSunSign, setPartnerSunSign] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showResults, setShowResults] = useState(false);
+  const [weatherMatters, setWeatherMatters] = useState(false);
 
   // API loading states
   const { data: countriesData } = useSWR(
@@ -70,7 +71,10 @@ export default function CheckTiming({ onCalculationComplete }) {
   // data collection
 
   const handleSubmitAllData = async (event) => {
-    event.preventDefault();
+    // prevents the browser from accidentally triggering a double-submit
+    if (event && typeof event.preventDefault === "function") {
+      event.preventDefault();
+    }
 
     if (
       !selectedEventId ||
@@ -92,6 +96,7 @@ export default function CheckTiming({ onCalculationComplete }) {
         startDate: selectedDate,
         timeframe,
         onlyWeekends,
+        weatherMatters,
         partnerSunSign,
       };
 
@@ -243,6 +248,20 @@ export default function CheckTiming({ onCalculationComplete }) {
           />
           <CheckboxLabel htmlFor="onlyWeekends">Only weekends</CheckboxLabel>
         </CheckboxGroup>
+
+        {(timeframe === "1 week" || timeframe === "2 weeks") && (
+          <CheckboxGroup>
+            <StyledCheckbox
+              type="checkbox"
+              id="weatherMatters"
+              checked={weatherMatters}
+              onChange={(event) => setWeatherMatters(event.target.checked)}
+            />
+            <CheckboxLabel htmlFor="weatherMatters">
+              Good weather is important
+            </CheckboxLabel>
+          </CheckboxGroup>
+        )}
       </EventContainer>
 
       {/* only for date and wedding */}

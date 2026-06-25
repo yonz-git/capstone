@@ -47,7 +47,39 @@ export default async function handler(request, response) {
     const targetMonth = !isNaN(parsedDate) ? parsedDate.getMonth() + 1 : 6;
     const targetDay = !isNaN(parsedDate) ? parsedDate.getDate() : 16;
 
+    const lat = eventDetails.latitude || eventDetails.lat || 52.52;
+    const lon = eventDetails.longitude || eventDetails.lon || 13.405;
+    const weatherMatters = eventDetails.weatherMatters;
+
     let realTransitData = "Could not fetch live ephemeris data.";
+    let weatherDataText = "No weather data available for this date range.";
+
+    const daysDifference =
+      (new Date(parsedDate) - new Date()) / (1000 * 60 * 60 * 24);
+
+    // ONLY fetch weather if the date is within 14 days AND the checkbox is ticked
+    if (weatherMatters && daysDifference >= 0 && daysDifference <= 14) {
+      if (!lat || !lon) {
+        return response.status(400).json({
+          error:
+            "Bad Request: Coordinates are required when weather preferences are enabled.",
+        });
+      }
+
+      try {
+        const weatherResponse = await fetch(
+          `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,precipitation_probability_max,weather_code&forecast_days=14`
+        );
+        if (weatherResponse.ok) {
+          const weatherJson = await weatherResponse.json();
+          weatherDataText = JSON.stringify(weatherJson.daily);
+        }
+      } catch (error) {
+        console.error("Weather fetch failed, proceeding without it.");
+        weatherDataText =
+          "Weather lookup failed, but user prefers good weather.";
+      }
+    }
 
     try {
       if (process.env.ASTROLOGY_API_KEY) {
@@ -65,8 +97,8 @@ export default async function handler(request, response) {
               day: targetDay,
               hours: 12,
               min: 0,
-              lat: 52.52,
-              lon: 13.405,
+              lat: lat || 52.52,
+              lon: lon || 13.405,
               tzone: 1.0,
             }),
           }
@@ -94,6 +126,10 @@ export default async function handler(request, response) {
       - Birth Date: ${userProfile.birthDate}
       - Birth Time: ${userProfile.birthTime || "Unknown"}
       - Sun Sign/Details: ${JSON.stringify(userProfile)}
+      - Forecasted Weather Data: ${weatherDataText}
+
+      CRITERIA:
+  If the user indicates weather matters to them, adjust your total cosmic score downward if severe storms, heavy rain, or freezing temp conflicts with their event type (e.g., an outdoor date or wedding). Combine planetary alignment friction with weather realities to determine if it really "Is or Is Not their day".
 
       EVENT REQUIREMENTS:
       - Planning a: ${eventDetails.eventType}
@@ -105,19 +141,23 @@ export default async function handler(request, response) {
       
       CRITICAL DATE SELECTION RULE:
 ${
-  eventDetails.eventType?.toLowerCase().includes("professional")
-    ? "-> CRITICAL REQUIREMENT: Because this is a Professional Meeting, you MUST NOT under any circumstance select a Saturday or a Sunday. All 3 chosen bestDays MUST fall strictly on weekdays (Monday through Friday)."
+  eventDetails.onlyWeekends
+    ? "-> CRITICAL FORCED CONSTRAINT: The user checked ONLY weekends. You ARE STRICTLY FORBIDDEN from choosing any day that is not a Saturday or a Sunday. Every single 'date' property in your JSON output MUST be a Saturday or a Sunday."
     : ""
 }
-
+      
 ${
-  isProfessional
-    ? `HARSH CONSTRAINT - EVENT IS PROFESSIONAL: 
-The user is booking a "${eventDetails.eventType}". 
+  eventDetails.eventType === "professional" && !eventDetails.onlyWeekends
+    ? `-> CRITICAL REQUIREMENT: Because this is a Professional Meeting, you MUST NOT under any circumstance select a Saturday or a Sunday. All 3 chosen bestDays MUST fall strictly on weekdays (Monday through Friday).
+    
+-> HARSH CONSTRAINT - EVENT IS PROFESSIONAL: 
+The user is checking a "${eventDetails.eventType}". 
 You ARE STRICTLY FORBIDDEN from choosing a Saturday or Sunday for any of the 3 dates. 
 Double-check your calendar math: All 3 "date" properties in the JSON MUST fall exclusively on Monday, Tuesday, Wednesday, Thursday, or Friday.`
     : ""
 }
+
+
 
       REAL-TIME PLANETARY TRANSIT POSITIONS (Ground Truth):
       The current baseline planet coordinates for the start of this window are:
