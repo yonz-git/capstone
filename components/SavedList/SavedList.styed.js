@@ -84,7 +84,7 @@ export const ModalBox = styled.div`
   text-align: center;
 
   backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+
   color: white;
   h3 {
     font-weight: 400;
