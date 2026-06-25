@@ -133,7 +133,6 @@ export default function SavedList() {
         <ModalOverlay
           id="modal-backdrop"
           onClick={(event) => {
-            // 2. 🚀 ONLY close if the user clicked the backdrop itself, NOT the content box inside
             if (event.target.id === "modal-backdrop") {
               setDateToDelete(null);
             }
