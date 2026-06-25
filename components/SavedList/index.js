@@ -16,7 +16,7 @@ import {
   ButtonGroup,
   CancelButton,
   ConfirmButton,
-} from "./SavedList.styed";
+} from "./SavedList.styled";
 
 export default function SavedList() {
   const [expandedIndex, setExpandedIndex] = useState(null);
