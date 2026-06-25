@@ -38,9 +38,8 @@ export const NavItem = styled.li`
     text-decoration: none;
     color: white;
     font-weight: 200;
-    transition:
-      color 0.2s ease-in-out,
-      font-weight 0.2s ease;
+    text-shadow: 0 0 0px rgba(255, 255, 255, 0);
+    transition: all 0.3s ease-in-out;
   }
 
   &.active {
