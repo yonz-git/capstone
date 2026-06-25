@@ -141,19 +141,23 @@ export default async function handler(request, response) {
       
       CRITICAL DATE SELECTION RULE:
 ${
-  eventDetails.eventType?.toLowerCase().includes("professional")
-    ? "-> CRITICAL REQUIREMENT: Because this is a Professional Meeting, you MUST NOT under any circumstance select a Saturday or a Sunday. All 3 chosen bestDays MUST fall strictly on weekdays (Monday through Friday)."
+  eventDetails.onlyWeekends
+    ? "-> CRITICAL FORCED CONSTRAINT: The user checked ONLY weekends. You ARE STRICTLY FORBIDDEN from choosing any day that is not a Saturday or a Sunday. Every single 'date' property in your JSON output MUST be a Saturday or a Sunday."
     : ""
 }
-
+      
 ${
-  isProfessional
-    ? `HARSH CONSTRAINT - EVENT IS PROFESSIONAL: 
-The user is booking a "${eventDetails.eventType}". 
+  eventDetails.eventType === "professional" && !eventDetails.onlyWeekends
+    ? `-> CRITICAL REQUIREMENT: Because this is a Professional Meeting, you MUST NOT under any circumstance select a Saturday or a Sunday. All 3 chosen bestDays MUST fall strictly on weekdays (Monday through Friday).
+    
+-> HARSH CONSTRAINT - EVENT IS PROFESSIONAL: 
+The user is checking a "${eventDetails.eventType}". 
 You ARE STRICTLY FORBIDDEN from choosing a Saturday or Sunday for any of the 3 dates. 
 Double-check your calendar math: All 3 "date" properties in the JSON MUST fall exclusively on Monday, Tuesday, Wednesday, Thursday, or Friday.`
     : ""
 }
+
+
 
       REAL-TIME PLANETARY TRANSIT POSITIONS (Ground Truth):
       The current baseline planet coordinates for the start of this window are:

@@ -71,7 +71,10 @@ export default function CheckTiming({ onCalculationComplete }) {
   // data collection
 
   const handleSubmitAllData = async (event) => {
-    event.preventDefault();
+    // prevents the browser from accidentally triggering a double-submit
+    if (event && typeof event.preventDefault === "function") {
+      event.preventDefault();
+    }
 
     if (
       !selectedEventId ||
