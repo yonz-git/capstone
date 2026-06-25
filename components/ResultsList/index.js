@@ -18,6 +18,7 @@ export default function ResultsList({ onBack }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [expandedIndex, setExpandedIndex] = useState(null);
+  const [currentEventType, setCurrentEventType] = useState("General");
 
   useEffect(() => {
     async function fetchCosmicDays() {
@@ -31,6 +32,9 @@ export default function ResultsList({ onBack }) {
           setLoading(false);
           return; // stop running the function without crashing the page
         }
+
+        const parsedEvent = JSON.parse(localEvent);
+        setCurrentEventType(parsedEvent.eventType || "General");
 
         // fetch the calculation
         const response = await fetch("/api/calculate-days", {
@@ -147,11 +151,16 @@ export default function ResultsList({ onBack }) {
             ? savedDatesData
             : [];
 
-          const isSaved = savedDatesArray.find((date) => {
-            if (!date.gregorianDate || !data.date) return false;
+          const isSaved = savedDatesArray.find((dbItem) => {
+            if (!dbItem.gregorianDate || !data.date) return false;
             // convert to string safely before splitting
-            const savedDateString = String(date.gregorianDate).split("T")[0];
-            return savedDateString === data.date;
+            const savedDateString = String(dbItem.gregorianDate).split("T")[0];
+            const datesMatch = savedDateString === data.date;
+            const eventTypesMatch =
+              (dbItem.eventType || "General").toLowerCase() ===
+              currentEventType.toLowerCase();
+
+            return datesMatch && eventTypesMatch;
           });
 
           return (
