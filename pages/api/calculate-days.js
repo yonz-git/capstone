@@ -83,6 +83,7 @@ export default async function handler(request, response) {
       (new Date(parsedDate) - new Date()) / (1000 * 60 * 60 * 24);
 
     // 2. STEP 2: Fetch Open-Meteo Weather Forecast using the geocoded coordinates
+
     // ONLY fetch weather if the date is within 14 days AND the checkbox is ticked
     if (weatherMatters && daysDifference >= 0 && daysDifference <= 14) {
       try {
