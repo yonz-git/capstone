@@ -6,6 +6,7 @@ export default async function handler(request, response) {
 
   if (request.method === "GET") {
     const savedDates = await SavedDate.find();
+
     return response.status(200).json(savedDates);
   }
 

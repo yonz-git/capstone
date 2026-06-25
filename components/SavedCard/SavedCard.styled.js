@@ -15,7 +15,7 @@ export const CardHeader = styled.div`
   flex-direction: column;
   cursor: pointer;
   user-select: none;
-  padding-bottom: 20px;
+
   padding-top: 20px;
 `;
 
@@ -31,6 +31,7 @@ export const LeftGroup = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
+  margin-bottom: 3px;
 `;
 
 export const RightGroup = styled.div`
