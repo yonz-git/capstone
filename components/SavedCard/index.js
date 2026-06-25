@@ -27,10 +27,8 @@ import {
   CancelButton,
   SaveButton,
   HeaderClickableZone,
-  Weather,
-  WeatherContainer,
 } from "./SavedCard.styled";
-// import { Weather, WeatherContainer } from "../ResultCard/ResultCard.styled";
+import { Weather, WeatherContainer } from "../ResultCard/ResultCard.styled";
 
 export default function SavedCard({
   data,
