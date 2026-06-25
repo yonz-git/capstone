@@ -13,7 +13,7 @@ export default function NavBar() {
         </NavItem>
 
         <NavItem className={router.pathname === "/checktiming" ? "active" : ""}>
-          <Link href="/checktiming">Time</Link>
+          <Link href="/checktiming">Timing</Link>
         </NavItem>
 
         <NavItem className={router.pathname === "/saveddates" ? "active" : ""}>
