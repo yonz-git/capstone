@@ -79,7 +79,7 @@ export const ModalBox = styled.div`
   border: 1px solid #3c3973;
   border-radius: 16px;
   padding: 2rem;
-  margin-right: 13.5px;
+
   max-width: 380px;
   text-align: center;
 

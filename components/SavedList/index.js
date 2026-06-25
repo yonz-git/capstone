@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import useSWR from "swr";
 import SavedCard from "../SavedCard";
 import Link from "next/link";
@@ -62,6 +62,25 @@ export default function SavedList() {
       console.error("Error deleting saved date:", error);
     }
   }
+
+  useEffect(() => {
+    // 1. Function that checks if the pressed key is "Escape"
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setDateToDelete(null); // Closes the modal
+      }
+    };
+
+    // 2. Only listen to the keyboard if the modal is actually open
+    if (dateToDelete) {
+      window.addEventListener("keydown", handleKeyDown);
+    }
+
+    // 3. Clean up the event listener when the modal closes or component unmounts
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [dateToDelete]);
 
   if (isLoading)
     return (
@@ -131,9 +150,11 @@ export default function SavedList() {
 
       {dateToDelete && (
         <ModalOverlay
+          role="dialog"
+          aria-modal="true"
           id="modal-backdrop"
           onClick={(event) => {
-            if (event.target.id === "modal-backdrop") {
+            if (event.target === event.currentTarget) {
               setDateToDelete(null);
             }
           }}
