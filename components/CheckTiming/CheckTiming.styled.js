@@ -40,8 +40,8 @@ export const Button = styled.button`
 
   color: #ffffff;
 
-  padding: 12px 0 18px 0;
-  border-radius: 12px;
+  padding: 14px;
+  border-radius: 20px;
   font-size: 16px;
   font-weight: 400;
   cursor: pointer;
@@ -49,7 +49,6 @@ export const Button = styled.button`
   align-items: center;
   justify-content: center;
   gap: 8px;
-  transition: background-color 0.3s ease-in-out;
 `;
 
 export const EventContainer = styled.div`

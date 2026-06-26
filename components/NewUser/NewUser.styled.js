@@ -40,7 +40,7 @@ export const Description = styled.p`
   font-weight: 200;
   width: 80%;
   margin: 0 auto;
-  margin-bottom: 8rem;
+  margin-bottom: 7rem;
 `;
 
 export const Footer = styled.footer`
@@ -53,22 +53,13 @@ export const Button = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-
   overflow: hidden;
-  cursor: pointer;
 
   z-index: 2;
   width: 100%;
 
   color: #ffffff;
 
-  padding: 16px;
-  border-radius: 1.8rem;
+  padding: 14px;
   font-size: 16px;
-
-  // margin-top: 3rem;
-`;
-
-export const ButtonIcon = styled.span`
-  font-size: 18px;
 `;

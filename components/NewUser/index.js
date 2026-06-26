@@ -3,17 +3,15 @@ import Link from "next/link";
 import {
   Container,
   Header,
-  CosmicIcon,
   Title,
   Subtitle,
   Description,
   Footer,
   Button,
-  ButtonIcon,
 } from "./NewUser.styled";
 import Strands from "@/components/Strands";
 
-export default function NewUser({ onOnboarding }) {
+export default function NewUser() {
   return (
     <Container>
       <Header>
@@ -27,10 +25,8 @@ export default function NewUser({ onOnboarding }) {
       </Description>
 
       <Footer>
-        <Link href="/onboarding">
-          <Button>
-            <ButtonIcon>✦</ButtonIcon>✦ Create Cosmic Profile
-          </Button>
+        <Link href="/onboarding" style={{ textDecoration: "none" }}>
+          <Button>✧ Create Cosmic Profile</Button>
         </Link>
       </Footer>
     </Container>

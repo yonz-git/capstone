@@ -13,9 +13,6 @@ export default createGlobalStyle`
     width: 100%;
     min-height: 100vh;
     color:ffffffee;
-   
-    
-
     overflow-y: auto; 
 
 
@@ -26,6 +23,14 @@ export default createGlobalStyle`
     -ms-overflow-style: none; 
   }
 
+   body {
+    margin: 0;
+    margin-bottom:40px;
+    body, input, select, textarea, button, a {
+    font-family: var(--font-jost), sans-serif;
+
+    
+  }
 
   main {
   font-family: var(--font-jost), system-ui, sans-serif;
@@ -53,8 +58,10 @@ export default createGlobalStyle`
 font-weight: 300 ;
  letter-spacing:0.05rem;
  backdrop-filter: blur(5px);
-
-      //  box-shadow: 0 4px 12px rgba(60, 57, 115, 0.3);
+   border-radius: 20px;
+   max-width:80%;
+   margin:0 auto;
+   cursor: pointer;
 
   box-shadow:
       inset 0 0 20px #1f203812,
@@ -65,17 +72,9 @@ font-weight: 300 ;
     0 0 2px #1c0d0d27,
     -4px 0 4px rgba(247, 246, 230, 0.83),
     4px 0 4px rgba(173, 174, 220, 0.81);
-
-
   background-color: transparent;
 transition: all 0.3s ease-in-out;
- 
-    
-    // background-color: #2b375569;
- backdrop-filter: blur(5px);
-
    }
-
 
 
   button:hover{
@@ -105,14 +104,7 @@ transition: all 0.3s ease-in-out;
 
 
 
-  body {
-    margin: 0;
-    margin-bottom:40px;
-    body, input, select, textarea, button, a {
-    font-family: var(--font-jost), sans-serif;
-
-    
-  }
+ 
 
   }
 
