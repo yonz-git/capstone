@@ -11,12 +11,13 @@ import {
   Button,
   ButtonIcon,
 } from "./NewUser.styled";
+import Strands from "@/components/Strands";
 
 export default function NewUser({ onOnboarding }) {
   return (
     <Container>
       <Header>
-        <CosmicIcon>🌙✨</CosmicIcon>
+        <Strands />
         <Title>It&apos;s Not Your Day</Title>
         <Subtitle>Your cosmic timing</Subtitle>
       </Header>
@@ -28,7 +29,7 @@ export default function NewUser({ onOnboarding }) {
       <Footer>
         <Link href="/onboarding">
           <Button>
-            <ButtonIcon>+</ButtonIcon> Create Cosmic Profile
+            <ButtonIcon>✦</ButtonIcon>✦ Create Cosmic Profile
           </Button>
         </Link>
       </Footer>

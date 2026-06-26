@@ -12,6 +12,7 @@ export default createGlobalStyle`
     padding: 0;
     width: 100%;
     min-height: 100vh;
+    color:ffffffee;
     
 
     overflow-y: auto; 
@@ -40,9 +41,15 @@ export default createGlobalStyle`
  
 
   }
+    p, span{
+    font-weight;200;}
+
+    h1{
+    
+      letter-spacing: 0.05rem;}
 
   button{
-font-weight: 400;
+font-weight: 300 !important;
 
        box-shadow: 0 4px 12px rgba(60, 57, 115, 0.3);
     border: 1px solid #3c3973;

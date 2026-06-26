@@ -11,27 +11,23 @@ export const Container = styled.main`
 
 export const Header = styled.header`
   text-align: center;
-
-  margin-bottom: 6rem;
-`;
-
-export const CosmicIcon = styled.div`
-  font-size: 32px;
-  margin-bottom: 16px;
+  font_weight: 300;
+  margin-bottom: 8rem;
+  height: 120px;
 `;
 
 export const Title = styled.h1`
-  font-size: 36px;
-  font-weight: 500;
-  margin: 0 0 8px 0;
+  font-size: 28px;
+  font-weight: 300;
 
-  line-height: 1.2;
+  margin: 0 0 8px 0;
 `;
 
 export const Subtitle = styled.p`
-  font-size: 22px;
+  font-size: 20px;
   color: #e2e2e2;
   margin: 0;
+  font-weight: 200;
 `;
 
 export const Description = styled.p`
@@ -65,6 +61,7 @@ export const Button = styled.button`
   justify-content: center;
   gap: 8px;
   margin-top: 3rem;
+  text-
 `;
 
 export const ButtonIcon = styled.span`
