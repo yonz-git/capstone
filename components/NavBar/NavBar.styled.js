@@ -6,7 +6,7 @@ export const StyledNav = styled.nav`
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  max-width: 428px;
+  max-width: 375px;
   height: 50px;
   background-color: #0a0a0b9f;
   border-top: 1px solid #0a0a0b;

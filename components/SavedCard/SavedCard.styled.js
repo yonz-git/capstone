@@ -6,6 +6,7 @@ export const CardContainer = styled.div`
   border: 1px solid #3c3973;
   border-radius: 16px;
   padding: 1rem;
+  padding-bottom: 1.6rem;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 `;
 
@@ -129,7 +130,7 @@ export const SummaryText = styled.p`
 
 export const DropdownArrow = styled.span`
   position: absolute;
-  bottom: -10px;
+
   left: 50%;
   display: flex;
   align-items: center;
@@ -291,4 +292,5 @@ export const SaveButton = styled.button`
 export const HeaderClickableZone = styled.div`
   width: 100%;
   cursor: pointer;
+  position: relative;
 `;

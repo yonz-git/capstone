@@ -142,11 +142,11 @@ export default function SavedCard({
               )}
             </WeatherContainer>
           )}
-        </HeaderClickableZone>
 
-        <DropdownArrow onClick={onToggleExpand} $isExpanded={isExpanded}>
-          》
-        </DropdownArrow>
+          <DropdownArrow onClick={onToggleExpand} $isExpanded={isExpanded}>
+            》
+          </DropdownArrow>
+        </HeaderClickableZone>
       </CardHeader>
 
       <ExpandableContent $isExpanded={isExpanded}>
