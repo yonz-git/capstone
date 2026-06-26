@@ -5,11 +5,11 @@ const ai = process.env.GEMINI_API_KEY
   ? new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY })
   : null;
 
-// Ccnfigure OpenAI SDK to securely route to Groq instead
+// Configure OpenAI SDK to securely route to Groq instead
 const groq = process.env.GROQ_API_KEY
   ? new OpenAI({
       apiKey: process.env.GROQ_API_KEY,
-      baseURL: "https://api.groq.com/openai/v1", // redirects traffic to Groq
+      baseURL: "https://api.groq.com/openai/v1", // Redirects traffic to Groq
     })
   : null;
 
@@ -39,7 +39,7 @@ export default async function handler(request, response) {
       });
     }
 
-
+    // Robust JavaScript Date object processing
     const parsedDate = new Date(eventDetails.startDate);
     const targetYear = !isNaN(parsedDate) ? parsedDate.getFullYear() : 2026;
     const targetMonth = !isNaN(parsedDate) ? parsedDate.getMonth() + 1 : 6;
@@ -67,7 +67,7 @@ export default async function handler(request, response) {
             );
           }
         }
-      } catch (geoErrogit chegit r) {
+      } catch (geoError) {
         console.error(
           "Geocoding lookup failed, proceeding with fallback coordinates:",
           geoError
@@ -92,10 +92,10 @@ export default async function handler(request, response) {
     const daysDifference =
       (targetMidnight - todayMidnight) / (1000 * 60 * 60 * 24);
 
-    // check if weather is needed and the START date is within reasonable range
+    // Check if weather is needed and the START date is within reasonable range
     const includeWeatherInResult = weatherMatters && daysDifference <= 14;
 
-    // 2. STEP 2: fetch Open-Meteo Weather Forecast using the geocoded coordinates
+    // 2. STEP 2: Fetch Open-Meteo Weather Forecast using the geocoded coordinates
     if (includeWeatherInResult) {
       try {
         const weatherResponse = await fetch(
@@ -116,7 +116,7 @@ export default async function handler(request, response) {
       }
     }
 
-    // 3. STEP 3: fetch Astrology Data using the same coordinates
+    // 3. STEP 3: Fetch Astrology Data using the same coordinates
     try {
       if (process.env.ASTROLOGY_API_KEY) {
         const astroResponse = await fetch(
@@ -152,7 +152,7 @@ export default async function handler(request, response) {
       console.error("External Astrology API fallback activated:", apiError);
     }
 
-    // 4. STEP 4: DYNAMIC validation configurations
+    // 4. STEP 4: Build your DYNAMIC validation configurations
     const bestDayItemProperties = {
       date: { type: Type.STRING, description: "YYYY-MM-DD format" },
       score: { type: Type.INTEGER, description: "Cosmic match score 0-100" },
@@ -174,7 +174,7 @@ export default async function handler(request, response) {
       };
     }
 
-    // 5. STEP 5: AI Prompt
+    // 5. STEP 5: Construct AI Prompt
     const prompt = `
       You are an expert electional astrologer and data analyst.
       Calculate the 3 absolute best days for this event based on the following authenticated data.
