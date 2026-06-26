@@ -277,6 +277,7 @@ export const SaveButton = styled.button`
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
+  box-shadow: none;
 
   &:disabled {
     background: rgba(255, 255, 255, 0.2);
@@ -286,6 +287,7 @@ export const SaveButton = styled.button`
 
   &:not(:disabled):hover {
     background: #c6baff;
+    box-shadow: none;
   }
 `;
 

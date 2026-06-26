@@ -4,5 +4,5 @@ export const GalaxyContainer = styled.div`
   width: 100%;
   height: 100%;
   position: relative;
-  background-color: #020c19;
+  background-color: #0f1116;
 `;

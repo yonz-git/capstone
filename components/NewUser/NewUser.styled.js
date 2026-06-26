@@ -38,8 +38,9 @@ export const Description = styled.p`
   margin-bottom: 5rem;
   text-align: center;
   font-weight: 200;
-  width: 70%;
+  width: 80%;
   margin: 0 auto;
+  margin-bottom: 8rem;
 `;
 
 export const Footer = styled.footer`
@@ -47,21 +48,25 @@ export const Footer = styled.footer`
 `;
 
 export const Button = styled.button`
-  width: 100%;
-  background-color: #222222;
-  color: #ffffff;
-  border: none;
-  padding: 16px;
-  border-radius: 0.8rem;
-  font-size: 16px;
-  font-weight: 400;
-  cursor: pointer;
+  position: relative;
+
   display: flex;
-  align-items: center;
   justify-content: center;
-  gap: 8px;
-  margin-top: 3rem;
-  text-
+  align-items: center;
+
+  overflow: hidden;
+  cursor: pointer;
+
+  z-index: 2;
+  width: 100%;
+
+  color: #ffffff;
+
+  padding: 16px;
+  border-radius: 1.8rem;
+  font-size: 16px;
+
+  // margin-top: 3rem;
 `;
 
 export const ButtonIcon = styled.span`
