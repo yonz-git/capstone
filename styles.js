@@ -28,7 +28,7 @@ export default createGlobalStyle`
   main {
     font-family: var(--font-jost), system-ui, sans-serif;
     width: 100%;
-  max-width: 428px;
+  max-width: 375px;
   min-height: 100vh;
   margin: 0 auto;   
   position: relative;
