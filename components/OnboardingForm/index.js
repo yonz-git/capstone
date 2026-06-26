@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import useSWR from "swr";
+import { Country, City } from "country-state-city";
 import {
   Container,
   Header,
@@ -26,27 +26,15 @@ export default function OnboardingForm() {
   const [selectedCountry, setSelectedCountry] = useState("");
 
   //birth place API fetching
+  const countries = Country.getAllCountries();
 
-  const { data: countriesData } = useSWR(
-    "https://countriesnow.space/api/v0.1/countries/iso"
+  const activeCountry = countries.find(
+    (country) => country.name === selectedCountry
   );
-  const countries = countriesData?.data || [];
 
-  const { data: citiesData } = useSWR(
-    selectedCountry
-      ? [
-          "https://countriesnow.space/api/v0.1/countries/cities",
-          selectedCountry,
-        ]
-      : null,
-    ([url, country]) =>
-      fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ country }),
-      }).then((response) => response.json())
-  );
-  const cities = citiesData?.data || [];
+  const cities = activeCountry
+    ? City.getCitiesOfCountry(activeCountry.isoCode).map((city) => city.name)
+    : [];
 
   function handleSubmit(event) {
     event.preventDefault();

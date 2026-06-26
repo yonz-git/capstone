@@ -1,6 +1,6 @@
 import { useState } from "react";
-import useSWR from "swr";
 import ResultsList from "../ResultsList/index.js";
+import { Country, City } from "country-state-city";
 import {
   Container,
   Header,
@@ -46,27 +46,15 @@ export default function CheckTiming({ onCalculationComplete }) {
   const [showResults, setShowResults] = useState(false);
   const [weatherMatters, setWeatherMatters] = useState(false);
 
-  // API loading states
-  const { data: countriesData } = useSWR(
-    "https://countriesnow.space/api/v0.1/countries/iso"
-  );
-  const countries = countriesData?.data || [];
+  const countries = Country.getAllCountries();
 
-  const { data: citiesData } = useSWR(
-    selectedCountry
-      ? [
-          "https://countriesnow.space/api/v0.1/countries/cities",
-          selectedCountry,
-        ]
-      : null,
-    ([url, country]) =>
-      fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ country }),
-      }).then((response) => response.json())
+  const activeCountry = countries.find(
+    (country) => country.name === selectedCountry
   );
-  const cities = citiesData?.data || [];
+
+  const cities = activeCountry
+    ? City.getCitiesOfCountry(activeCountry.isoCode).map((city) => city.name)
+    : [];
 
   // data collection
 
