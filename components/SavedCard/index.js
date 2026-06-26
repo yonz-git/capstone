@@ -58,7 +58,7 @@ export default function SavedCard({
   const handleNoteButtonClick = (event) => {
     event.preventDefault();
     if (!isExpanded) {
-      onToggleExpand(); // Smoothly open the layout structure
+      onToggleExpand();
     }
     setIsEditingNote(true);
   };
