@@ -39,7 +39,6 @@ export default async function handler(request, response) {
       });
     }
 
-
     const parsedDate = new Date(eventDetails.startDate);
     const targetYear = !isNaN(parsedDate) ? parsedDate.getFullYear() : 2026;
     const targetMonth = !isNaN(parsedDate) ? parsedDate.getMonth() + 1 : 6;
@@ -316,7 +315,7 @@ export default async function handler(request, response) {
   } catch (error) {
     console.error("Endpoint execution failure details:", error);
     return response.status(500).json({
-      error: "Failed to compute cosmic transits.",git 
+      error: "Failed to compute cosmic transits.",
       details: error.message,
     });
   }
