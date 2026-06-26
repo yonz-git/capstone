@@ -9,7 +9,7 @@ const ai = process.env.GEMINI_API_KEY
 const groq = process.env.GROQ_API_KEY
   ? new OpenAI({
       apiKey: process.env.GROQ_API_KEY,
-      baseURL: "https://api.groq.com/openai/v1", // Redirects traffic to Groq
+      baseURL: "https://api.groq.com/openai/v1", // Redirects traffic to Groq as Gemini reaches limits
     })
   : null;
 
