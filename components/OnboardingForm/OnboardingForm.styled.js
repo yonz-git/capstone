@@ -26,7 +26,6 @@ export const Header = styled.header`
 
   h1 {
     font-size: 18px;
-    font-weight: 400;
   }
 
   span {
@@ -57,11 +56,11 @@ export const Line = styled.div`
 `;
 
 export const FormContainer = styled.form`
-  flex: 1; /* ✨ Tells the form to occupy all remaining vertical space */
+  flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* ✨ Centers the nested StepSection vertically */
-  align-items: center; /* ✨ Centers everything horizontally */
+  justify-content: center;
+  align-items: center;
   width: 100%;
 `;
 
@@ -74,8 +73,6 @@ export const StepSection = styled.section`
 
   h2 {
     font-size: 22px;
-
-    font-weight: 400;
   }
 
   p {
@@ -106,7 +103,6 @@ export const InputGroup = styled.div`
   label {
     display: block;
     font-size: 14px;
-    font-weight: 400;
     margin-bottom: 10px;
     color: #ffffff;
   }
@@ -147,19 +143,6 @@ export const CheckboxGroup = styled.div`
     cursor: pointer;
     user-select: none;
   }
-`;
-
-export const ContinueButton = styled.button`
-  width: 100%;
-  padding: 16px;
-
-  color: white;
-  border: none;
-  border-radius: 0.8rem;
-  font-size: 16px;
-  font-weight: 400;
-  cursor: pointer;
-  margin-top: 20px;
 `;
 
 export const StyledSelect = styled.select`

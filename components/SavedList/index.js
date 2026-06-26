@@ -9,7 +9,6 @@ import {
   Title,
   Subtitle,
   CardsList,
-  BackButton,
   StatusMessage,
   ModalOverlay,
   ModalBox,
@@ -17,6 +16,7 @@ import {
   CancelButton,
   ConfirmButton,
 } from "./SavedList.styled";
+import Button from "../ui-elements/Button";
 
 export default function SavedList() {
   const [expandedIndex, setExpandedIndex] = useState(null);
@@ -144,8 +144,8 @@ export default function SavedList() {
         })}
       </CardsList>
 
-      <Link href="/checktiming">
-        <BackButton>✦ Plan Another Event</BackButton>
+      <Link href="/checktiming" style={{ textDecoration: "none" }}>
+        <Button>✧ Plan Another Event</Button>
       </Link>
 
       {dateToDelete && (

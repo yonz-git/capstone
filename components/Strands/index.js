@@ -2,8 +2,6 @@ import { Renderer, Program, Mesh, Color, Triangle, RenderTarget } from "ogl";
 import { useEffect, useRef } from "react";
 import styled from "styled-components";
 
-// 1. Defined the styled container with base layout and canvas overrides
-
 const MAX_STRANDS = 12;
 const MAX_COLORS = 8;
 
@@ -359,7 +357,6 @@ export default function Strands({
     };
   }, []);
 
-  // 2. Swapped out the old div for the StrandsContainer
   return <StrandsContainer ref={ctnDom} className={className} style={style} />;
 }
 

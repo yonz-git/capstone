@@ -7,7 +7,6 @@ import {
   Title,
   Subtitle,
   Footer,
-  Button,
   EventContainer,
   TitleBlock,
   GridContainer,
@@ -24,6 +23,7 @@ import {
   SelectIcon,
   DropdownWithIcon,
 } from "./CheckTiming.styled";
+import Button from "../ui-elements/Button";
 
 const INITIAL_EVENTS = [
   { id: "date", name: "Date", emoji: "❤️" },

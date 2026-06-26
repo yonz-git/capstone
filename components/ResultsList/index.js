@@ -10,8 +10,8 @@ import {
   Subtitle,
   LoadingText,
   CardsList,
-  BackButton,
 } from "./ResultsList.styled.js";
+import Button from "../ui-elements/Button";
 
 export default function ResultsList({ onBack }) {
   const [results, setResults] = useState([]);
@@ -178,7 +178,7 @@ export default function ResultsList({ onBack }) {
         })}
       </CardsList>
 
-      <BackButton onClick={onBack}> Plan Another Event</BackButton>
+      <Button onClick={onBack}>✧ Plan Another Event</Button>
     </Container>
   );
 }

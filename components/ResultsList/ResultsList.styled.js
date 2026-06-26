@@ -18,7 +18,6 @@ export const Header = styled.header`
 
 export const Title = styled.h2`
   font-size: 24px;
-  font-weight: 400;
   margin: 40px 0 20px 0;
 `;
 
@@ -41,22 +40,4 @@ export const CardsList = styled.div`
   flex-direction: column;
   gap: 6px;
   margin-bottom: 30px;
-`;
-
-export const BackButton = styled.button`
-  width: 100%;
-  background-color: transparent;
-  border: 1px solid #3c3973;
-  color: #cbc1ff;
-  padding: 14px;
-  border-radius: 12px;
-  font-size: 16px;
-  cursor: pointer;
-  margin-top: 10px;
-  transition: all 0.2s ease-in-out;
-
-  &:hover {
-    background-color: #5337af;
-    color: #ffffff;
-  }
 `;

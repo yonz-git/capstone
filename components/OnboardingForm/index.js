@@ -13,10 +13,10 @@ import {
   InputGroup,
   StyledInput,
   CheckboxGroup,
-  ContinueButton,
   StyledSelect,
 } from "./OnboardingForm.styled";
-import CosmicIcon from "../Icons/Icons";
+import CosmicIcon from "../ui-elements/Icons";
+import Button from "../ui-elements/Button";
 
 export default function OnboardingForm() {
   const router = useRouter();
@@ -151,9 +151,9 @@ export default function OnboardingForm() {
               />
             </InputGroup>
 
-            <ContinueButton type="button" onClick={handleNextStep}>
+            <Button type="button" onClick={handleNextStep}>
               Continue
-            </ContinueButton>
+            </Button>
           </StepSection>
         )}
 
@@ -191,9 +191,9 @@ export default function OnboardingForm() {
               </label>
             </CheckboxGroup>
 
-            <ContinueButton type="button" onClick={handleNextStep}>
+            <Button type="button" onClick={handleNextStep}>
               Continue
-            </ContinueButton>
+            </Button>
           </StepSection>
         )}
 
@@ -265,7 +265,7 @@ export default function OnboardingForm() {
               </StyledSelect>
             </InputGroup>
 
-            <ContinueButton type="submit">Save Profile</ContinueButton>
+            <Button type="submit">Save Profile</Button>
           </StepSection>
         )}
       </FormContainer>

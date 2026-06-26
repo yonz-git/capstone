@@ -35,22 +35,6 @@ export const Footer = styled.footer`
   margin-bottom: 60px;
 `;
 
-export const Button = styled.button`
-  width: 100%;
-
-  color: #ffffff;
-
-  padding: 14px;
-  border-radius: 20px;
-  font-size: 16px;
-  font-weight: 400;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-`;
-
 export const EventContainer = styled.div`
   max-width: 90vw;
   margin-bottom: 3rem;

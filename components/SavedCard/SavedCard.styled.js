@@ -101,22 +101,23 @@ export const ExpandableContent = styled.div`
   margin-top: -25px;
 `;
 
-export const DateLabel = styled.h3`
+export const DateLabel = styled.h4`
   font-size: 14px;
   margin: 0;
   color: #ffffff;
-  font-weight: 400;
+  font-weight: 200;
 `;
 
-export const EventLabel = styled.h4`
+export const EventLabel = styled.h3`
   font-size: 18px;
   margin: 0;
   color: #ffffff;
-  font-weight: 400;
+  font-weight: 300;
 `;
 
 export const EventLocation = styled.div`
   font-size: 14px;
+  font-weight: 300;
 `;
 
 export const SummaryText = styled.p`

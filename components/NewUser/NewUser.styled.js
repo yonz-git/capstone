@@ -18,8 +18,6 @@ export const Header = styled.header`
 
 export const Title = styled.h1`
   font-size: 28px;
-  font-weight: 300;
-
   margin: 0 0 8px 0;
 `;
 
@@ -27,7 +25,6 @@ export const Subtitle = styled.p`
   font-size: 20px;
   color: #e2e2e2;
   margin: 0;
-  font-weight: 200;
 `;
 
 export const Description = styled.p`
@@ -37,29 +34,11 @@ export const Description = styled.p`
   margin: 0;
   margin-bottom: 5rem;
   text-align: center;
-  font-weight: 200;
   width: 80%;
   margin: 0 auto;
-  margin-bottom: 7rem;
+  margin-bottom: 4rem;
 `;
 
 export const Footer = styled.footer`
   width: 100%;
-`;
-
-export const Button = styled.button`
-  position: relative;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-
-  z-index: 2;
-  width: 100%;
-
-  color: #ffffff;
-
-  padding: 14px;
-  font-size: 16px;
 `;

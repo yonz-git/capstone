@@ -17,7 +17,6 @@ export const Header = styled.header`
 `;
 export const Title = styled.h2`
   font-size: 24px;
-  font-weight: 400;
   margin: 40px 0 20px 0;
 `;
 export const Subtitle = styled.p`
@@ -38,19 +37,6 @@ export const CardsList = styled.div`
   flex-direction: column;
   gap: 6px;
   margin-bottom: 30px;
-`;
-
-export const BackButton = styled.button`
-  width: 100%;
-
-  border: 1px solid #3c3973;
-  color: #fbfaff;
-  padding: 14px;
-  border-radius: 0.8rem;
-  font-size: 16px;
-  cursor: pointer;
-  margin-top: 10px;
-  transition: all 0.2s ease-in-out;
 `;
 
 export const StatusMessage = styled.div`
@@ -87,7 +73,7 @@ export const ModalBox = styled.div`
 
   color: white;
   h3 {
-    font-weight: 400;
+    font-weight: 300;
     margin-top: 0;
   }
   p {
@@ -122,8 +108,9 @@ export const ConfirmButton = styled.button`
   padding: 0.6rem 1.2rem;
   border-radius: 8px;
   cursor: pointer;
-  font-weight: 400;
+  font-weight: 300;
   &:hover {
     background: #b54cdb;
+    transition: all 0.3s ease-in-out;
   }
 `;

@@ -1,4 +1,3 @@
-import React from "react";
 import Link from "next/link";
 import {
   Container,
@@ -7,9 +6,9 @@ import {
   Subtitle,
   Description,
   Footer,
-  Button,
 } from "./NewUser.styled";
 import Strands from "@/components/Strands";
+import Button from "../ui-elements/Button";
 
 export default function NewUser() {
   return (
