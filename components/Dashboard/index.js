@@ -11,9 +11,9 @@ import {
   Question,
   Description,
   Footer,
-  Button,
 } from "./Dashboard.styled.js";
 import Strands from "../Strands";
+import Button from "../ui-elements/Button";
 
 export default function Dashboard() {
   const router = useRouter();
@@ -78,8 +78,8 @@ export default function Dashboard() {
       <Question>What are we timing today?</Question>
 
       <Footer>
-        <Link href="/checktiming">
-          <Button>✦ Check my Cosmic Timing</Button>
+        <Link href="/checktiming" style={{ textDecoration: "none" }}>
+          <Button>✧ Check my Cosmic Timing</Button>
         </Link>
       </Footer>
     </Container>

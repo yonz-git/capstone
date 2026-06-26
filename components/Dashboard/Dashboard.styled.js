@@ -52,21 +52,6 @@ export const Footer = styled.footer`
   margin-bottom: 20px;
 `;
 
-export const Button = styled.button`
-  width: 100%;
-  transition: background-color 0.3s ease-in-out;
-  color: #ffffff;
-  padding: 16px;
-  border-radius: 12px;
-  font-size: 16px;
-  font-weight: 400;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-`;
-
 export const ButtonIcon = styled.span`
   font-size: 18px;
 `;
