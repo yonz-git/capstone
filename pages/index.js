@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import NewUser from "@/components/NewUser";
-// import Galaxy from "@/components/ui-elements/Galaxy";
+import Galaxy from "@/components/ui-elements/Galaxy";
 import styled from "styled-components";
 
 export default function HomePage() {
@@ -25,7 +25,9 @@ export default function HomePage() {
 
   return (
     <>
-      <BackgroundWrapper>{/* <Galaxy /> */}</BackgroundWrapper>
+      <BackgroundWrapper>
+        <Galaxy />
+      </BackgroundWrapper>
       <NewUser />
     </>
   );
