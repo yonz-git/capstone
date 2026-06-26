@@ -40,7 +40,7 @@ export const Question = styled.p`
 export const Description = styled.p`
   font-size: 15px;
   line-height: 1.6;
-  color: #ffffffee;
+  color: #ffffff;
   margin: 0 auto;
   margin-top: 1.5rem;
   font-weight: 300;

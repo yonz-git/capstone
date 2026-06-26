@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import NewUser from "@/components/NewUser";
+// import Galaxy from "@/components/ui-elements/Galaxy";
+import styled from "styled-components";
 
 export default function HomePage() {
   const router = useRouter();
@@ -21,5 +23,19 @@ export default function HomePage() {
 
   if (isChecking) return null;
 
-  return <NewUser />;
+  return (
+    <>
+      <BackgroundWrapper>{/* <Galaxy /> */}</BackgroundWrapper>
+      <NewUser />
+    </>
+  );
 }
+
+const BackgroundWrapper = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+`;

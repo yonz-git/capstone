@@ -12,7 +12,7 @@ import {
   Description,
   Footer,
 } from "./Dashboard.styled.js";
-import Strands from "../Strands";
+
 import Button from "../ui-elements/Button";
 
 export default function Dashboard() {
@@ -45,8 +45,8 @@ export default function Dashboard() {
     <Container>
       <Header>
         <CosmicIcon>{signData.symbol + "\uFE0E"}</CosmicIcon>
-        import Strands from './Strands';
-        <div style={{ width: "100%", height: "600px", position: "relative" }}>
+
+        {/* <div style={{ width: "100%", height: "600px", position: "relative" }}>
           <Strands
             colors={["#ffffff", "#ffffff", "#ffffff"]}
             count={4}
@@ -67,7 +67,7 @@ export default function Dashboard() {
             glassSize={0.41}
             hueShift={0}
           />
-        </div>
+        </div> */}
         <Title>Welcome Starseed</Title>
         <Description>
           Your cosmic profile is ready. We’ve mapped your natal positions and

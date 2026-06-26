@@ -45,14 +45,14 @@ export const Dot = styled.div`
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background-color: ${(props) => (props.$active ? "#aa8dff" : "#3c3655")};
-  border: 2px solid ${(props) => (props.$active ? "#aa8dff" : "#aa8dff")};
+  background-color: ${(props) => (props.$active ? "#f6f4ffe1" : "#363a55")};
+  border: 2px solid ${(props) => (props.$active ? "#ffffff" : "#ffffff6e")};
 `;
 
 export const Line = styled.div`
   width: 60px;
   height: 2px;
-  background-color: ${(props) => (props.$active ? "#696186" : "#696186")};
+  background-color: ${(props) => (props.$active ? "#ffffff6e" : "#ffffff6e")};
 `;
 
 export const FormContainer = styled.form`
@@ -73,6 +73,7 @@ export const StepSection = styled.section`
 
   h2 {
     font-size: 22px;
+    margin-bottom: 30px;
   }
 
   p {
@@ -138,9 +139,9 @@ export const CheckboxGroup = styled.div`
   }
 
   label {
-    font-size: 14px;
+    font-size: 16px;
     color: #ececec;
-    cursor: pointer;
+
     user-select: none;
   }
 `;

@@ -7,7 +7,7 @@ import {
   Description,
   Footer,
 } from "./NewUser.styled";
-import Strands from "@/components/Strands";
+import Strands from "../ui-elements/Strands";
 import Button from "../ui-elements/Button";
 
 export default function NewUser() {

@@ -4,9 +4,7 @@ import { useEffect } from "react";
 import NavBar from "@/components/NavBar";
 import GlobalStyle from "../styles";
 import { Jost } from "next/font/google";
-import Aurora from "@/components/Aurora";
 import styled from "styled-components";
-import Galaxy from "@/components/Galaxy";
 
 const jost = Jost({
   subsets: ["latin"],
@@ -32,9 +30,7 @@ export default function App({ Component, pageProps }) {
       <main>
         <GlobalStyle />
 
-        <BackgroundWrapper>
-          <Galaxy />
-        </BackgroundWrapper>
+        <BackgroundWrapper></BackgroundWrapper>
         <SWRConfig
           value={{
             fetcher: (url) => fetch(url).then((response) => response.json()),
@@ -56,5 +52,6 @@ const BackgroundWrapper = styled.div`
   width: 100vw;
   height: 100vh;
   z-index: 0; /* Keeps it strictly behind your text/cards */
+  background: radial-gradient(circle, #1b1b20, #050405);
   pointer-events: none; /* Allows users to click through the animation canvas cleanly */
 `;
