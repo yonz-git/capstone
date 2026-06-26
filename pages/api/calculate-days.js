@@ -67,7 +67,7 @@ export default async function handler(request, response) {
             );
           }
         }
-      } catch (geoErrogit chegit r) {
+      } catch (geoError) {
         console.error(
           "Geocoding lookup failed, proceeding with fallback coordinates:",
           geoError
@@ -316,7 +316,7 @@ export default async function handler(request, response) {
   } catch (error) {
     console.error("Endpoint execution failure details:", error);
     return response.status(500).json({
-      error: "Failed to compute cosmic transits.",
+      error: "Failed to compute cosmic transits.",git 
       details: error.message,
     });
   }
