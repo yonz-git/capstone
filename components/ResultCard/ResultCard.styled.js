@@ -154,7 +154,7 @@ export const WeatherContainer = styled.div`
   flex-wrap: wrap;
   gap: 8px;
   margin-top: 8px;
-  margin-bottom: 4px;
+  margin-bottom: 8px;
 `;
 
 export const Weather = styled.div`

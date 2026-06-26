@@ -25,7 +25,6 @@ export default function OnboardingForm() {
   const [unknownTime, setUnknownTime] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState("");
 
-  //birth place API fetching
   const countries = Country.getAllCountries();
 
   const activeCountry = countries.find(

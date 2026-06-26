@@ -58,7 +58,7 @@ export default function SavedCard({
   const handleNoteButtonClick = (event) => {
     event.preventDefault();
     if (!isExpanded) {
-      onToggleExpand(); // Smoothly open the layout structure
+      onToggleExpand();
     }
     setIsEditingNote(true);
   };
@@ -142,11 +142,11 @@ export default function SavedCard({
               )}
             </WeatherContainer>
           )}
-        </HeaderClickableZone>
 
-        <DropdownArrow onClick={onToggleExpand} $isExpanded={isExpanded}>
-          》
-        </DropdownArrow>
+          <DropdownArrow onClick={onToggleExpand} $isExpanded={isExpanded}>
+            》
+          </DropdownArrow>
+        </HeaderClickableZone>
       </CardHeader>
 
       <ExpandableContent $isExpanded={isExpanded}>
