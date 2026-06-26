@@ -51,7 +51,33 @@ const BackgroundWrapper = styled.div`
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 0; /* Keeps it strictly behind your text/cards */
-  background: radial-gradient(circle, #1b1b20, #050405);
+  z-index: 0;
+  // background: radial-gradient(circle, #1b1b20, #050405);
+
+  background:
+    radial-gradient(
+      circle at -4% -3%,
+      rgb(122 120 79 / 29%) -20%,
+      #1f1e294a 45% 45%
+    ),
+    radial-gradient(
+      circle at 120% -25%,
+      rgb(105 133 146 / 24%) 20%,
+      #21242c5e 34%
+    ),
+    linear-gradient(to bottom, #161829 -20%, #0d0c0f -80%, #000000 5%);
+  // background:
+  //   radial-gradient(
+  //     circle at 10% 70%,
+  //     rgba(79, 85, 105, 0.25) 0%,
+  //     transparent 45%
+  //   ),
+  //   radial-gradient(
+  //     circle at 90% 15%,
+  //     rgba(49, 152, 217, 0.2) 0%,
+  //     transparent 40%
+  //   ),
+  //   linear-gradient(to bottom, #16161b 0%, #0a080b 40%, #0c0c10 100%);
+
   pointer-events: none; /* Allows users to click through the animation canvas cleanly */
 `;

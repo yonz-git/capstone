@@ -21,13 +21,13 @@ const Button = styled.button`
   margin-top: 2rem;
   box-shadow:
     inset 0 0 20px #1f203812,
-    inset 20px 0 40px rgba(39, 0, 194, 0.02),
+    inset 20px 0 40px rgba(88, 64, 184, 0.02),
     inset -20px 0 40px rgba(0, 255, 255, 0.02),
-    inset 20px 0 100px rgba(64, 0, 255, 0.02),
+    inset 20px 0 100px rgba(128, 119, 255, 0.02),
     inset -20px 0 100px rgba(2, 55, 63, 0.02),
-    0 0 2px #1c0d0d27,
-    -4px 0 4px rgba(247, 246, 230, 0.83),
-    4px 0 4px rgba(173, 174, 220, 0.81);
+    0 0 1px #1c0d0d27,
+    -3px 0 4px rgba(247, 246, 230, 0.83),
+    3px 0 4px rgba(173, 174, 220, 0.81);
   background-color: transparent;
   transition: all 0.3s ease-in-out;
 
