@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const CardContainer = styled.div`
   background: #49468250;
+  background: radial-gradient(circle, #171011 10%, #1d1212 30%, #ce7f7e 140%);
   backdrop-filter: blur(5px);
   border: 1px solid #3c3973;
   border-radius: 16px;

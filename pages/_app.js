@@ -5,6 +5,7 @@ import NavBar from "@/components/NavBar";
 import GlobalStyle from "../styles";
 import { Jost } from "next/font/google";
 import styled from "styled-components";
+import Galaxy from "@/components/ui-elements/Galaxy";
 
 const jost = Jost({
   subsets: ["latin"],
@@ -30,7 +31,7 @@ export default function App({ Component, pageProps }) {
       <main>
         <GlobalStyle />
 
-        <BackgroundWrapper></BackgroundWrapper>
+        <BackgroundWrapper>{/* <Galaxy /> */}</BackgroundWrapper>
         <SWRConfig
           value={{
             fetcher: (url) => fetch(url).then((response) => response.json()),
@@ -81,23 +82,3 @@ const BackgroundWrapper = styled.div`
 
   pointer-events: none; /* Allows users to click through the animation canvas cleanly */
 `;
-
-// const BackgroundWrapper = styled.div`
-//   position: fixed;
-//   top: 0;
-//   left: 0;
-//   width: 100vw;
-//   height: 100vh;
-
-//   // background: linear-gradient(180deg, #ce7f7e 0%, #070608 100%);
-//   background-image:
-//     linear-gradient(#2a2b2f -50%, #111215 50%, #070608 100%),
-//     linear-gradient(
-//       to right,
-//       rgba(130, 92, 84, 0.1) 0%,
-//       #32221e 30%,
-//       #201815 50%,
-//       #705e5a 70%,
-//       rgba(130, 92, 84, 0.1) 100%
-//     );
-// `;
