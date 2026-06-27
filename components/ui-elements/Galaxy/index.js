@@ -179,7 +179,7 @@ export default function Galaxy({
   disableAnimation = false,
   speed = 0.1,
   mouseInteraction = false,
-  glowIntensity = 0.15,
+  glowIntensity = 0.1,
   saturation = 0.2,
   mouseRepulsion = true,
   repulsionStrength = 2,
