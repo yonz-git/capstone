@@ -1,14 +1,23 @@
 import styled from "styled-components";
 
 export const CardContainer = styled.div`
-  background: #49468250;
-  background: radial-gradient(circle, #171011 10%, #1d1212 30%, #ce7f7e 140%);
   backdrop-filter: blur(5px);
-  border: 1px solid #3c3973;
-  border-radius: 16px;
-  padding: 1rem;
+  border: 0.01rem solid #817e93;
+  border-radius: 20px;
+  padding: 1.4rem;
   padding-bottom: 1.6rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  box-shadow:
+    inset 0 0 20px #1f203812,
+    inset 20px 0 40px rgba(88, 64, 184, 0.02),
+    inset -20px 0 40px rgba(0, 255, 255, 0.02),
+    inset 20px 0 100px rgba(128, 119, 255, 0.02),
+    inset -20px 0 100px rgba(2, 55, 63, 0.02),
+    0 0 1px #1c0d0d27,
+    -3px 0 4px rgba(247, 246, 230, 0.2),
+    3px 0 4px rgba(173, 174, 220, 0.2);
+  background-color: transparent;
+  transition: all 0.3s ease-in-out;
+  backdrop-filter: blur(5px);
 `;
 
 export const CardHeader = styled.div`
@@ -70,16 +79,20 @@ export const HeartButton = styled.div`
 `;
 
 export const ScoreCircle = styled.div`
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  background: ${(props) => (props.$score > 85 ? "#c17bff" : "#aa99ff")};
+  // background: ${(props) => (props.$score > 85 ? "#9879da" : "#a3acf9")};
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: bold;
+  font-weight: 500;
   font-size: 13px;
-  color: #141434;
+  color: #fefefe;
+  opacity.0.8;
+backdrop-filter: blur(5px);
+  // 
+  border:0.1rem #ffffffb5 solid;
 `;
 
 export const HeartOutlineIcon = styled.svg`
@@ -91,7 +104,7 @@ export const HeartOutlineIcon = styled.svg`
 export const HeartFilledIcon = styled.svg`
   width: 20px;
   height: 20px;
-  fill: #c0e666;
+  fill: #e3e3e3;
   filter: drop-shadow(0 0 6px rgba(255, 53, 201, 0.45));
 `;
 
@@ -113,7 +126,7 @@ export const EventLabel = styled.h3`
   font-size: 18px;
   margin: 0;
   color: #ffffff;
-  font-weight: 300;
+  font-weight: 300;s
 `;
 
 export const EventLocation = styled.div`
@@ -127,7 +140,7 @@ export const SummaryText = styled.p`
   margin: 0;
   font-size: 0.8rem;
   padding-bottom: 1em;
-  font-weight: 300;
+  font-weight: 200;
 `;
 
 export const DropdownArrow = styled.span`
@@ -152,7 +165,7 @@ export const DropdownArrow = styled.span`
 
 export const NoteButton = styled.div`
   font-size: 13px;
-  color: #edbfff;
+  color: #eeeeee;
   position: absolute;
   top: -1em;
   right: 0.9em;

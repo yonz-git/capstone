@@ -99,7 +99,7 @@ export default function SavedList() {
       <Container>
         {" "}
         <StatusMessage>
-          No saved days yet. ✨ <br />
+          No saved days yet <br />
         </StatusMessage>
         <Link href="/checktiming">
           <BackButton>Find Aligned Days</BackButton>{" "}
@@ -111,7 +111,7 @@ export default function SavedList() {
   return (
     <Container>
       <Header>
-        <Title>🪐 Your aligned dates</Title>
+        <Title>⊹ Your aligned dates</Title>
         <Subtitle></Subtitle>
       </Header>
 

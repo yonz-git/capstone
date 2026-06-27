@@ -31,7 +31,9 @@ export default function App({ Component, pageProps }) {
       <main>
         <GlobalStyle />
 
-        <BackgroundWrapper>{/* <Galaxy /> */}</BackgroundWrapper>
+        <BackgroundWrapper>
+          <Galaxy />
+        </BackgroundWrapper>
         <SWRConfig
           value={{
             fetcher: (url) => fetch(url).then((response) => response.json()),
