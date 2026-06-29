@@ -7,7 +7,6 @@ import {
   Title,
   Subtitle,
   Footer,
-  Button,
   EventContainer,
   TitleBlock,
   GridContainer,
@@ -24,12 +23,13 @@ import {
   SelectIcon,
   DropdownWithIcon,
 } from "./CheckTiming.styled";
+import Button from "../ui-elements/Button";
 
 const INITIAL_EVENTS = [
-  { id: "date", name: "Date", emoji: "❤️" },
-  { id: "wedding", name: "Wedding", emoji: "💍" },
-  { id: "moving", name: "Moving", emoji: "🚚" },
-  { id: "professional", name: "Professional Meeting", emoji: "💼" },
+  { id: "date", name: "Date", emoji: "♡" },
+  { id: "wedding", name: "Wedding", emoji: "⚢" },
+  { id: "moving", name: "Moving", emoji: "༄" },
+  { id: "professional", name: "Professional Meeting", emoji: "͟웃̟͟" },
 ];
 
 export default function CheckTiming({ onCalculationComplete }) {
@@ -113,7 +113,7 @@ export default function CheckTiming({ onCalculationComplete }) {
   return (
     <Container as="form" onSubmit={handleSubmitAllData}>
       <Header>
-        <Title>✨ Plan an Event </Title>
+        <Title>✧ Plan an Event </Title>
         <Subtitle>
           Tell us what you{"'"}re planning and your timeframe. <br></br>We{"'"}
           ll find your 3 best days.
@@ -121,7 +121,7 @@ export default function CheckTiming({ onCalculationComplete }) {
       </Header>
       <EventContainer>
         <TitleBlock>
-          <h2>1. What are you planning?</h2>
+          <h2>What are you planning?</h2>
           <p>Choose your event type.</p>
         </TitleBlock>
 
@@ -140,7 +140,7 @@ export default function CheckTiming({ onCalculationComplete }) {
       </EventContainer>
       <EventContainer>
         <TitleBlock>
-          <h2>2. Where is your event?</h2>
+          <h2>Where is your event?</h2>
         </TitleBlock>
 
         <Location>
@@ -194,7 +194,7 @@ export default function CheckTiming({ onCalculationComplete }) {
       </EventContainer>
       <EventContainer>
         <TitleBlock>
-          <h2>3. When do you want to time the event?</h2>
+          <h2>When do you want to time the event?</h2>
         </TitleBlock>
         <InputGroup>
           <label htmlFor="startDate">Start Date</label>
@@ -288,7 +288,7 @@ export default function CheckTiming({ onCalculationComplete }) {
         </EventContainer>
       )}
       <Footer>
-        <Button type="submit">✦ Check my cosmic timing</Button>
+        <Button type="submit">✧ Check my cosmic timing</Button>
       </Footer>
     </Container>
   );

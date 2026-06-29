@@ -35,23 +35,6 @@ export const Footer = styled.footer`
   margin-bottom: 60px;
 `;
 
-export const Button = styled.button`
-  width: 100%;
-
-  color: #ffffff;
-
-  padding: 12px 0 18px 0;
-  border-radius: 12px;
-  font-size: 16px;
-  font-weight: 400;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  transition: background-color 0.3s ease-in-out;
-`;
-
 export const EventContainer = styled.div`
   max-width: 90vw;
   margin-bottom: 3rem;
@@ -76,18 +59,27 @@ export const GridContainer = styled.div`
 `;
 
 export const EventCard = styled.div`
-  background: #49468250;
+  background-color: transparent;
   backdrop-filter: blur(5px);
-  border: 1px solid #3c3973;
+
   border-radius: 12px;
   padding: 16px;
   text-align: center;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 
-  border: 1px solid ${(props) => (props.$isActive ? "#aa99ff" : "#2d293f")};
+  border: 1px solid ${(props) => (props.$isActive ? "#eeefdc" : "#86858fd2")};
   box-shadow: ${(props) =>
     props.$isActive ? "0 4px 12px rgba(0,0,0,0.06)" : "none"};
+  box-shadow:
+    inset 0 0 20px #1f203812,
+    inset 20px 0 40px rgba(88, 64, 184, 0.02),
+    inset -20px 0 40px rgba(0, 255, 255, 0.02),
+    inset 20px 0 100px rgba(128, 119, 255, 0.02),
+    inset -20px 0 100px rgba(2, 55, 63, 0.02),
+    0 0 1px #1c0d0d27,
+    -3px 0 4px rgba(247, 246, 230, 0.2),
+    3px 0 4px rgba(173, 174, 220, 0.2);
 
   &:hover {
     border-color: "#cabfff";
@@ -95,7 +87,7 @@ export const EventCard = styled.div`
 
   h3 {
     font-size: 14px;
-    font-weight: 400;
+    font-weight: 300;
     margin: 0;
     margin-top: 10px;
   }

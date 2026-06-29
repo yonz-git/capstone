@@ -11,8 +11,9 @@ import {
   Question,
   Description,
   Footer,
-  Button,
 } from "./Dashboard.styled.js";
+
+import Button from "../ui-elements/Button";
 
 export default function Dashboard() {
   const router = useRouter();
@@ -44,7 +45,30 @@ export default function Dashboard() {
     <Container>
       <Header>
         <CosmicIcon>{signData.symbol + "\uFE0E"}</CosmicIcon>
-        <Title>Welcome, Starseed!</Title>
+
+        {/* <div style={{ width: "100%", height: "600px", position: "relative" }}>
+          <Strands
+            colors={["#ffffff", "#ffffff", "#ffffff"]}
+            count={4}
+            speed={0.1}
+            amplitude={2.1}
+            waviness={2.4}
+            thickness={0.7}
+            glow={0.5}
+            taper={3.7}
+            spread={1}
+            intensity={0.2}
+            saturation={2}
+            opacity={1}
+            scale={0.6}
+            glass
+            refraction={0.75}
+            dispersion={0}
+            glassSize={0.41}
+            hueShift={0}
+          />
+        </div> */}
+        <Title>Welcome Starseed</Title>
         <Description>
           Your cosmic profile is ready. We’ve mapped your natal positions and
           cosmic timing.
@@ -54,8 +78,8 @@ export default function Dashboard() {
       <Question>What are we timing today?</Question>
 
       <Footer>
-        <Link href="/checktiming">
-          <Button>✦ Check my Cosmic Timing</Button>
+        <Link href="/checktiming" style={{ textDecoration: "none" }}>
+          <Button>✧ Check my Cosmic Timing</Button>
         </Link>
       </Footer>
     </Container>

@@ -12,8 +12,7 @@ export default createGlobalStyle`
     padding: 0;
     width: 100%;
     min-height: 100vh;
-    
-
+    color:ffffffee;
     overflow-y: auto; 
 
 
@@ -24,10 +23,18 @@ export default createGlobalStyle`
     -ms-overflow-style: none; 
   }
 
+   body {
+    margin: 0;
+    margin-bottom:40px;
+    body, input, select, textarea, button, a {
+
+
+      font-family: var(--font-jost), system-ui, sans-serif;
+  }
 
   main {
-    font-family: var(--font-jost), system-ui, sans-serif;
-    width: 100%;
+  font-family: var(--font-jost), system-ui, sans-serif;
+  width: 100%;
   max-width: 375px;
   min-height: 100vh;
   margin: 0 auto;   
@@ -37,41 +44,22 @@ export default createGlobalStyle`
 
   button, input, textarea, select {
     font-family: inherit;
- 
+ font-weight:300 !important;
 
   }
 
-  button{
-font-weight: 400;
+    h1{
+     font-weight:300;
+      letter-spacing: 0.05rem;}
 
-       box-shadow: 0 4px 12px rgba(60, 57, 115, 0.3);
-    border: 1px solid #3c3973;
-               background-color: transparent;
-                 transition: background-color 0.3s ease-in-out;
- 
-    
-    background-color: #5337afb6;
- backdrop-filter: blur(5px);
-    box-shadow: 0 4px 12px rgba(60, 57, 115, 0.3);
-    border: 1px solid #3c3973;}
+ h2, label{
+ letter-spacing: 0.03rem;
+      font-weight:300;}
 
-  button:hover{
-  background-color: #3c22531b;
-    color: #ffffff;
- backdrop-filter: blur(5px);
-    box-shadow: 0 4px 12px rgba(60, 57, 115, 0.3);
-    border: 1px solid #3c3973;}
+  p, span{
+    font-weight:200;
+    letter-spacing: 0.03rem}
 
-
-
-  body {
-    margin: 0;
-    margin-bottom:40px;
-    body, input, select, textarea, button, a {
-    font-family: var(--font-jost), sans-serif;
-
-    
-  }
 
   }
 

@@ -26,7 +26,6 @@ export const Header = styled.header`
 
   h1 {
     font-size: 18px;
-    font-weight: 400;
   }
 
   span {
@@ -46,22 +45,22 @@ export const Dot = styled.div`
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background-color: ${(props) => (props.$active ? "#aa8dff" : "#3c3655")};
-  border: 2px solid ${(props) => (props.$active ? "#aa8dff" : "#aa8dff")};
+  background-color: ${(props) => (props.$active ? "#f6f4ffe1" : "#363a55")};
+  border: 2px solid ${(props) => (props.$active ? "#ffffff" : "#ffffff6e")};
 `;
 
 export const Line = styled.div`
   width: 60px;
   height: 2px;
-  background-color: ${(props) => (props.$active ? "#696186" : "#696186")};
+  background-color: ${(props) => (props.$active ? "#ffffff6e" : "#ffffff6e")};
 `;
 
 export const FormContainer = styled.form`
-  flex: 1; /* ✨ Tells the form to occupy all remaining vertical space */
+  flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* ✨ Centers the nested StepSection vertically */
-  align-items: center; /* ✨ Centers everything horizontally */
+  justify-content: center;
+  align-items: center;
   width: 100%;
 `;
 
@@ -74,8 +73,7 @@ export const StepSection = styled.section`
 
   h2 {
     font-size: 22px;
-
-    font-weight: 400;
+    margin-bottom: 30px;
   }
 
   p {
@@ -106,7 +104,6 @@ export const InputGroup = styled.div`
   label {
     display: block;
     font-size: 14px;
-    font-weight: 400;
     margin-bottom: 10px;
     color: #ffffff;
   }
@@ -142,24 +139,11 @@ export const CheckboxGroup = styled.div`
   }
 
   label {
-    font-size: 14px;
+    font-size: 16px;
     color: #ececec;
-    cursor: pointer;
+
     user-select: none;
   }
-`;
-
-export const ContinueButton = styled.button`
-  width: 100%;
-  padding: 16px;
-
-  color: white;
-  border: none;
-  border-radius: 0.8rem;
-  font-size: 16px;
-  font-weight: 400;
-  cursor: pointer;
-  margin-top: 20px;
 `;
 
 export const StyledSelect = styled.select`

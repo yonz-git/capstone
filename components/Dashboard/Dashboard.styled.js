@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.main`
-  color: #ffffff;
+  color: #ffffffee;
   display: flex;
   flex-direction: column;
   max-height: 100vh;
@@ -19,12 +19,14 @@ export const Header = styled.header`
 
 export const CosmicIcon = styled.div`
   margin-bottom: 16px;
-  font-size: 64px;
+  font-size: 60px;
 `;
 
 export const Title = styled.h1`
-  font-size: 28px;
-  font-weight: 400;
+  font-size: 24px;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
   margin: 0 0 8px 0;
   line-height: 1.2;
 `;
@@ -42,27 +44,12 @@ export const Description = styled.p`
   margin: 0 auto;
   margin-top: 1.5rem;
   font-weight: 300;
-  width: 14rem;
+  width: 16rem;
 `;
 
 export const Footer = styled.footer`
   width: 100%;
   margin-bottom: 20px;
-`;
-
-export const Button = styled.button`
-  width: 100%;
-  transition: background-color 0.3s ease-in-out;
-  color: #ffffff;
-  padding: 16px;
-  border-radius: 12px;
-  font-size: 16px;
-  font-weight: 400;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
 `;
 
 export const ButtonIcon = styled.span`

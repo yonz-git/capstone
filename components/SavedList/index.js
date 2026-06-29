@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import useSWR from "swr";
 import SavedCard from "../SavedCard";
 import Link from "next/link";
@@ -9,7 +9,6 @@ import {
   Title,
   Subtitle,
   CardsList,
-  BackButton,
   StatusMessage,
   ModalOverlay,
   ModalBox,
@@ -17,6 +16,7 @@ import {
   CancelButton,
   ConfirmButton,
 } from "./SavedList.styled";
+import Button from "../ui-elements/Button";
 
 export default function SavedList() {
   const [expandedIndex, setExpandedIndex] = useState(null);
@@ -99,10 +99,10 @@ export default function SavedList() {
       <Container>
         {" "}
         <StatusMessage>
-          No saved days yet. ✨ <br />
+          No saved days yet <br />
         </StatusMessage>
         <Link href="/checktiming">
-          <BackButton>Find Aligned Days</BackButton>{" "}
+          <Button>Find Aligned Days</Button>{" "}
         </Link>
       </Container>
     );
@@ -111,7 +111,7 @@ export default function SavedList() {
   return (
     <Container>
       <Header>
-        <Title>🪐 Your aligned dates</Title>
+        <Title>⊹ Your aligned dates</Title>
         <Subtitle></Subtitle>
       </Header>
 
@@ -144,8 +144,8 @@ export default function SavedList() {
         })}
       </CardsList>
 
-      <Link href="/checktiming">
-        <BackButton>✦ Plan Another Event</BackButton>
+      <Link href="/checktiming" style={{ textDecoration: "none" }}>
+        <Button>✧ Plan Another Event</Button>
       </Link>
 
       {dateToDelete && (
