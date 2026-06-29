@@ -102,7 +102,7 @@ export default function SavedList() {
           No saved days yet <br />
         </StatusMessage>
         <Link href="/checktiming">
-          <BackButton>Find Aligned Days</BackButton>{" "}
+          <Button>Find Aligned Days</Button>{" "}
         </Link>
       </Container>
     );
