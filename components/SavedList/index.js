@@ -1,4 +1,4 @@
-import gi{ useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import useSWR from "swr";
 import SavedCard from "../SavedCard";
 import Link from "next/link";
