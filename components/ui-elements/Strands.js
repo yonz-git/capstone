@@ -355,6 +355,7 @@ export default function Strands({
       }
       gl.getExtension("WEBGL_lose_context")?.loseContext();
     };
+    // eslint-disable-line react-hooks/exhaustive-deps
   }, []);
 
   return <StrandsContainer ref={ctnDom} className={className} style={style} />;

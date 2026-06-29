@@ -127,9 +127,9 @@ export default function ResultsList({ onBack }) {
       <Container>
         <p>Error: {error}</p>
         <Link href="/checktiming">
-          <BackButton type="button" onClick={onBack}>
+          <Button type="button" onClick={onBack}>
             Go Back & Try Again
-          </BackButton>
+          </Button>
         </Link>
       </Container>
     );
